@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>{% block title %} Orders {% endblock %}</h1>
+{% endblock %}
+{% block content %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Customer Name</th>
+        <th>Order Date</th>
+        <th>Order Total</th>
+        <th>Order Type</th>
+    </tr>
+    <tbody>
+    {% for item in orders %}
+    <tr>
+        <td>{{item['idCustomer']}}</td>
+        <td>{{item['orderDate']}}</td>
+        <td>{{item['orderTotal']}}</td>
+        <td>{{item['orderType']}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

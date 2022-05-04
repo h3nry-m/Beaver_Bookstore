@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>{% block title %} Books {% endblock %}</h1>
+{% endblock %}
+{% block content %}
+<table class="table">
+    <thead class="table_header">
+    <tr>
+        <th class="table_cell">Title</th>
+        <th class="table_cell">Name</th>
+        <th class="table_cell">ISBN</th>
+        <th class="table_cell">Publisher</th>
+        <th class="table_cell">Year</th>
+        <th class="table_cell">New Qty</th>
+        <th class="table_cell">New Price</th>
+        <th class="table_cell">Used Qty</th>
+        <th class="table_cell">Used Price</th>
+    </tr>
+    <tbody>
+    {% for item in books %}
+    <tr>
+        <td class="table_cell">{{item['title']}}</td>
+        <td class="table_cell">{{item['firstName']}} {{item['lastName']}}</td>
+        <td class="table_cell">{{item['isbn']}}</td>
+        <td class="table_cell">{{item['publisher']}}</td>
+        <td class="table_cell">{{item['publicationYear']}}</td>
+        <td class="table_cell">{{item['newStock']}}</td>
+        <td class="table_cell">{{item['newPrice']}}</td>
+        <td class="table_cell">{{item['usedStock']}}</td>
+        <td class="table_cell">{{item['usedPrice']}}</td>
+        <td class="table_cell">
+            <input type="button" class="edit" onclick="" value="Edit">
+            <input type="button" class="delete" onclick="" value="Delete">
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="create">
+    <h2>Add a book</h2>
+    <form method="post">
+        <label for="title">Title</label>
+        <input type="text" name="title"
+               placeholder="Title"
+               value="{{ request.form['title'] }}"></input>
+        <br>
+
+        <label for="firstName">First Name</label>
+        <input type="text" name="name"
+               placeholder="First name"
+               value="{{ request.form['firstName'] }}"></input>
+        <br>
+
+        <label for="name">Last Name</label>
+        <input type="text" name="lastName"
+               placeholder="Last name"
+               value="{{ request.form['lastName'] }}"></input>
+        <br>
+
+        <label for="isbn">ISBN</label>
+        <input type="text" name="isbn"
+               placeholder="xxx-x-xx-xxxxxx-x"
+               value="{{ request.form['isbn'] }}"></input>
+        <br>
+
+        <label for="publisher">Publisher</label>
+        <input type="text" name="publisher"
+               placeholder=""
+               value="{{ request.form['publisher'] }}"></input>
+        <br>
+
+        <label for="publicationYear">publicationYear</label>
+        <input type="number" name="publicationYear"
+               placeholder="publicationYear"
+               value="{{ request.form['publicationYear'] }}"></input>
+        <br>
+
+        <label for="newStock">New Stock</label>
+        <input type="number" name="newStock"
+               placeholder="newStock"
+               value="{{ request.form['newStock'] }}"></input>
+        <br>
+
+        <label for="newPrice">New Price</label>
+        <input type="number" name="New Price"
+               placeholder="newPrice"
+               value="{{ request.form['newPrice'] }}"></input>
+        <br>
+
+        <label for="usedStock">used Stock</label>
+        <input type="number" name="usedStock"
+               placeholder="usedStock"
+               value="{{ request.form['usedStock'] }}"></input>
+        <br>
+        <label for="usedPrice">Used Price</label>
+        <input type="number" name="Used Price"
+               placeholder="usedPrice"
+               value="{{ request.form['usedPrice'] }}"></input>
+        <br>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

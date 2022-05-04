@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>{% block title %} Reviews {% endblock %}</h1>
+{% endblock %}
+{% block content %}
+<table class="table">
+    <thead>
+    <tr>
+        <th>Customer</th>
+        <th>Book</th>
+        <th>Title</th>
+        <th>Body</th>
+        <th>Stars</th>
+    </tr>
+    <tbody>
+    {% for item in reviews %}
+    <tr>
+        <td>{{item['idCustomer']}}</td>
+        <td>{{item['idBook']}}</td>
+        <td>{{item['postTitle']}}</td>
+        <td>{{item['postBody']}}</td>
+        <td>{{item['stars']}}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

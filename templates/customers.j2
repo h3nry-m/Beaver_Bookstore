@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>{% block title %} Customers {% endblock %}</h1>
+{% endblock %}
+{% block content %}
+<table class="table">
+    <thead class="table_header>
+    <tr>
+        <th class="table_cell">Name</th>
+        <th class="table_cell">Email</th>
+        <th class="table_cell">Phone number</th>
+        <th class="table_cell">Street Address</th>
+        <th class="table_cell">City</th>
+        <th class="table_cell">State</th>
+        <th class="table_cell">Zip Code</th>
+    </tr>
+    <tbody>
+    {% for item in customers %}
+    <tr>
+        <td class="table_cell">{{item['firstName']}} {{item['lastName']}}</td>
+        <td class="table_cell">{{item['email']}}</td>
+        <td class="table_cell">{{item['phoneNumber']}}</td>
+        <td class="table_cell">{{item['addressStreet']}}</td>
+        <td class="table_cell">{{item['addressCity']}}</td>
+        <td class="table_cell">{{item['addressState']}}</td>
+        <td class="table_cell">{{item['addressZip']}}</td>
+        <td class="table_cell">
+            <input type="button" class="edit" onclick="" value="Edit">
+            <input type="button" class="delete" onclick="" value="Delete">
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+<div class="create">
+    <h2>Add a customer</h2>
+    <form method="post">
+        <label for="firstName">First Name</label>
+        <input type="text" name="name"
+               placeholder="First name"
+               value="{{ request.form['firstName'] }}"></input>
+        <br>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName"
+               placeholder="Last name"
+               value="{{ request.form['lastName'] }}"></input>
+        <br>
+
+        <label for="email">Email</label>
+        <input type="text" name="email"
+               placeholder="Email"
+               value="{{ request.form['email'] }}"></input>
+        <br>
+
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" name="phoneNumber"
+               placeholder="(xxx)-xxx-xxx"
+               value="{{ request.form['phoneNumber'] }}"></input>
+        <br>
+
+        <label for="addressStreet">Street</label>
+        <input type="text" name="addressStreet"
+               placeholder="addressStreet"
+               value="{{ request.form['addressStreet'] }}"></input>
+        <br>
+
+        <label for="addressState">State</label>
+        <input type="text" name="addressState"
+               placeholder="addressState"
+               value="{{ request.form['addressState'] }}"></input>
+        <br>
+
+        <label for="addressZip">Zip Code</label>
+        <input type="number" name="addressZip"
+               placeholder="number"
+               value="{{ request.form['addressZip'] }}"></input>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}
