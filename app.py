@@ -55,6 +55,52 @@ def CRUD_reviews():
 
 @app.route('/orders')
 def CRUD_orders():
+    orders_from_app_py = [
+        [
+            {
+                "idOrder": 1,
+                "fname": "Gene",
+                "lname": "Fram",
+                "orderDate": "2022-03-18",
+                "orderTotal": 19.68,
+                "orderType": "purchase" 
+            },
+            {
+                "idOrder": 2,
+                "fname": "Jared",
+                "lname": "Collazo",
+                "orderDate": "2022-01-02",
+                "orderTotal": 22.68,
+                "orderType": "purchase" 
+            },
+            {
+                "idOrder": 3,
+                "fname": "Keith",
+                "lname": "Hazlett",
+                "orderDate": "2022-02-16",
+                "orderTotal": 11.70,
+                "orderType": "purchase" 
+            },
+            {
+                "idOrder": 4,
+                "fname": "Cara",
+                "lname": "Jacob",
+                "orderDate": "2022-04-20",
+                "orderTotal": 5.90,
+                "orderType": "sale" 
+            }
+        ],
+        [
+            {
+                "fname": "Frank",
+                "lname": "Owens"
+            },
+            {
+                "fname": "Ethan",
+                "lname": "Lopez"
+            }
+        ]
+    ]
     return render_template("orders.j2", orders = orders_from_app_py)
 
 @app.route('/customers')

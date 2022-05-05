@@ -6,19 +6,41 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Customer Name</th>
-        <th>Order Date</th>
-        <th>Order Total</th>
-        <th>Order Type</th>
+        <th class="table_cell">Order ID</th>
+        <th class="table_cell">fname</th>
+        <th class="table_cell">lname</th>
+        <th class="table_cell">Order Date</th>
+        <th class="table_cell">Order Total</th>
+        <th class="table_cell">Order Type</th>
     </tr>
     <tbody>
-    {% for item in orders %}
+    {% for item in orders[0] %}
     <tr>
-        <td>{{item['idCustomer']}}</td>
-        <td>{{item['orderDate']}}</td>
-        <td>{{item['orderTotal']}}</td>
-        <td>{{item['orderType']}}</td>
+        <td class="table_cell">{{item['idOrder']}}</td>
+        <td class="table_cell" >{{item['fname']}}</td>
+        <td class="table_cell" >{{item['lname']}}</td>
+        <td class="table_cell">{{item['orderDate']}}</td>
+        <td class="table_cell">{{item['orderTotal']}}</td>
+        <td class="table_cell">{{item['orderType']}}</td>
+        <td class="table_cell">
+            <input type="button" class="edit" onclick="" value="Edit">
+            <input type="button" class="delete" onclick="" value="Delete">
+        </td>
     </tr>
     {% endfor %}
 </table>
+
+<div class="create">
+    <form id="addOrder">
+        <legend>
+            <strong> Add Order</strong>
+        </legend>
+        <select name="customers" id="customers">
+            {% for item in orders[1] %}
+           <option> {{item['fname']}}</option>
+            {% endfor %}
+
+        </select>
+    </form>
+</div>
 {% endblock %}
