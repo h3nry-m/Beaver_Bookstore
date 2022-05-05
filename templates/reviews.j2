@@ -6,21 +6,93 @@
 <table class="table">
     <thead>
     <tr>
-        <th>Customer</th>
-        <th>Book</th>
-        <th>Title</th>
-        <th>Body</th>
-        <th>Stars</th>
+        <th class="table_cell">Review ID</th>
+        <th class="table_cell">idCustomer</th>
+        <th class="table_cell">idBook</th>
+        <th class="table_cell">postTitle</th>
+        <th class="table_cell">postBody</th>
+        <th class="table_cell">stars</th>
     </tr>
+    <input type="button" class="new" onclick="" value="New">
     <tbody>
-    {% for item in reviews %}
+    {% for item in reviews[0] %}
     <tr>
-        <td>{{item['idCustomer']}}</td>
-        <td>{{item['idBook']}}</td>
-        <td>{{item['postTitle']}}</td>
-        <td>{{item['postBody']}}</td>
-        <td>{{item['stars']}}</td>
+        <td class="table_cell">{{item['idReview']}}</td>
+        <td class="table_cell">{{item['idCustomer']}}</td>
+        <td class="table_cell" >{{item['idBook']}}</td>
+        <td class="table_cell" >{{item['postTitle']}}</td>
+        <td class="table_cell">{{item['postBody']}}</td>
+        <td class="table_cell">{{item['stars']}}</td>
+        <td class="table_cell">
+            <input type="button" class="edit" onclick="" value="Edit">
+            <input type="button" class="delete" onclick="" value="Delete">
+        </td>
     </tr>
     {% endfor %}
 </table>
+<div class="create">
+    <form id="addReview" method="post">
+        <legend>
+        <h2>Add a Review</h2>
+        </legend>
+        {# <select id="fname">
+            {% for item in orders[1] %}
+           <option value="{{ request.form['firstName'] }}"> {{item['firstName']}}</option>
+            {% endfor %}
+        </select> #}
+        {# <select id="lname">
+            {% for item in orders[1] %}
+            <option value="{{ request.form['lastName'] }}"> {{item['lastName']}}</option>
+            {% endfor %}
+        </select> #}
+        <label>First Name:</label>
+        <select id="fname">
+            {% for item in reviews[1] %}
+           <option value="{{ request.form['firstName'] }}"> {{item['firstName']}}</option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+        <label>Last Name:</label>
+        <select id="lname">
+            {% for item in reviews[1] %}
+            <option value="{{ request.form['lastName'] }}"> {{item['lastName']}}</option>
+            {% endfor %}
+        </select>
+
+        <br> 
+
+        <label>Title:</label>
+
+        <select id="bookTitle">
+            {% for item in reviews[2] %}
+            <option value="{{ request.form['title'] }}"> {{item['title']}}</option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+       <label> reviewContents: </label>
+
+       <br>
+
+       <textarea rows="4" cols="50" name="comment" form="usrform">Post your comment here!</textarea>
+        <br>
+        <label>Stars </label>
+        <select id="orderType">
+            <option value="{{ request.form['orderType'] }}"> 1 </option>
+            <option value="{{ request.form['orderType'] }}"> 2 </option>
+            <option value="{{ request.form['orderType'] }}"> 3 </option>
+            <option value="{{ request.form['orderType'] }}"> 4 </option>
+            <option value="{{ request.form['orderType'] }}"> 5 </option>
+        </select>
+        <br>
+
+
+
+        <input type="button" class="submit" onclick="" value="Submit">
+
+    </form>
+</div>
 {% endblock %}

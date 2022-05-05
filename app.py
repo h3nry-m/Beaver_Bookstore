@@ -51,6 +51,59 @@ def CRUD_books():
 
 @app.route('/reviews')
 def CRUD_reviews():
+    reviews_from_app_py = [
+        [
+            {
+            "idReview": 1,
+            "idCustomer": 3,
+            "idBook": 2,
+            "postTitle": "Great Book",
+            "postBody": "The best book I've read my entire life",
+            "stars": 5
+            },
+            {
+            "idReview": 2,
+            "idCustomer": 2,
+            "idBook": 3,
+            "postTitle": "Mediocre",
+            "postBody": "The book was predictable and not very exciting",
+            "stars": 3
+            },
+            {
+            "idReview": 3,
+            "idCustomer": 4,
+            "idBook": 4,
+            "postTitle": "Not Bad",
+            "postBody": "The character development was not bad but could use work",
+            "stars": 4
+            }
+        ],
+        [
+            {
+                "firstName": "Keith",
+                "lastName": "Hazlett"
+            },
+            {
+                "firstName": "Gene",
+                "lastName": "Fram"
+            },
+            {
+                "firstName": "Frank",
+                "lastName": "Ownens"
+            }
+        ],
+        [
+            {
+                "title": "Moonwalking with Einstein"
+            },
+            {
+                "title": "Scarlet"
+            },
+            {
+                "title": "The Thousand Autumns of Jacob de Zoet"
+            }
+        ]
+    ]
     return render_template("reviews.j2", reviews = reviews_from_app_py)
 
 @app.route('/orders')
