@@ -3,9 +3,12 @@
     <h1>{% block title %} Orders {% endblock %}</h1>
 {% endblock %}
 {% block content %}
-<table class="table">
+<table id="browse" class="table">
     <thead>
     <tr>
+        <th class="table_cell">    
+        <input type="button" class="new" onclick="newOrder()" value="New">
+        </th>
         <th class="table_cell">Order ID</th>
         <th class="table_cell">First Name</th>
         <th class="table_cell">Last Name</th>
@@ -13,10 +16,10 @@
         <th class="table_cell">Order Total</th>
         <th class="table_cell">Order Type</th>
     </tr>
-    <input type="button" class="new" onclick="" value="New">
     <tbody>
     {% for item in orders[0] %}
     <tr>
+        <td class="table_cell"></td>
         <td class="table_cell">{{item['idOrder']}}</td>
         <td class="table_cell" >{{item['firstName']}}</td>
         <td class="table_cell" >{{item['lastName']}}</td>
@@ -24,20 +27,20 @@
         <td class="table_cell">{{item['orderTotal']}}</td>
         <td class="table_cell">{{item['orderType']}}</td>
         <td class="table_cell">
-            <input type="button" class="edit" onclick="" value="Edit">
-            <input type="button" class="delete" onclick="" value="Delete">
+        <input type="button" class="edit" onclick="updateOrder()" value="Edit">
+        <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
         </td>
     </tr>
     {% endfor %}
 </table>
 
-<div class="create">
+<div id="create" style="display: none;"">
 
     <form id="addOrder" method="post">
         <legend>
-        <h2>Add an Order</h2>
+        <h2>Add a Order</h2>
         </legend>
-        <labe>First Name:</label>
+        <label>First Name:</label>
         <select id="fname">
             {% for item in orders[1] %}
            <option value="{{ request.form['firstName'] }}"> {{item['firstName']}}</option>
@@ -61,7 +64,65 @@
             <option value="{{ request.form['orderType'] }}"> sale </option>
         </select>
         <input type="button" class="submit" onclick="" value="Submit">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
 
     </form>
 </div>
+
+<div id="update" style="display: none;">
+    <form id="modifyOrder" methord="post">
+        <legend>
+            <h2>Modify a Order</h2>
+        </legend>
+        <label>orderID: 1 </label>
+        <label>First Name: Gene</label>
+        
+        <labe>Last Name: Fram</label>
+        
+        <label>Date:</label>
+        <input value="{{ request.form['date'] }}" type="date">
+        <label for="orderTotal">Order Total</label>
+        <input type="number" name="Order Total"
+               placeholder="Order Total"
+               value="{{ request.form['orderTotal'] }}"></input>
+        <label>Order Type: </label>
+        <select id="orderType">
+            <option value="{{ request.form['orderType'] }}"> purchase </option>
+            <option value="{{ request.form['orderType'] }}"> sale </option>
+        </select>
+        <input type="button" class="update" onclick="" value="Update">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+    </form>
+
+</div>
+
+<div id="delete" style="display: none;">
+    <form id="modifyOrder" methord="post">
+        <legend>
+            <h2>Delete a Order</h2>
+        </legend>
+        {# this is a sample, need to adjust for queries at a later date #}
+        {# TODO #}
+        <p> Are you sure you ant to delete the following order?</p>
+        <label>orderID: 1 </label>
+        <br>
+        <label>First Name: Gene</label>
+        <br>
+        <labe>Last Name: Fram</label>
+        <br>
+        <label>Date: 2022-03-18</label>
+        <br>
+        <label>
+        <label>Order Total: 19.68</label>
+        <br>
+        <label>Order Type: purchase</label>
+        <br>
+        <input type="button" class="submit" onclick="" value="Submit">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+    </form>
+
+</div>
+<br>
+<input type="button" id="all" onclick="showAll()" value="Show All">
+
 {% endblock %}

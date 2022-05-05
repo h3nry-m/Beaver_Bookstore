@@ -1,23 +1,33 @@
 {% extends 'base.html' %}
 {% block header %}
-    <h1>{% block title %} Books {% endblock %}</h1>
+    <h1>{% block title %} Order Details {% endblock %}</h1>
 {% endblock %}
 {% block content %}
 
+<table class="table">
+    <thead>
+    <tr>
+        <th class="table_cell">orderDetailsID</th>
+        <th class="table_cell">Order ID</th>
+        <th class="table_cell">Book ID</th>
+        <th class="table_cell">Order Quantity</th>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    </tr>
+    <input type="button" class="new" onclick="" value="New">
+    <tbody>
+    {% for item in orderDetails[0] %}
+    <tr>
+        <td class="table_cell">{{item['orderDetailsID']}}</td>
+        <td class="table_cell" >{{item['idOrder']}}</td>
+        <td class="table_cell" >{{item['idBook']}}</td>
+        <td class="table_cell" >{{item['orderQty']}}</td>        
+        <td class="table_cell">
+            <input type="button" class="edit" onclick="" value="Edit">
+            <input type="button" class="delete" onclick="" value="Delete">
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 
 
 
