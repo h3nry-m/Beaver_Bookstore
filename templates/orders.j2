@@ -7,18 +7,19 @@
     <thead>
     <tr>
         <th class="table_cell">Order ID</th>
-        <th class="table_cell">fname</th>
-        <th class="table_cell">lname</th>
+        <th class="table_cell">First Name</th>
+        <th class="table_cell">Last Name</th>
         <th class="table_cell">Order Date</th>
         <th class="table_cell">Order Total</th>
         <th class="table_cell">Order Type</th>
     </tr>
+    <input type="button" class="new" onclick="" value="New">
     <tbody>
     {% for item in orders[0] %}
     <tr>
         <td class="table_cell">{{item['idOrder']}}</td>
-        <td class="table_cell" >{{item['fname']}}</td>
-        <td class="table_cell" >{{item['lname']}}</td>
+        <td class="table_cell" >{{item['firstName']}}</td>
+        <td class="table_cell" >{{item['lastName']}}</td>
         <td class="table_cell">{{item['orderDate']}}</td>
         <td class="table_cell">{{item['orderTotal']}}</td>
         <td class="table_cell">{{item['orderType']}}</td>
@@ -31,16 +32,35 @@
 </table>
 
 <div class="create">
-    <form id="addOrder">
+    <form id="addOrder" method="post">
         <legend>
-            <strong> Add Order</strong>
+        <h2>Add a Order</h2>
         </legend>
-        <select name="customers" id="customers">
+        <labe>First Name:</label>
+        <select id="fname">
             {% for item in orders[1] %}
-           <option> {{item['fname']}}</option>
+           <option value="{{ request.form['firstName'] }}"> {{item['firstName']}}</option>
             {% endfor %}
-
         </select>
+        <labe>Last Name:</label>
+        <select id="lname">
+            {% for item in orders[1] %}
+            <option value="{{ request.form['lastName'] }}"> {{item['lastName']}}</option>
+            {% endfor %}
+        </select>
+        <label>Date:</label>
+        <input value="{{ request.form['date'] }}" type="date">
+        <label for="orderTotal">Order Total</label>
+        <input type="number" name="Order Total"
+               placeholder="Order Total"
+               value="{{ request.form['orderTotal'] }}"></input>
+        <label>Order Type: </label>
+        <select id="orderType">
+            <option value="{{ request.form['orderType'] }}"> purchase </option>
+            <option value="{{ request.form['orderType'] }}"> sale </option>
+        </select>
+        <input type="button" class="submit" onclick="" value="Submit">
+
     </form>
 </div>
 {% endblock %}

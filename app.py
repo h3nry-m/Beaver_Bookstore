@@ -59,32 +59,32 @@ def CRUD_orders():
         [
             {
                 "idOrder": 1,
-                "fname": "Gene",
-                "lname": "Fram",
+                "firstName": "Gene",
+                "lastName": "Fram",
                 "orderDate": "2022-03-18",
                 "orderTotal": 19.68,
                 "orderType": "purchase" 
             },
             {
                 "idOrder": 2,
-                "fname": "Jared",
-                "lname": "Collazo",
+                "firstName": "Jared",
+                "lastName": "Collazo",
                 "orderDate": "2022-01-02",
                 "orderTotal": 22.68,
                 "orderType": "purchase" 
             },
             {
                 "idOrder": 3,
-                "fname": "Keith",
-                "lname": "Hazlett",
+                "firstName": "Keith",
+                "lastName": "Hazlett",
                 "orderDate": "2022-02-16",
                 "orderTotal": 11.70,
                 "orderType": "purchase" 
             },
             {
                 "idOrder": 4,
-                "fname": "Cara",
-                "lname": "Jacob",
+                "firstName": "Cara",
+                "lastName": "Jacob",
                 "orderDate": "2022-04-20",
                 "orderTotal": 5.90,
                 "orderType": "sale" 
@@ -92,12 +92,12 @@ def CRUD_orders():
         ],
         [
             {
-                "fname": "Frank",
-                "lname": "Owens"
+                "firstName": "Frank",
+                "lastName": "Owens"
             },
             {
-                "fname": "Ethan",
-                "lname": "Lopez"
+                "firstName": "Ethan",
+                "lastName": "Lopez"
             }
         ]
     ]
