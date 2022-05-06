@@ -48,9 +48,9 @@ CREATE TABLE Books (
 CREATE TABLE Orders (
     idOrder INT NOT NULL UNIQUE AUTO_INCREMENT,
     idCustomer INT,
-    orderDate DATE,
+    orderDate DATE NOT NULL,
     orderType VARCHAR(8) NOT NULL CHECK (orderType IN ('sale', 'purchase')),
-    orderTotal DECIMAL(8,2),
+    orderTotal DECIMAL(8,2) NOT NULL,
     PRIMARY KEY (idOrder),
     FOREIGN KEY (idCustomer) REFERENCES Customers (idCustomer) ON DELETE CASCADE
 );
@@ -62,7 +62,7 @@ CREATE TABLE OrderDetails (
     orderDetailsID INT NOT NULL UNIQUE AUTO_INCREMENT,
     idOrder INT,
     idBook INT,
-    orderQty INT,
+    orderQty INT NOT NULL,
     PRIMARY KEY (orderDetailsID),
     FOREIGN KEY (idOrder) REFERENCES Orders (idOrder) ON DELETE CASCADE,
     FOREIGN KEY (idBook) REFERENCES Books (idBook) ON DELETE CASCADE
@@ -71,7 +71,8 @@ CREATE TABLE OrderDetails (
 -- -----------------------------------------------------
 -- Intersecting Table Reviews
 -- -----------------------------------------------------
-
+--TODO
+--ADD SAMPLE DATA THAT INCORPORATES NULL TITLE/POST
 Create TABLE Reviews (
     idReview INT NOT NULL UNIQUE AUTO_INCREMENT,
     idCustomer INT,
@@ -106,32 +107,32 @@ VALUE
 
 INSERT INTO Orders (idCustomer, orderDate, orderTotal, orderType) 
 VALUE
-((SELECT idCustomer FROM Customers WHERE idCustomer = 2), '2022-03-18', 19.68, 'purchase'),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 5), '2022-01-02', 22.86, 'purchase'),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 3), '2022-02-16', 11.70, 'purchase'),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 4), '2022-04-20', 5.90, 'sale'),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 2), '2022-04-20', 10.62, 'sale'),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 1), '2022-04-25', 4.84, 'sale');
+(2, '2022-03-18', 19.68, 'purchase'),
+(5, '2022-01-02', 22.86, 'purchase'),
+(3, '2022-02-16', 11.70, 'purchase'),
+(4, '2022-04-20', 5.90, 'sale'),
+(2, '2022-04-20', 10.62, 'sale'),
+(1, '2022-04-25', 4.84, 'sale');
 
 
 INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars)
 VALUE 
-((SELECT idCustomer FROM Customers WHERE idCustomer = 3), (SELECT idBook FROM Books WHERE idBook = 2), 'Great book', "The best book I've read my entire life", 5),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 2), (SELECT idBook FROM Books WHERE idBook = 3), 'Mediocre', "This book was predictable and not very exciting", 3),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 4), (SELECT idBook FROM Books WHERE idBook = 4), 'Not bad', "The character development was not bad but could use work", 4),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 1), (SELECT idBook FROM Books WHERE idBook = 2), 'Not good', "Terrible book, do not recommend", 1),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 1), (SELECT idBook FROM Books WHERE idBook = 1), 'Pretty good', "Good for a quick relaxing read", 4);
+(3, 2, 'Great book', NULL, 5),
+(2, 3, 'Mediocre', "This book was predictable and not very exciting", 3),
+(4, 4, NULL, "The character development was not bad but could use work", 4),
+(1, 2, 'Not good', "Terrible book, do not recommend", 1),
+(1, 1, 'Pretty good', "Good for a quick relaxing read", 4);
 
 INSERT INTO OrderDetails (idOrder, idBook, orderQty)
 VALUE
-((SELECT idOrder FROM Orders WHERE idOrder = 1), (SELECT idBook FROM Books WHERE idBook = 2), 1),
-((SELECT idOrder FROM Orders WHERE idOrder = 1), (SELECT idBook FROM Books WHERE idBook = 3), 1),
-((SELECT idOrder FROM Orders WHERE idOrder = 2), (SELECT idBook FROM Books WHERE idBook = 4), 1),
-((SELECT idOrder FROM Orders WHERE idOrder = 2), (SELECT idBook FROM Books WHERE idBook = 5), 1),
-((SELECT idOrder FROM Orders WHERE idOrder = 3), (SELECT idBook FROM Books WHERE idBook = 1), 1),
-((SELECT idOrder FROM Orders WHERE idOrder = 4), (SELECT idBook FROM Books WHERE idBook = 2), 1),
-((SELECT idOrder FROM Orders WHERE idOrder = 5), (SELECT idBook FROM Books WHERE idBook = 1), 2),
-((SELECT idOrder FROM Orders WHERE idOrder = 6), (SELECT idBook FROM Books WHERE idBook = 3), 1);
+(1, 2, 3),
+(1, 3, 4),
+(2, 4, 2),
+(2, 5, 2),
+(3, 1, 2),
+(4, 2, 1),
+(5, 1, 2),
+(6, 3, 1);
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
