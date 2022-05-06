@@ -4,33 +4,100 @@
 {% endblock %}
 {% block content %}
 
-<table class="table">
+<table id = 'browse' class="table">
     <thead>
     <tr>
+        <th class="table_cell">    
+            <input type="button" class="new" onclick="newOrder()" value="New">
+        </th>
         <th class="table_cell">orderDetailsID</th>
         <th class="table_cell">Order ID</th>
         <th class="table_cell">Book ID</th>
         <th class="table_cell">Order Quantity</th>
-
+        
     </tr>
-    <input type="button" class="new" onclick="" value="New">
     <tbody>
     {% for item in orderDetails[0] %}
     <tr>
+        <td class="table_cell"></td>
         <td class="table_cell">{{item['orderDetailsID']}}</td>
         <td class="table_cell" >{{item['idOrder']}}</td>
         <td class="table_cell" >{{item['idBook']}}</td>
         <td class="table_cell" >{{item['orderQty']}}</td>        
         <td class="table_cell">
-            <input type="button" class="edit" onclick="" value="Edit">
-            <input type="button" class="delete" onclick="" value="Delete">
+        <input type="button" class="edit" onclick="updateOrder()" value="Edit">
+        <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
         </td>
     </tr>
     {% endfor %}
 </table>
 
+<div id = 'create' style="display:none;">
 
+    <legend>
+    <h2> Add an Order-Books </h2>
+    </legend>
+    
+    <fieldset>
+        <label> Order ID </label>
+        <input type="number" name="orderID">
+        <label> Book ID </label>
+        <input type="number" name="bookID">
+        <label> Order Quantity </label>
+        <input type="number" name="orderQty">
+    </fieldset>
 
+    <input type="button" class="submit" onclick="" value="Submit">
+    
+    <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
 
+</div>
+
+<div id = 'update' style="display:none;">
+
+    <legend>
+    <h2> Update an Order-Books </h2>
+    </legend>
+    
+    <fieldset>
+        {# TODO
+        NEED TO IMPLEMENT QUERY  #}
+        <label> orderDetailsID: 1 </label>
+        <label> Order ID </label>
+        <input type="number" name="orderID">
+        <label> Book ID </label>
+        <input type="number" name="bookID">
+        <label> Order Quantity </label>
+        <input type="number" name="orderQty">
+    </fieldset>
+
+    <input type="button" class="submit" onclick="" value="Submit">
+    
+    <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+
+</div>
+
+<div id = 'delete' style="display:none;">
+
+    <legend>
+    <h2> Delete an Order-Books </h2>
+    </legend>
+    
+    <fieldset>
+        {# TODO
+        NEED TO IMPLEMENT QUERY  #}
+        <p> Are you sure you want to delete the following review?</p>
+        <label> orderDetailsID: 1 </label>
+        <label> Order ID : 1 </label>
+        <label> Book ID: 1</label>
+        <label> Order Quantity: 2</label>
+        
+    </fieldset>
+
+    <input type="button" class="submit" onclick="" value="Submit">
+    
+    <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+
+</div>
 
 {% endblock %}

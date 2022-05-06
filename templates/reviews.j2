@@ -3,9 +3,12 @@
     <h1>{% block title %} Reviews {% endblock %}</h1>
 {% endblock %}
 {% block content %}
-<table class="table">
+<table id = 'browse'>
     <thead>
     <tr>
+        <th class="table_cell">    
+            <input type="button" class="new" onclick="newOrder()" value="New">
+        </th>
         <th class="table_cell">Review ID</th>
         <th class="table_cell">idCustomer</th>
         <th class="table_cell">idBook</th>
@@ -13,10 +16,10 @@
         <th class="table_cell">postBody</th>
         <th class="table_cell">stars</th>
     </tr>
-    <input type="button" class="new" onclick="" value="New">
     <tbody>
     {% for item in reviews[0] %}
     <tr>
+        <td class="table_cell"></td>
         <td class="table_cell">{{item['idReview']}}</td>
         <td class="table_cell">{{item['idCustomer']}}</td>
         <td class="table_cell" >{{item['idBook']}}</td>
@@ -24,14 +27,14 @@
         <td class="table_cell">{{item['postBody']}}</td>
         <td class="table_cell">{{item['stars']}}</td>
         <td class="table_cell">
-            <input type="button" class="edit" onclick="" value="Edit">
-            <input type="button" class="delete" onclick="" value="Delete">
+        <input type="button" class="edit" onclick="updateOrder()" value="Edit">
+        <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
         </td>
     </tr>
     {% endfor %}
 </table>
-<div class="create">
-    <form id="addReview" method="post">
+<div id = 'create' style="display:none;">
+    <form id="addReview" method="post" >
         <legend>
         <h2>Add a Review</h2>
         </legend>
@@ -80,19 +83,101 @@
        <textarea rows="4" cols="50" name="comment" form="usrform">Post your comment here!</textarea>
         <br>
         <label>Stars </label>
-        <select id="orderType">
-            <option value="{{ request.form['orderType'] }}"> 1 </option>
-            <option value="{{ request.form['orderType'] }}"> 2 </option>
-            <option value="{{ request.form['orderType'] }}"> 3 </option>
-            <option value="{{ request.form['orderType'] }}"> 4 </option>
-            <option value="{{ request.form['orderType'] }}"> 5 </option>
+        <select id="stars">
+            <option value="{{ request.form['stars'] }}"> 1 </option>
+            <option value="{{ request.form['stars'] }}"> 2 </option>
+            <option value="{{ request.form['stars'] }}"> 3 </option>
+            <option value="{{ request.form['stars'] }}"> 4 </option>
+            <option value="{{ request.form['stars'] }}"> 5 </option>
         </select>
         <br>
 
-
-
         <input type="button" class="submit" onclick="" value="Submit">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
 
     </form>
 </div>
+
+<div id="update" style="display: none;">
+    <form id="modifyOrder" method="post">
+        <legend>
+            <h2>Modify a Review</h2>
+        </legend>
+        <label>Review ID: 1</label>
+
+        <br> 
+
+        <label>First Name: Keith </label>
+        
+        <br> 
+
+        <labe>Last Name: Hazlett</label>
+        
+        <br> 
+
+        <label>Title:</label>
+
+        <select id="bookTitle">
+            {% for item in reviews[2] %}
+            <option value="{{ request.form['title'] }}"> {{item['title']}}</option>
+            {% endfor %}
+        </select>
+
+        <br>
+
+        <label> reviewContents: </label>
+
+        <br>
+
+        <textarea rows="4" cols="50" name="comment" form="usrform">Post your comment here!</textarea>
+        
+        <br>
+        
+        <label>Stars </label>
+        <select id="stars">
+            <option value="{{ request.form['stars'] }}"> 1 </option>
+            <option value="{{ request.form['stars'] }}"> 2 </option>
+            <option value="{{ request.form['stars'] }}"> 3 </option>
+            <option value="{{ request.form['stars'] }}"> 4 </option>
+            <option value="{{ request.form['stars'] }}"> 5 </option>
+        
+        </select>
+        
+        <br>
+        
+        <input type="button" class="update" onclick="" value="Update">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+    </form>
+
+</div>
+
+
+<div id="delete" style="display: none;">
+    <form id="modifyOrder" method="post">
+        <legend>
+            <h2>Delete a Order</h2>
+        </legend>
+        {# this is a sample, need to adjust for queries at a later date #}
+        {# TODO #}
+        <p> Are you sure you want to delete the following review?</p>
+        <label>Review ID: 1 </label>
+        <br>
+        <label>First Name: Gene</label>
+        <br>
+        <labe>Last Name: Fram</label>
+        <br>
+        <label>Title: Moonwalking with Einstein</label>
+        <br>
+        <label>
+        <label>reviewContents: The best book I've read my entire life.</label>
+        <br>
+        <label>Stars: 4</label>
+        <br>
+        <input type="button" class="submit" onclick="" value="Submit">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+    </form>
+
+</div>
+
+<input type="button" id="all" onclick="showAll()" value="Show All">
 {% endblock %}
