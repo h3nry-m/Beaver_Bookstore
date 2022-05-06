@@ -49,10 +49,10 @@ CREATE TABLE Orders (
     idOrder INT NOT NULL UNIQUE AUTO_INCREMENT,
     idCustomer INT,
     orderDate DATE,
-    orderType VARCHAR(8) NOT NULL CHECK (orderType IN ('sale', 'purchase'))
+    orderType VARCHAR(8) NOT NULL CHECK (orderType IN ('sale', 'purchase')),
     orderTotal DECIMAL(8,2),
     PRIMARY KEY (idOrder),
-    FOREIGN KEY (idCustomer) REFERENCES Customers (idCustomer)
+    FOREIGN KEY (idCustomer) REFERENCES Customers (idCustomer) ON DELETE CASCADE
 );
 
 -- -----------------------------------------------------
@@ -64,8 +64,8 @@ CREATE TABLE OrderDetails (
     idBook INT,
     orderQty INT,
     PRIMARY KEY (orderDetailsID),
-    FOREIGN KEY (idOrder) REFERENCES Orders (idOrder),
-    FOREIGN KEY (idBook) REFERENCES Books (idBook)
+    FOREIGN KEY (idOrder) REFERENCES Orders (idOrder) ON DELETE CASCADE,
+    FOREIGN KEY (idBook) REFERENCES Books (idBook) ON DELETE CASCADE
 );
 
 -- -----------------------------------------------------
@@ -80,8 +80,8 @@ Create TABLE Reviews (
     postBody TEXT(1000),
     stars TINYINT(5) NOT NULL,
     PRIMARY KEY (idReview),
-    FOREIGN KEY (idCustomer) REFERENCES Customers (idCustomer),
-    FOREIGN KEY (idBook) REFERENCES Books (idBook)
+    FOREIGN KEY (idCustomer) REFERENCES Customers (idCustomer) ON DELETE CASCADE,
+    FOREIGN KEY (idBook) REFERENCES Books (idBook) ON DELETE CASCADE
 );
 
 
@@ -97,7 +97,7 @@ VALUE
 
 INSERT INTO Books (title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice)
 VALUE
-('Euphoria', 'Lily','King',"978-0-80-212255-1", 'Atlantic Monthly Press', 2014, 3, 11.70, 4, 5.31 ),
+('Euphoria', 'Lily','King','978-0-80-212255-1', 'Atlantic Monthly Press', 2014, 3, 11.70, 4, 5.31 ),
 ('Moonwalking with Einstein', 'Joshua', 'Foer', '978-1-59-420229-2','The Penguin Press', 2011, 5, 9.79, 7, 5.90),
 ('Scarlet', 'Marissa', 'Meyer','978-1-25-000721-6', 'Square Fish', 2013, 2, 9.89, 6, 4.84),
 ('The Thousand Autumns of Jacob de Zoet', 'David', 'Mitchell', '978-0-34-092157-9', 'Random House', 2010, 5, 12.90, 4, 5.33),
@@ -109,9 +109,9 @@ VALUE
 ((SELECT idCustomer FROM Customers WHERE idCustomer = 2), '2022-03-18', 19.68, 'purchase'),
 ((SELECT idCustomer FROM Customers WHERE idCustomer = 5), '2022-01-02', 22.86, 'purchase'),
 ((SELECT idCustomer FROM Customers WHERE idCustomer = 3), '2022-02-16', 11.70, 'purchase'),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 4), '2022-04-20', 5.90, 'purchase'),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 2), '2022-04-20', 10.62, 'purchase'),
-((SELECT idCustomer FROM Customers WHERE idCustomer = 1), '2022-04-25', 4.84, 'purchase');
+((SELECT idCustomer FROM Customers WHERE idCustomer = 4), '2022-04-20', 5.90, 'sale'),
+((SELECT idCustomer FROM Customers WHERE idCustomer = 2), '2022-04-20', 10.62, 'sale'),
+((SELECT idCustomer FROM Customers WHERE idCustomer = 1), '2022-04-25', 4.84, 'sale');
 
 
 INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars)
