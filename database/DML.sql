@@ -13,10 +13,6 @@ DELETE FROM Books WHERE idBook = :book_ID_selected_from_book_table;
 UPDATE Books SET title = :titleInput, firstName = :firstNameInput, lastName = :lastNameInput, isbn = :isbnInput, publisher = :publisherInput, publicationYear = :publicationYearInput, newStock = :newStockInput, newPrice = :newPriceInput, usedStock = :usedStockInput, usedPrice = :usedPriceInput
 WHERE id= :book_ID_from_the_update_form;
 
-
-
-
-
 -- Customers
 -- get all customer info for the Customers table 
 SELECT firstName, lastName, email, phoneNumber, addressStreet, addresssCity, addressState, addressZip FROM Customers; 
@@ -79,32 +75,26 @@ SET idOrder = :idOrderInput,
     idBook = :idBookInput,
     orderQty = :orderQty,
 WHERE orderDetailsID = :orderDetailsID_selected_from_the_update_form;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 -- Reviews
 -- get all review info for the Reviews table 
-SELECT idCustomer, idBook, postTitle, postBody, stars FROM Reviews;
+SELECT idCustomer, idBook, postTitle, postBody, stars 
+FROM Reviews;
 
 -- add a new review into the Reviews table
-INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars) VALUES (:idCustomer_from_review_table, :idBook_from_review_table, :postTitleInput, :postBodyInput, :starsInput);
-
+INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars) 
+VALUES (:idCustomer_from_review_table, :idBook_from_review_table, :postTitleInput, :postBodyInput, :starsInput);
+-- TODO
 -- delete a review (not sure if we have to dis-associate here because technically the review ID will also hold the idBook + idCustomer and there's a CASCADE on delete)
-DELETE FROM Customers WHERE idReview = :ID_review_selected_from_review_table;
+DELETE 
+FROM Rewiews 
+WHERE idReview = :ID_review_selected_from_review_table;
 
 -- update a review
-UPDATE Reviews SET idCustomer = :idCustomer_from_review_table, idBook = :idBook_from_review_table, postTitle = :postTitleInput, postBody = :postBodyInput, stars = :starsInput
+UPDATE Reviews 
+SET idCustomer = :idCustomer_from_review_table, 
+    idBook = :idBook_from_review_table, 
+    postTitle = :postTitleInput, 
+    postBody = :postBodyInput, 
+    stars = :starsInput
 WHERE id= :ID_review_from_the_update_form;
+
