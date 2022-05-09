@@ -2,3 +2,6 @@ __pycache__
 lib
 lib64
 venv
+/venv_elo
+/.vscode
+.env

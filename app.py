@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import database.db_connector as db
 import os
 
 
@@ -8,21 +9,9 @@ orders_from_app_py = []
 # Configuration
 app = Flask(__name__)
 
-#database connection
-# Template:
-# app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
-# app.config["MYSQL_USER"] = "cs340_OSUusername"
-# app.config["MYSQL_PASSWORD"] = "XXXX" | last 4 digits of OSU id
-# app.config["MYSQL_DB"] = "cs340_OSUsername"
-# app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+# #database connection
 
-# database connection info
-app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
-app.config["MYSQL_USER"] = "cs340_lopezet"
-app.config["MYSQL_PASSWORD"] = "9224" 
-app.config["MYSQL_DB"] = "cs340_lopezet"
-app.config["MYSQL_CURSORCLASS"] = "DictCursor"
-# Routes
+# # Routes
 
 
 @app.route('/books')
@@ -250,7 +239,7 @@ def root():
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9114))
+    port = int(os.environ.get('PORT', 9111)) #9114
     #                                 ^^^^
     #              You can replace this number with any valid port
 
