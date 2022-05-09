@@ -8,6 +8,20 @@ orders_from_app_py = []
 # Configuration
 app = Flask(__name__)
 
+#database connection
+# Template:
+# app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
+# app.config["MYSQL_USER"] = "cs340_OSUusername"
+# app.config["MYSQL_PASSWORD"] = "XXXX" | last 4 digits of OSU id
+# app.config["MYSQL_DB"] = "cs340_OSUsername"
+# app.config["MYSQL_CURSORCLASS"] = "DictCursor"
+
+# database connection info
+app.config["MYSQL_HOST"] = "classmysql.engr.oregonstate.edu"
+app.config["MYSQL_USER"] = "cs340_lopezet"
+app.config["MYSQL_PASSWORD"] = "9224" 
+app.config["MYSQL_DB"] = "cs340_lopezet"
+app.config["MYSQL_CURSORCLASS"] = "DictCursor"
 # Routes
 
 
@@ -228,9 +242,6 @@ def CRUD_order_details():
     ]
     return render_template("order_details.j2", orderDetails=orders_details_from_app_py)
 
-@app.route('/button')
-def button():
-    return
 
 @app.route('/')
 def root():
