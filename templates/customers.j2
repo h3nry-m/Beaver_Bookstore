@@ -3,9 +3,13 @@
     <h1>{% block title %} Customers {% endblock %}</h1>
 {% endblock %}
 {% block content %}
-<table class="table">
-    <thead class="table_header>
+<table id="browse" class="table">
+    <thead>
     <tr>
+        <th class="table_cell">    
+            <input type="button" class="new" onclick="newCustomer()" value="New">
+        </th>
+        <th class="table_cell">Customer ID</th>
         <th class="table_cell">Name</th>
         <th class="table_cell">Email</th>
         <th class="table_cell">Phone number</th>
@@ -17,6 +21,8 @@
     <tbody>
     {% for item in customers %}
     <tr>
+        <td class="table_cell"></td>
+        <td class="table_cell">{{item['idCustomer']}}</td>
         <td class="table_cell">{{item['firstName']}} {{item['lastName']}}</td>
         <td class="table_cell">{{item['email']}}</td>
         <td class="table_cell">{{item['phoneNumber']}}</td>
@@ -25,15 +31,19 @@
         <td class="table_cell">{{item['addressState']}}</td>
         <td class="table_cell">{{item['addressZip']}}</td>
         <td class="table_cell">
-            <input type="button" class="edit" onclick="" value="Edit">
-            <input type="button" class="delete" onclick="" value="Delete">
+            <input type="button" class="edit" onclick="updateCustomer()" value="Edit">
+            <input type="button" class="delete" onclick="deleteCustomer()" value="Delete">
         </td>
     </tr>
     {% endfor %}
 </table>
-<div class="create">
-    <h2>Add a customer</h2>
-    <form method="post">
+
+<div id="create" style="display: none;"">
+
+    <form id="addCustomer" method="post">
+        <legend>
+            <h2>Add a customer</h2>
+        </legend>
         <label for="firstName">First Name</label>
         <input type="text" name="name"
                placeholder="First name"
@@ -77,5 +87,11 @@
         <br>
         <button type="submit">Submit</button>
     </form>
+
+
 </div>
+<br>
+<input type="button" id="all" onclick="showAll()" value="Show All">
+
+
 {% endblock %}

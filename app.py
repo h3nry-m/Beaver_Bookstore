@@ -14,6 +14,7 @@ app = Flask(__name__)
 @app.route('/books')
 def CRUD_books():
     books_from_app_py = [{
+        "idBook": 1,
         "title": "Euphoria",
         "firstName": "Lily",
         "lastName": "King",
@@ -25,6 +26,7 @@ def CRUD_books():
         "usedStock": 4,
         "usedPrice": 5.31},
         {
+        "idBook": 2,
         "title": "Moonwalking with Einstein",
         "firstName": "Joshua",
         "lastName": "Foer",
@@ -36,6 +38,7 @@ def CRUD_books():
         "usedStock": 7,
         "usedPrice": 5.90},
         {
+        "idBook": 3,
         "title": "Scarlet",
         "firstName": "Marissa",
         "lastName": "Meyer",
@@ -164,6 +167,7 @@ def CRUD_orders():
 @app.route('/customers')
 def CRUD_customers():
     customers_from_app_py = [{
+        "idCustomer": 1,
         "firstName": "Cara",
         "lastName": "Jacob",
         "email": "cara.jacob9@hotmail.com",
@@ -174,6 +178,7 @@ def CRUD_customers():
         "addressZip": 33301
     },
         {
+        "idCustomer": 2,
         "firstName": "Gene",
         "lastName": "Fram",
         "email": "gene_fram7@hotmail.com",
@@ -184,6 +189,7 @@ def CRUD_customers():
         "addressZip": 55402
     },
         {
+        "idCustomer": 3,
         "firstName": "Keith",
         "lastName": "Hazlett",
         "email": "hazlett_keith3@hotmail.com",
@@ -233,7 +239,7 @@ def root():
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9113))
+    port = int(os.environ.get('PORT', 9114))
     #                                 ^^^^
     #              You can replace this number with any valid port
 
