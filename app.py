@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, json
 import database.db_connector as db
 import os
 
@@ -10,6 +10,8 @@ orders_from_app_py = []
 app = Flask(__name__)
 
 # #database connection
+
+db_connection = db.connect_to_database()
 
 # # Routes
 
@@ -116,57 +118,56 @@ def CRUD_reviews():
 
 @app.route('/orders')
 def CRUD_orders():
-
-
-    orders_from_app_py = [
-        [
-            {
-                "idOrder": 1,
-                "firstName": "Gene",
-                "lastName": "Fram",
-                "orderDate": "2022-03-18",
-                "orderTotal": 19.68,
-                "orderType": "purchase"
-            },
-            {
-                "idOrder": 2,
-                "firstName": "Jared",
-                "lastName": "Collazo",
-                "orderDate": "2022-01-02",
-                "orderTotal": 22.68,
-                "orderType": "purchase"
-            },
-            {
-                "idOrder": 3,
-                "firstName": "Keith",
-                "lastName": "Hazlett",
-                "orderDate": "2022-02-16",
-                "orderTotal": 11.70,
-                "orderType": "purchase"
-            },
-            {
-                "idOrder": 4,
-                "firstName": "Cara",
-                "lastName": "Jacob",
-                "orderDate": "2022-04-20",
-                "orderTotal": 5.90,
-                "orderType": "sale"
-            }
-        ],
-        [
-            {
-                "firstName": "Frank",
-                "lastName": "Owens"
-            },
-            {
-                "firstName": "Ethan",
-                "lastName": "Lopez"
-            }
-        ]
-    ]
-    return render_template("orders.j2", orders=orders_from_app_py)
-
-
+    query = "SELECT idOrder, firstName, lastName, orderDate, orderTotal, orderType FROM Orders INNER JOIN Customers ON Orders.idCustomer = Customers.idCustomer ORDER BY idOrder ASC;"
+    cursor = db.execute_query(db_connection=db_connection, query=query)
+    results = cursor.fetchall()
+    # orders_from_app_py = [
+    #     [
+    #         {
+    #             "idOrder": 1,
+    #             "firstName": "Gene",
+    #             "lastName": "Fram",
+    #             "orderDate": "2022-03-18",
+    #             "orderTotal": 19.68,
+    #             "orderType": "purchase"
+    #         },
+    #         {
+    #             "idOrder": 2,
+    #             "firstName": "Jared",
+    #             "lastName": "Collazo",
+    #             "orderDate": "2022-01-02",
+    #             "orderTotal": 22.68,
+    #             "orderType": "purchase"
+    #         },
+    #         {
+    #             "idOrder": 3,
+    #             "firstName": "Keith",
+    #             "lastName": "Hazlett",
+    #             "orderDate": "2022-02-16",
+    #             "orderTotal": 11.70,
+    #             "orderType": "purchase"
+    #         },
+    #         {
+    #             "idOrder": 4,
+    #             "firstName": "Cara",
+    #             "lastName": "Jacob",
+    #             "orderDate": "2022-04-20",
+    #             "orderTotal": 5.90,
+    #             "orderType": "sale"
+    #         }
+    #     ],
+    #     [
+    #         {
+    #             "firstName": "Frank",
+    #             "lastName": "Owens"
+    #         },
+    #         {
+    #             "firstName": "Ethan",
+    #             "lastName": "Lopez"
+    #         }
+    #     ]
+    # ]
+    return render_template("orders.j2", orders=results)
 @app.route('/customers')
 def CRUD_customers():
     customers_from_app_py = [{

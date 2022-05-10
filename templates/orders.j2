@@ -3,34 +3,36 @@
     <h1>{% block title %} Orders {% endblock %}</h1>
 {% endblock %}
 {% block content %}
+
 <table id="browse" class="table">
     <thead>
+
     <tr>
         <th class="table_cell">    
         <input type="button" class="new" onclick="newOrder()" value="New">
         </th>
-        <th class="table_cell">Order ID</th>
-        <th class="table_cell">First Name</th>
-        <th class="table_cell">Last Name</th>
-        <th class="table_cell">Order Date</th>
-        <th class="table_cell">Order Total</th>
-        <th class="table_cell">Order Type</th>
+
+        {% for key in orders[0].keys() %}
+        <th> {{ key }}</th>
+        {% endfor %}
     </tr>
     <tbody>
-    {% for item in orders[0] %}
+
+    {% for item in orders %}
+
     <tr>
         <td class="table_cell"></td>
-        <td class="table_cell">{{item['idOrder']}}</td>
-        <td class="table_cell" >{{item['firstName']}}</td>
-        <td class="table_cell" >{{item['lastName']}}</td>
-        <td class="table_cell">{{item['orderDate']}}</td>
-        <td class="table_cell">{{item['orderTotal']}}</td>
-        <td class="table_cell">{{item['orderType']}}</td>
+
+        {%for key in item.keys() %}
+        <td> {{item[key]}}</td>
+        {% endfor %}
+
         <td class="table_cell">
         <input type="button" class="edit" onclick="updateOrder()" value="Edit">
         <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
         </td>
     </tr>
+
     {% endfor %}
 </table>
 
