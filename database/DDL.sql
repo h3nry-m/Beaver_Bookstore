@@ -71,8 +71,7 @@ CREATE TABLE OrderDetails (
 -- -----------------------------------------------------
 -- Intersecting Table Reviews
 -- -----------------------------------------------------
---TODO
---ADD SAMPLE DATA THAT INCORPORATES NULL TITLE/POST
+
 Create TABLE Reviews (
     idReview INT NOT NULL UNIQUE AUTO_INCREMENT,
     idCustomer INT,
