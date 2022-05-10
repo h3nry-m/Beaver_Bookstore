@@ -5,3 +5,4 @@ venv
 /venv_elo
 /.vscode
 .env
+bin
