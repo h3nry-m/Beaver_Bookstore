@@ -123,7 +123,12 @@ def CRUD_orders():
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
 
-        return render_template("orders.j2", orders=results)
+        query2 = "SELECT idCustomer, firstName, lastName FROM Customers"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        customer_data = cursor.fetchall()
+        return render_template("orders.j2", orders=results, customers=customer_data)
+    # if request.method == "POST":
+    #     if request.form.get()
         
 @app.route('/customers')
 def CRUD_customers():
@@ -197,7 +202,7 @@ def root():
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9114)) #9114
+    port = int(os.environ.get('PORT', 9010)) #9114
     #                                 ^^^^
     #              You can replace this number with any valid port
 

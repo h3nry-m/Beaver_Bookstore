@@ -42,18 +42,14 @@
         <legend>
         <h2>Add a Order</h2>
         </legend>
-        <label>First Name:</label>
-        <select id="fname">
-            {% for item in orders[1] %}
-           <option value="{{ request.form['firstName'] }}"> {{item['firstName']}}</option>
+        <label>Full Name:</label>
+        
+        <select id="fname" name="fullName">
+            {% for item in customers %}
+           <option value= "{{idCustomer}}"> {{item['firstName']}} {{item['lastName']}}</option>
             {% endfor %}
         </select>
-        <labe>Last Name:</label>
-        <select id="lname">
-            {% for item in orders[1] %}
-            <option value="{{ request.form['lastName'] }}"> {{item['lastName']}}</option>
-            {% endfor %}
-        </select>
+
         <label>Date:</label>
         <input value="{{ request.form['date'] }}" type="date">
         <label for="orderTotal">Order Total</label>
@@ -67,7 +63,6 @@
         </select>
         <input type="button" class="submit" onclick="" value="Submit">
         <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
-
     </form>
 </div>
 
