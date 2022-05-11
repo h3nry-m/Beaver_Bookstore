@@ -1,6 +1,6 @@
 -- Books
 -- get all book info for the Books table 
-SELECT title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice FROM Books;
+SELECT * FROM Books;
 
 -- add a new book into the Books table
 INSERT INTO Books (title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice) 
@@ -15,7 +15,7 @@ WHERE id= :book_ID_from_the_update_form;
 
 -- Customers
 -- get all customer info for the Customers table 
-SELECT firstName, lastName, email, phoneNumber, addressStreet, addresssCity, addressState, addressZip FROM Customers; 
+SELECT * FROM Customers; 
 
 -- add a new customer into the Customers table
 INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addresssCity, addressState, addressZip) 
