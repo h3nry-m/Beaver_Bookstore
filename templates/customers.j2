@@ -10,7 +10,8 @@
             <input type="button" class="new" onclick="newCustomer()" value="New">
         </th>
         <th class="table_cell">Customer ID</th>
-        <th class="table_cell">Name</th>
+        <th class="table_cell">First Name</th>
+        <th class="table_cell">Last Name</th>
         <th class="table_cell">Email</th>
         <th class="table_cell">Phone number</th>
         <th class="table_cell">Street Address</th>
@@ -19,20 +20,15 @@
         <th class="table_cell">Zip Code</th>
     </tr>
     <tbody>
-    {% for item in customers %}
-    <tr>
-        <td class="table_cell"></td>
-        <td class="table_cell">{{item['idCustomer']}}</td>
-        <td class="table_cell">{{item['firstName']}} {{item['lastName']}}</td>
-        <td class="table_cell">{{item['email']}}</td>
-        <td class="table_cell">{{item['phoneNumber']}}</td>
-        <td class="table_cell">{{item['addressStreet']}}</td>
-        <td class="table_cell">{{item['addressCity']}}</td>
-        <td class="table_cell">{{item['addressState']}}</td>
-        <td class="table_cell">{{item['addressZip']}}</td>
+       {% for item in customers %}
+       <tr>
         <td class="table_cell">
-            <input type="button" class="edit" onclick="updateCustomer()" value="Edit">
-            <input type="button" class="delete" onclick="deleteCustomer()" value="Delete">
+       {% for key in item.keys() %}
+              <td class="table_cell"> {{item[key]}} </td>
+       {% endfor %}
+       
+            <td class="table_cell"><input type="button" class="edit" onclick="{{item.id}}" value="Edit"></td>
+            <td class="table_cell"><input type="button" class="delete" onclick="{{item.id}}" value="Delete"></td>
         </td>
     </tr>
     {% endfor %}
@@ -40,7 +36,7 @@
 
 <div id="create" style="display: none;"">
 
-    <form id="addCustomer" method="post">
+    <form id="addCustomer" method="POST">
         <legend>
             <h2>Add a customer</h2>
         </legend>
@@ -87,9 +83,82 @@
         <br>
         <button type="submit">Submit</button>
     </form>
+</div>
 
+<div id="update" style="display: none;"">
+
+    <form id="updateCustomer" method="POST">
+        <legend>
+            <h2>Update a Customer</h2>
+        </legend>
+
+        <label for="firstName">First Name</label>
+        <input type="text" name="name"
+               placeholder="First name"
+               value="{{ request.form['firstName'] }}"></input>
+        <br>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName"
+               placeholder="Last name"
+               value="{{ request.form['lastName'] }}"></input>
+        <br>
+
+        <label for="email">Email</label>
+        <input type="email" name="email"
+               placeholder="Email"
+               value="{{ request.form['email'] }}"></input>
+        <br>
+
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" name="phoneNumber"
+               placeholder="(xxx)-xxx-xxx"
+               value="{{ request.form['phoneNumber'] }}"></input>
+        <br>
+
+        <label for="addressStreet">Street</label>
+        <input type="text" name="addressStreet"
+               placeholder="addressStreet"
+               value="{{ request.form['addressStreet'] }}"></input>
+        <br>
+
+        <label for="addressState">State</label>
+        <input type="text" name="addressState"
+               placeholder="addressState"
+               value="{{ request.form['addressState'] }}"></input>
+        <br>
+
+        <label for="addressZip">Zip Code</label>
+        <input type="number" name="addressZip"
+               placeholder="number"
+               value="{{ request.form['addressZip'] }}"></input>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<div id="delete" style="display: none;">
+    <form id="DeleteCustomer" method="POST">
+        <legend>
+            <h2>Delete a Customer</h2>
+        </legend>
+
+        <p> Are you sure you want to delete this book?</p>
+        <label>Customer ID: 1 </label>
+        <br>
+        <label>First Name: Cara</label>
+        <br>
+        <labe>Last Name: Jacob</label>
+        <br>
+        <label>Email: cara.jacob9@hotmail.com</label>
+        <br>
+        <label>
+        <input type="button" class="submit" onclick="" value="Submit">
+        <input type="button" id="cancel" onclick="" value="Cancel">
+    </form>
 
 </div>
+
 <br>
 <input type="button" id="all" onclick="showAll()" value="Show All">
 

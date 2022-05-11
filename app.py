@@ -16,48 +16,52 @@ db_connection = db.connect_to_database()
 # # Routes
 
 
-@app.route('/books')
+@app.route('/books', methods=["GET", "POST"])
 def CRUD_books():
-    books_from_app_py = [{
-        "idBook": 1,
-        "title": "Euphoria",
-        "firstName": "Lily",
-        "lastName": "King",
-        "isbn": "978-0-80-212255-1",
-        "publisher": "Atlantic Monthly Press",
-        "publicationYear": 2014,
-        "newStock": 3,
-        "newPrice": 11.70,
-        "usedStock": 4,
-        "usedPrice": 5.31},
-        {
-        "idBook": 2,
-        "title": "Moonwalking with Einstein",
-        "firstName": "Joshua",
-        "lastName": "Foer",
-        "isbn": "978-1-59-420229-2",
-        "publisher": "The Penguin Press",
-        "publicationYear": 2011,
-        "newStock": 5,
-        "newPrice": 9.79,
-        "usedStock": 7,
-        "usedPrice": 5.90},
-        {
-        "idBook": 3,
-        "title": "Scarlet",
-        "firstName": "Marissa",
-        "lastName": "Meyer",
-        "isbn": "978-1-25-000721-6",
-        "publisher": "Square Fish",
-        "publicationYear": 2013,
-        "newStock": 2,
-        "newPrice": 9.89,
-        "usedStock": 6,
-        "usedPrice": 4.84
-    }]
-    return render_template("books.j2", books=books_from_app_py)
+    if request.method == "GET":
+        query = "SELECT * FROM Books;"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        all_books = cursor.fetchall()
+        return render_template("books.j2", books=all_books)
+    
+    # does not currently work
+    if request.method == "POST":
+        if request.form.get("Add_Book"):
+            title = request.form['title']
+            firstName = request.form['firstName']
+            lastName = request.form['lastName']
+            isbn = request.form['isbn']
+            publisher = request.form['publisher']
+            publicationYear = request.form['publicationYear']
+            newStock = request.form['publicationYear']
+            newPrice = request.form['newPrice']
+            usedStock = request.form['usedStock']
+            usedPrice = request.form['usedPrice']
+            query = "INSERT INTO Books (title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cursor = mysql.connection.cursor()
+            cursor.execute(query, (title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice))
+            mysql.connection.commit()
+            print('title', title)
+            print('firstname', firstName)
+        return redirect("/books")
 
+# does not currently work. not sure yet if want to do edit in a separate page or use a function
+@app.route("/edit_book/<int:id>", methods = ["POST", "GET"])
+def edit_book(id):
+    if request.method == "GET":
+        # to grab the current info of the book
+        query = ""
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
 
+        # to grab the publisher from the dropdown menu
+        query2 = ""
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        publisher_data = cur.fetchall()
+
+        return render_template("", data = data, publisher_data = publisher_data)
 @app.route('/reviews')
 def CRUD_reviews():
     reviews_from_app_py = [
@@ -132,40 +136,44 @@ def CRUD_orders():
         
 @app.route('/customers')
 def CRUD_customers():
-    customers_from_app_py = [{
-        "idCustomer": 1,
-        "firstName": "Cara",
-        "lastName": "Jacob",
-        "email": "cara.jacob9@hotmail.com",
-        "phoneNumber": "954-616-7898",
-        "addressStreet": "667 Kenwood Place",
-        "addressCity": "Fort Lauderdale",
-        "addressState": "Florida",
-        "addressZip": 33301
-    },
-        {
-        "idCustomer": 2,
-        "firstName": "Gene",
-        "lastName": "Fram",
-        "email": "gene_fram7@hotmail.com",
-        "phoneNumber": "612-775-0456",
-        "addressStreet": "2128 Jewell Road",
-        "addressCity": "Minneapolis",
-        "addressState": "Minnesota",
-        "addressZip": 55402
-    },
-        {
-        "idCustomer": 3,
-        "firstName": "Keith",
-        "lastName": "Hazlett",
-        "email": "hazlett_keith3@hotmail.com",
-        "phoneNumber": "505-248-2439",
-        "addressStreet": "4455 Byrd Lane",
-        "addressCity": "Albuquerque",
-        "addressState": "New Mexico",
-        "addressZip": 87102
-    }]
-    return render_template("customers.j2", customers=customers_from_app_py)
+    # customers_from_app_py = [{
+    #     "idCustomer": 1,
+    #     "firstName": "Cara",
+    #     "lastName": "Jacob",
+    #     "email": "cara.jacob9@hotmail.com",
+    #     "phoneNumber": "954-616-7898",
+    #     "addressStreet": "667 Kenwood Place",
+    #     "addressCity": "Fort Lauderdale",
+    #     "addressState": "Florida",
+    #     "addressZip": 33301
+    # },
+    #     {
+    #     "idCustomer": 2,
+    #     "firstName": "Gene",
+    #     "lastName": "Fram",
+    #     "email": "gene_fram7@hotmail.com",
+    #     "phoneNumber": "612-775-0456",
+    #     "addressStreet": "2128 Jewell Road",
+    #     "addressCity": "Minneapolis",
+    #     "addressState": "Minnesota",
+    #     "addressZip": 55402
+    # },
+    #     {
+    #     "idCustomer": 3,
+    #     "firstName": "Keith",
+    #     "lastName": "Hazlett",
+    #     "email": "hazlett_keith3@hotmail.com",
+    #     "phoneNumber": "505-248-2439",
+    #     "addressStreet": "4455 Byrd Lane",
+    #     "addressCity": "Albuquerque",
+    #     "addressState": "New Mexico",
+    #     "addressZip": 87102
+    # }]
+    if request.method == "GET":
+        query = "SELECT * FROM Customers;"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        all_customers = cursor.fetchall()
+        return render_template("customers.j2", customers=all_customers)
 
 
 @app.route('/order_details')

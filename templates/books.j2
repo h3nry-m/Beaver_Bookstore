@@ -11,7 +11,8 @@
         </th>
         <th class="table_cell">Book ID</th>
         <th class="table_cell">Title</th>
-        <th class="table_cell">Name</th>
+        <th class="table_cell">First Name</th>
+        <th class="table_cell">Last Name</th>
         <th class="table_cell">ISBN</th>
         <th class="table_cell">Publisher</th>
         <th class="table_cell">Year</th>
@@ -21,28 +22,21 @@
         <th class="table_cell">Used Price</th>
     </tr>
     <tbody>
-    {% for item in books %}
-    <tr>
-        <td class="table_cell"></td>
-        <td class="table_cell">{{item['idBook']}}</td>
-        <td class="table_cell">{{item['title']}}</td>
-        <td class="table_cell">{{item['firstName']}} {{item['lastName']}}</td>
-        <td class="table_cell">{{item['isbn']}}</td>
-        <td class="table_cell">{{item['publisher']}}</td>
-        <td class="table_cell">{{item['publicationYear']}}</td>
-        <td class="table_cell">{{item['newStock']}}</td>
-        <td class="table_cell">${{item['newPrice']}}</td>
-        <td class="table_cell">{{item['usedStock']}}</td>
-        <td class="table_cell">${{item['usedPrice']}}</td>
+       {% for item in books %}
+       <tr>
         <td class="table_cell">
-            <input type="button" class="edit" onclick="" value="Edit">
-            <input type="button" class="delete" onclick="" value="Delete">
+       {% for key in item.keys() %}
+              <td class="table_cell"> {{item[key]}} </td>
+       {% endfor %}
+       
+            <td class="table_cell"><input type="button" class="edit" onclick="{{item.id}}" value="Edit"></td>
+            <td class="table_cell"><input type="button" class="delete" onclick="{{item.id}}" value="Delete"></td>
         </td>
     </tr>
     {% endfor %}
 </table>
 <div id="create" style="display: none;"">
-    <form id="addBook" method="post">
+    <form id="addBook" method="POST">
        <legend>
          <h2>Add a book</h2>
        </legend>
@@ -105,10 +99,100 @@
                value="{{ request.form['usedPrice'] }}"></input>
         <br>
 
-        <button type="submit">Submit</button>
+        <input type="submit" value="Add_Book" name="Add_Book" class="btn">
     </form>
 </div>
-<br>
+
+<div id="update" style="display: none;">
+    <form id="updateBook" method="POST">
+        <legend>
+            <h2>Edit a Book</h2>
+        </legend>
+
+       <label for="title">Title</label>
+        <input type="text" name="title"
+               placeholder="Title"
+               value="{{ request.form['title'] }}"></input>
+        <br>
+
+        <label for="firstName">First Name</label>
+        <input type="text" name="name"
+               placeholder="First name"
+               value="{{ request.form['firstName'] }}"></input>
+        <br>
+
+        <label for="name">Last Name</label>
+        <input type="text" name="lastName"
+               placeholder="Last name"
+               value="{{ request.form['lastName'] }}"></input>
+        <br>
+
+        <label for="isbn">ISBN</label>
+        <input type="text" name="isbn"
+               placeholder="xxx-x-xx-xxxxxx-x"
+               value="{{ request.form['isbn'] }}"></input>
+        <br>
+
+        <label for="publisher">Publisher</label>
+        <input type="text" name="publisher"
+               placeholder=""
+               value="{{ request.form['publisher'] }}"></input>
+        <br>
+
+        <label for="publicationYear">publicationYear</label>
+        <input type="number" name="publicationYear"
+               placeholder="publicationYear"
+               value="{{ request.form['publicationYear'] }}"></input>
+        <br>
+
+        <label for="newStock">New Stock</label>
+        <input type="number" name="newStock"
+               placeholder="newStock"
+               value="{{ request.form['newStock'] }}"></input>
+        <br>
+
+        <label for="newPrice">New Price</label>
+        <input type="number" name="New Price"
+               placeholder="newPrice"
+               value="{{ request.form['newPrice'] }}"></input>
+        <br>
+
+        <label for="usedStock">used Stock</label>
+        <input type="number" name="usedStock"
+               placeholder="usedStock"
+               value="{{ request.form['usedStock'] }}"></input>
+        <br>
+        <label for="usedPrice">Used Price</label>
+        <input type="number" name="Used Price"
+               placeholder="usedPrice"
+               value="{{ request.form['usedPrice'] }}"></input>
+        <br>
+        
+        <input type="button" class="update" onclick="" value="Update">
+        <input type="button" id="cancel" onclick="" value="Cancel">
+    </form>
+</div>
+<div id="delete" style="display: none;">
+    <form id="DeleteBook" method="POST">
+        <legend>
+            <h2>Delete a Book</h2>
+        </legend>
+
+        <p> Are you sure you want to delete this book?</p>
+        <label>Book ID: 1 </label>
+        <br>
+        <label>Title: Euphoria</label>
+        <br>
+        <labe>First Name: Lily</label>
+        <br>
+        <label>Last Name: King</label>
+        <br>
+        <label>
+        <input type="button" class="submit" onclick="" value="Submit">
+        <input type="button" id="cancel" onclick="" value="Cancel">
+    </form>
+
+</div>
 <input type="button" id="all" onclick="showAll()" value="Show All">
 
 {% endblock %}
