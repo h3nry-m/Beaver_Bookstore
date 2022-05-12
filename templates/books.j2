@@ -12,7 +12,7 @@
     <thead>
     <tr>
        <th class="table_cell">    
-            <input type="button" class="new" onclick="newCustomer()" value="New">
+            <input type="button" class="new" onclick="newOrder()" value="New">
         </th>
         <th class="table_cell">Book ID</th>
         <th class="table_cell">Title</th>
@@ -34,13 +34,13 @@
               <td class="table_cell"> {{item[key]}} </td>
        {% endfor %}
        
-            <td class="table_cell"><input type="button" class="edit" onclick="{{item.id}}" value="Edit"></td>
-            <td class="table_cell"><input type="button" class="delete" onclick="{{item.id}}" value="Delete"></td>
+            <td class="table_cell"><input type="button" class="edit" onclick="updateOrder()" value="Edit"></td>
+            <td class="table_cell"><input type="button" class="delete" onclick="deleteOrder()" value="Delete"></td>
         </td>
     </tr>
     {% endfor %}
 </table>
-<div id="create" style="display: none;"">
+<div id="create">
     <form id="addBook" method="POST">
        <legend>
          <h2>Add a book</h2>
@@ -108,7 +108,7 @@
     </form>
 </div>
 
-<div id="update" style="display: none;">
+<div id="update">
     <form id="updateBook" method="POST">
         <legend>
             <h2>Edit a Book</h2>
@@ -174,7 +174,7 @@
         <br>
         
         <input type="button" class="update" onclick="" value="Update">
-        <input type="button" id="cancel" onclick="" value="Cancel">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
     </form>
 </div>
 <div id="delete" style="display: none;">
@@ -194,7 +194,7 @@
         <br>
         <label>
         <input type="button" class="submit" onclick="" value="Submit">
-        <input type="button" id="cancel" onclick="" value="Cancel">
+        <input type="button" id="cancel" onclick="CancelOrder()" value="Cancel">
     </form>
 </div>
 <br>

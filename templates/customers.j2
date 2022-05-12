@@ -12,7 +12,7 @@
     <thead>
     <tr>
         <th class="table_cell">    
-            <input type="button" class="new" onclick="newCustomer()" value="New">
+            <input type="button" class="new" onclick="newOrder()" value="New">
         </th>
         <th class="table_cell">Customer ID</th>
         <th class="table_cell">First Name</th>
@@ -32,8 +32,8 @@
               <td class="table_cell"> {{item[key]}} </td>
        {% endfor %}
        
-            <td class="table_cell"><input type="button" class="edit" onclick="{{item.id}}" value="Edit"></td>
-            <td class="table_cell"><input type="button" class="delete" onclick="{{item.id}}" value="Delete"></td>
+            <td class="table_cell"><input type="button" class="edit" onclick="updateOrder()" value="Edit"></td>
+            <td class="table_cell"><input type="button" class="delete" onclick="deleteOrder()" value="Delete"></td>
         </td>
     </tr>
     {% endfor %}
@@ -90,7 +90,7 @@
     </form>
 </div>
 
-<div id="update" style="display: none;"">
+<div id="update">
 
     <form id="updateCustomer" method="POST">
         <legend>
@@ -138,7 +138,8 @@
                placeholder="number"
                value="{{ request.form['addressZip'] }}"></input>
         <br>
-        <button type="submit">Submit</button>
+        <input type="button" class="update" onclick="" value="Update">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
     </form>
 </div>
 
@@ -159,7 +160,7 @@
         <br>
         <label>
         <input type="button" class="submit" onclick="" value="Submit">
-        <input type="button" id="cancel" onclick="" value="Cancel">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
     </form>
 
 </div>
