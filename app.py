@@ -12,7 +12,7 @@ app = Flask(__name__)
 # #database connection
 
 db_connection = db.connect_to_database()
-
+db_connection.ping(True)
 # # Routes
 
 
@@ -214,4 +214,4 @@ if __name__ == "__main__":
     #                                 ^^^^
     #              You can replace this number with any valid port
 
-    app.run(port=port)
+    app.run(host="flip2.engr.oregonstate.edu", port=port, debug = False)
