@@ -49,7 +49,6 @@ CREATE TABLE Orders (
     idOrder INT NOT NULL UNIQUE AUTO_INCREMENT,
     idCustomer INT,
     orderDate DATE NOT NULL,
-    orderType VARCHAR(8) NOT NULL CHECK (orderType IN ('sale', 'purchase')),
     orderTotal DECIMAL(8,2) NOT NULL,
     PRIMARY KEY (idOrder),
     FOREIGN KEY (idCustomer) REFERENCES Customers (idCustomer) ON DELETE CASCADE
@@ -63,6 +62,8 @@ CREATE TABLE OrderDetails (
     idOrder INT,
     idBook INT,
     orderQty INT NOT NULL,
+    orderType VARCHAR(8) NOT NULL CHECK (orderType IN ('sale', 'purchase')),
+    orderPrice DECIMAL(5,2) NOT NULL,
     PRIMARY KEY (orderDetailsID),
     FOREIGN KEY (idOrder) REFERENCES Orders (idOrder) ON DELETE CASCADE,
     FOREIGN KEY (idBook) REFERENCES Books (idBook) ON DELETE CASCADE
@@ -87,11 +88,11 @@ Create TABLE Reviews (
 
 INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addresssCity, addressState, addressZip)
 VALUE
-('Cara', 'Jacob', 'cara.jacob9@hotmail.com', '954-616-7898', '667 Kenwood Place','Fort Lauderdale', 'Florida', '33301'),
-('Gene', 'Fram', 'gene_fram7@hotmail.com', '612-775-0456', '2128 Jewell Road', 'Minneapolis', 'Minnesota', '55402'),
-('Keith', 'Hazlett', 'hazlett_keith3@hotmail.com', '505-248-2439', '4455 Byrd Lane', 'Albuquerque', 'New Mexico', '87102'),
-('Frank', 'Owens', 'frank_owens2@hotmail.com','412-280-7116', '4938 Jacobs Street', 'Pittsburgh','Pennsylvania','15222'),
-('Jared', 'Collazo', 'jard.collaz@hotmail.com', '714-201-2358', '3593 Half and Half Drive', 'Five Points', 'California', '93624');
+('Cara', 'Jacob', 'cara.jacob9@hotmail.com', '954-616-7898', '667 Kenwood Place','Fort Lauderdale', 'FL', '33301'),
+('Gene', 'Fram', 'gene_fram7@hotmail.com', '612-775-0456', '2128 Jewell Road', 'Minneapolis', 'MN', '55402'),
+('Keith', 'Hazlett', 'hazlett_keith3@hotmail.com', '505-248-2439', '4455 Byrd Lane', 'Albuquerque', 'NM', '87102'),
+('Frank', 'Owens', 'frank_owens2@hotmail.com','412-280-7116', '4938 Jacobs Street', 'Pittsburgh','PA','15222'),
+('Jared', 'Collazo', 'jard.collaz@hotmail.com', '714-201-2358', '3593 Half and Half Drive', 'Five Points', 'CA', '93624');
 
 
 
@@ -104,14 +105,14 @@ VALUE
 ('Throne of Glass', 'Sarah', 'Mass', '978-1-40-883233-2', 'Bloomsbury Publishing PLC', 2012, 1, 9.96, 5, 2.19);
 
 
-INSERT INTO Orders (idCustomer, orderDate, orderTotal, orderType) 
+INSERT INTO Orders (idCustomer, orderDate, orderTotal) 
 VALUE
-(2, '2022-03-18', 19.68, 'purchase'),
-(5, '2022-01-02', 22.86, 'purchase'),
-(3, '2022-02-16', 11.70, 'purchase'),
-(4, '2022-04-20', 5.90, 'sale'),
-(2, '2022-04-20', 10.62, 'sale'),
-(1, '2022-04-25', 4.84, 'sale');
+(2, '2022-03-18', 68.93),
+(5, '2022-01-02', 22.86),
+(3, '2022-02-16', 45.70),
+(4, '2022-04-20', 5.90),
+(2, '2022-04-20', 10.62),
+(1, '2022-04-25', 4.84);
 
 
 INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars)
@@ -122,16 +123,16 @@ VALUE
 (1, 2, 'Not good', "Terrible book, do not recommend", 1),
 (1, 1, 'Pretty good', "Good for a quick relaxing read", 4);
 
-INSERT INTO OrderDetails (idOrder, idBook, orderQty)
+INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice)
 VALUE
-(1, 2, 3),
-(1, 3, 4),
-(2, 4, 2),
-(2, 5, 2),
-(3, 1, 2),
-(4, 2, 1),
-(5, 1, 2),
-(6, 3, 1);
+(1, 2, 3, "purchase", 29.37),
+(1, 3, 4, "purchase", 39.56),
+(2, 4, 2, "purchase", 25.80),
+(2, 5, 2, "purchase", 19.92),
+(3, 1, 2, "purchase", 11.70),
+(4, 2, 1, "sale", 5.90),
+(5, 1, 2, "sale", 10.62),
+(6, 3, 1, "sale", 4.84);
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;

@@ -11,14 +11,14 @@ SELECT * FROM Books;
 SELECT * FROM Customers; 
 
 -- Display Orders
-SELECT idOrder, firstName, lastName, orderDate, orderTotal, orderType
+SELECT idOrder, firstName, lastName, orderDate, orderTotal
 FROM Orders
 INNER JOIN Customers ON Orders.idCustomer = Customers.idCustomer
 ORDER BY idOrder ASC;
 
 
 -- Display Order Details
-SELECT orderDetailsID, idOrder, idBook, orderQty
+SELECT orderDetailsID, idOrder, idBook, orderQty, orderType, orderPrice
 FROM OrderDetails;
 
 -- Display Reviews
@@ -43,14 +43,14 @@ INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, a
 VALUES (:firstNameInput, :lastNameInput, :emailInput, :phoneNumberInput, :addressStreetInput, :addressCityInput, :addressStateInput, :addressZipInput);
 
 -- add a new order into the Orders table
-INSERT INTO Orders (idCustomer, orderDate, orderTotal, orderType)
+INSERT INTO Orders (idCustomer, orderDate, orderTotal)
 VALUES
-(:idCustomer,:orderDate, :orderTotal, :orderType);
+(:idCustomer,:orderDate, :orderTotal);
 
 -- add a new order into the Orders table
-INSERT INTO OrderDetails (idOrder, idBook, orderQty)
+INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice)
 VALUES
-(:idOrder,:idBook, :orderTotal, :orderQty);
+(:idOrder,:idBook, :orderTotal, :orderQty, :orderType, :orderPrice);
 
 -- add a new review into the Reviews table
 INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars) 
