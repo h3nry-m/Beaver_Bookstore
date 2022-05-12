@@ -3,37 +3,43 @@
     <h1>{% block title %} Reviews {% endblock %}</h1>
 {% endblock %}
 {% block content %}
-<table id = 'browse'>
+<table id = 'browse' class="table">
     <thead>
-    <tr>
-        <th class="table_cell">    
-            <input type="button" class="new" onclick="newOrder()" value="New">
-        </th>
-        <th class="table_cell">Review ID</th>
-        <th class="table_cell">idCustomer</th>
-        <th class="table_cell">idBook</th>
-        <th class="table_cell">postTitle</th>
-        <th class="table_cell">postBody</th>
-        <th class="table_cell">stars</th>
-    </tr>
+        <tr>
+            <th class="table_cell">    
+                <input type="button" class="new" onclick="newOrder()" value="New">
+            </th>
+            <th class="table_cell">Review ID</th>
+            <th class="table_cell">First Name</th>
+            <th class="table_cell">Last Name</th>
+            <th class="table_cell">Book Title</th>
+            <th class="table_cell">Post Title</th>
+            <th class="table_cell">Body</th>
+            <th class="table_cell">Stars</th>
+        </tr>
+    </thead>
     <tbody>
-    {% for item in reviews[0] %}
-    <tr>
-        <td class="table_cell"></td>
-        <td class="table_cell">{{item['idReview']}}</td>
-        <td class="table_cell">{{item['idCustomer']}}</td>
-        <td class="table_cell" >{{item['idBook']}}</td>
-        <td class="table_cell" >{{item['postTitle']}}</td>
-        <td class="table_cell">{{item['postBody']}}</td>
-        <td class="table_cell">{{item['stars']}}</td>
-        <td class="table_cell">
-        <input type="button" class="edit" onclick="updateOrder()" value="Edit">
-        <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
-        </td>
-    </tr>
-    {% endfor %}
+        {% for item in reviews %}
+
+        <tr>
+            <td class="table_cell"></td>
+
+            {%for key in item.keys() %}
+                <td class="table_cell"> {{item[key]}}</td>
+            {% endfor %}
+
+            <td class="table_cell">
+            <input type="button" class="edit" onclick="updateOrder()" value="Edit">
+            <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
+            </td>
+        </tr>
+        
+        {% endfor %}
+    </tbody>
 </table>
-<div id = 'create' style="display:none;">
+
+
+<div id = 'create'>
     <form id="addReview" method="post" >
         <legend>
         <h2>Add a Review</h2>
@@ -48,35 +54,29 @@
             <option value="{{ request.form['lastName'] }}"> {{item['lastName']}}</option>
             {% endfor %}
         </select> #}
-        <label>First Name:</label>
-        <select id="fname">
-            {% for item in reviews[1] %}
-           <option value="{{ request.form['firstName'] }}"> {{item['firstName']}}</option>
-            {% endfor %}
-        </select>
-
-        <br>
-
-        <label>Last Name:</label>
-        <select id="lname">
-            {% for item in reviews[1] %}
-            <option value="{{ request.form['lastName'] }}"> {{item['lastName']}}</option>
-            {% endfor %}
-        </select>
+        <label>Full Name:</label>
+            
+            <select id="fname" name="fullName">
+                {% for item in customers %}
+            <option value= "{{idCustomer}}"> {{item['firstName']}} {{item['lastName']}}</option>
+                {% endfor %}
+            </select>
 
         <br> 
 
         <label>Title:</label>
 
         <select id="bookTitle">
-            {% for item in reviews[2] %}
+            {% for item in books %}
             <option value="{{ request.form['title'] }}"> {{item['title']}}</option>
             {% endfor %}
         </select>
 
         <br>
-
-       <label> reviewContents: </label>
+        <label> Post Title: </label>
+        <input type="text" placeholder="Title.." >
+        <br> 
+       <label> Body: </label>
 
        <br>
 
@@ -98,7 +98,7 @@
     </form>
 </div>
 
-<div id="update" style="display: none;">
+<div id="update">
     <form id="modifyOrder" method="post">
         <legend>
             <h2>Modify a Review</h2>
@@ -111,14 +111,14 @@
         
         <br> 
 
-        <labe>Last Name: Hazlett</label>
+        <label>Last Name: Hazlett</label>
         
         <br> 
 
         <label>Title:</label>
 
         <select id="bookTitle">
-            {% for item in reviews[2] %}
+            {% for item in books %}
             <option value="{{ request.form['title'] }}"> {{item['title']}}</option>
             {% endfor %}
         </select>
@@ -152,7 +152,7 @@
 </div>
 
 
-<div id="delete" style="display: none;">
+<div id="delete">
     <form id="modifyOrder" method="post">
         <legend>
             <h2>Delete a Order</h2>

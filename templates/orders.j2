@@ -7,93 +7,104 @@
 <table id="browse" class="table">
     <thead>
 
-    <tr>
-        <th class="table_cell">    
-        <input type="button" class="new" onclick="newOrder()" value="New">
-        </th>
+        <tr>
+            <th class="table_cell">    
+            <input type="button" class="new" onclick="newOrder()" value="New">
+            </th>
+            <th class="table_cell">Order ID</th>
+            <th class="table_cell">First Name</th>
+            <th class="table_cell">Last Name</th>
+            <th class="table_cell">Order Date</th>
+            <th class="table_cell">Order Total</th>
+            <th class="table_cell">Order Type</th>
 
-        {% for key in orders[0].keys() %}
-        <th> {{ key }}</th>
-        {% endfor %}
-    </tr>
+        </tr>
+
+    </thead>
+
     <tbody>
-
     {% for item in orders %}
 
-    <tr>
-        <td class="table_cell"></td>
+        <tr>
+            <td class="table_cell"></td>
 
-        {%for key in item.keys() %}
-        <td> {{item[key]}}</td>
+            {%for key in item.keys() %}
+            <td class="table_cell"> {{item[key]}}</td>
+            {% endfor %}
+
+            <td class="table_cell">
+            <input type="button" class="edit" onclick="updateOrder()" value="Edit">
+            <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
+            </td>
+        </tr>
+
         {% endfor %}
-
-        <td class="table_cell">
-        <input type="button" class="edit" onclick="updateOrder()" value="Edit">
-        <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
-        </td>
-    </tr>
-
-    {% endfor %}
+    </tbody>
 </table>
 
-<div id="create" style="display: none;"">
+<div id="create" >
 
     <form id="addOrder" method="post">
-        <legend>
-        <h2>Add a Order</h2>
-        </legend>
-        <label>Full Name:</label>
-        
-        <select id="fname" name="fullName">
-            {% for item in customers %}
-           <option value= "{{idCustomer}}"> {{item['firstName']}} {{item['lastName']}}</option>
-            {% endfor %}
-        </select>
+        <fieldset>
+            <legend>
+                <h2>Add a Order</h2>
+            </legend>
+            <label>Full Name:</label>
+            
+            <select id="fname" name="fullName">
+                {% for item in customers %}
+                <option value= "{{idCustomer}}"> {{item['firstName']}} {{item['lastName']}}</option>
+                {% endfor %}
+            </select>
 
-        <label>Date:</label>
-        <input value="{{ request.form['date'] }}" type="date">
-        <label for="orderTotal">Order Total</label>
-        <input type="number" name="Order Total"
-               placeholder="Order Total"
-               value="{{ request.form['orderTotal'] }}"></input>
-        <label>Order Type: </label>
-        <select id="orderType">
-            <option value="{{ request.form['orderType'] }}"> purchase </option>
-            <option value="{{ request.form['orderType'] }}"> sale </option>
-        </select>
-        <input type="button" class="submit" onclick="" value="Submit">
-        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+            <label>Date:</label>
+            <input value="{{ request.form['date'] }}" type="date">
+            <label for="orderTotal">Order Total</label>
+            <input type="number" name="Order Total"
+                placeholder="Order Total"
+                value="{{ request.form['orderTotal'] }}"></input>
+            <label>Order Type: </label>
+            <select id="orderType">
+                <option value="{{ request.form['orderType'] }}"> purchase </option>
+                <option value="{{ request.form['orderType'] }}"> sale </option>
+            </select>
+            <input type="button" class="submit" onclick="" value="Submit">
+            <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+        </fieldset>
+        
     </form>
 </div>
 
-<div id="update" style="display: none;">
+<div id="update">
     <form id="modifyOrder" methord="post">
-        <legend>
-            <h2>Modify a Order</h2>
-        </legend>
-        <label>orderID: 1 </label>
-        <label>First Name: Gene</label>
-        
-        <labe>Last Name: Fram</label>
-        
-        <label>Date:</label>
-        <input value="{{ request.form['date'] }}" type="date">
-        <label for="orderTotal">Order Total</label>
-        <input type="number" name="Order Total"
-               placeholder="Order Total"
-               value="{{ request.form['orderTotal'] }}"></input>
-        <label>Order Type: </label>
-        <select id="orderType">
-            <option value="{{ request.form['orderType'] }}"> purchase </option>
-            <option value="{{ request.form['orderType'] }}"> sale </option>
-        </select>
-        <input type="button" class="update" onclick="" value="Update">
-        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+        <fieldset>
+            <legend>
+                <h2>Modify a Order</h2>
+            </legend>
+            <label>orderID: 1 </label>
+            <label>First Name: Gene</label>
+            
+            <labe>Last Name: Fram</label>
+            
+            <label>Date:</label>
+            <input value="{{ request.form['date'] }}" type="date">
+            <label for="orderTotal">Order Total</label>
+            <input type="number" name="Order Total"
+                placeholder="Order Total"
+                value="{{ request.form['orderTotal'] }}"></input>
+            <label>Order Type: </label>
+            <select id="orderType">
+                <option value="{{ request.form['orderType'] }}"> purchase </option>
+                <option value="{{ request.form['orderType'] }}"> sale </option>
+            </select>
+            <input type="button" class="update" onclick="" value="Update">
+            <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+        </fieldset
     </form>
 
 </div>
 
-<div id="delete" style="display: none;">
+<div id="delete">
     <form id="modifyOrder" methord="post">
         <legend>
             <h2>Delete a Order</h2>

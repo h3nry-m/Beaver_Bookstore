@@ -62,62 +62,23 @@ def edit_book(id):
         publisher_data = cur.fetchall()
 
         return render_template("", data = data, publisher_data = publisher_data)
+
 @app.route('/reviews')
 def CRUD_reviews():
-    reviews_from_app_py = [
-        [
-            {
-                "idReview": 1,
-                "idCustomer": 3,
-                "idBook": 2,
-                "postTitle": "Great Book",
-                "postBody": "The best book I've read my entire life",
-                "stars": 5
-            },
-            {
-                "idReview": 2,
-                "idCustomer": 2,
-                "idBook": 3,
-                "postTitle": "Mediocre",
-                "postBody": "The book was predictable and not very exciting",
-                "stars": 3
-            },
-            {
-                "idReview": 3,
-                "idCustomer": 4,
-                "idBook": 4,
-                "postTitle": "Not Bad",
-                "postBody": "The character development was not bad but could use work",
-                "stars": 4
-            }
-        ],
-        [
-            {
-                "firstName": "Keith",
-                "lastName": "Hazlett"
-            },
-            {
-                "firstName": "Gene",
-                "lastName": "Fram"
-            },
-            {
-                "firstName": "Frank",
-                "lastName": "Ownens"
-            }
-        ],
-        [
-            {
-                "title": "Moonwalking with Einstein"
-            },
-            {
-                "title": "Scarlet"
-            },
-            {
-                "title": "The Thousand Autumns of Jacob de Zoet"
-            }
-        ]
-    ]
-    return render_template("reviews.j2", reviews=reviews_from_app_py)
+    if request.method == "GET":
+        query = "SELECT idReview, Customers.firstName, Customers.lastName, title, postTitle, postBody, stars FROM Reviews INNER JOIN Customers ON Reviews.idCustomer = Customers.idCustomer INNER JOIN Books ON Reviews.idBook = Books.idBook ORDER BY idReview ASC;"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        results = cursor.fetchall()
+
+        query2 = "SELECT idCustomer, firstName, lastName FROM Customers;"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        customer_data = cursor.fetchall()
+
+        query3 = "SELECT idBook, title FROM Books;"
+        cursor = db.execute_query(db_connection=db_connection, query=query3)
+        book_data = cursor.fetchall()
+
+    return render_template("reviews.j2", reviews=results, customers=customer_data, books=book_data)
 
 
 @app.route('/orders', methods=["POST", "GET"])
@@ -127,9 +88,10 @@ def CRUD_orders():
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
 
-        query2 = "SELECT idCustomer, firstName, lastName FROM Customers"
+        query2 = "SELECT idCustomer, firstName, lastName FROM Customers;"
         cursor = db.execute_query(db_connection=db_connection, query=query2)
         customer_data = cursor.fetchall()
+
         return render_template("orders.j2", orders=results, customers=customer_data)
     # if request.method == "POST":
     #     if request.form.get()
@@ -178,29 +140,19 @@ def CRUD_customers():
 
 @app.route('/order_details')
 def CRUD_order_details():
-    orders_details_from_app_py = [
-        [{
-            "orderDetailsID": 1,
-            "idOrder": 1,
-            "idBook": 2,
-            "orderQty": 1
-        },
-        {
-            "orderDetailsID": 2,
-            "idOrder": 1,
-            "idBook": 3,
-            "orderQty": 1
-        },
-        {
-            "orderDetailsID": 3,
-            "idOrder": 2,
-            "idBook": 4,
-            "orderQty": 1
-        }
-        ]
-    
-    ]
-    return render_template("order_details.j2", orderDetails=orders_details_from_app_py)
+    if request.method == "GET":
+        query = "SELECT orderDetailsID, Orders.idOrder, Books.title, orderQty FROM OrderDetails INNER JOIN Books ON OrderDetails.idBook = Books.idBook INNER JOIN Orders ON OrderDetails.idOrder = Orders.idOrder ORDER BY orderDetailsID ASC;"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        results = cursor.fetchall()
+
+        query2 = "SELECT idOrder FROM Orders;"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        order_data = cursor.fetchall()
+
+        query3 = "SELECT idBook, title FROM Books;"
+        cursor = db.execute_query(db_connection=db_connection, query=query3)
+        book_data = cursor.fetchall()
+    return render_template("order_details.j2", orderDetails=results, orders=order_data, books = book_data)
 
 
 @app.route('/')

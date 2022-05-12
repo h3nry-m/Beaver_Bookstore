@@ -14,7 +14,7 @@ function showSection(section){
 
     }
     else if (section == 'all'){
-        document.getElementById('browse').style.display = 'block';
+        document.getElementById('browse').style.display = 'table';
         document.getElementById('create').style.display ='block';
         document.getElementById('update').style.display = 'block';
         document.getElementById('delete').style.display = 'block';
@@ -22,7 +22,7 @@ function showSection(section){
         document.getElementById('all').style.display = 'none';
     }
     else if (section == 'cancel'){
-        document.getElementById('browse').style.display = 'block';
+        document.getElementById('browse').style.display = 'table';
         document.getElementById('create').style.display ='none';
         document.getElementById('update').style.display = 'none';
         document.getElementById('delete').style.display = 'none';
@@ -35,7 +35,7 @@ function showSection(section){
         document.getElementById('delete').style.display = 'block';
     }
     else if (section =='hide'){
-        document.getElementById('browse').style.display = 'block';
+        document.getElementById('browse').style.display = 'table';
         document.getElementById('create').style.display = 'none';
         document.getElementById('update').style.display = 'none';
         document.getElementById('delete').style.display = 'none';
