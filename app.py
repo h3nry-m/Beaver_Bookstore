@@ -162,8 +162,10 @@ def root():
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get('PORT', 9010)) #9114
+    port = int(os.environ.get('PORT', 9011)) #9114
     #                                 ^^^^
     #              You can replace this number with any valid port
-
+    # app.run(debug=True) dunno your workflow but if you do debug=True then you can just 
+    # refresh the page instead of killing the hosting and restarting the hosting each time 
+    # like I was doing
     app.run(host="flip2.engr.oregonstate.edu", port=port, debug = False)

@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap');
+
+p {
+    font-family: "Nunito Sans";
+}
+
 tr:nth-child(even) {
     background-color: #e5e5e5;
 }
@@ -8,16 +14,21 @@ tr:nth-child(even) {
  
 }
 
+h1 {
+    font-family: "Nunito Sans";
+}
+
 .table_header {
     text-align: left;
     border: 1px solid black;
-
+    font-family: "Nunito Sans";
 }
 
 .table_cell {
     padding: 8px;
     border: 1px solid black;
-
+    font-family: "Nunito Sans";
+    text-align: center;
 }
 
 
@@ -31,4 +42,26 @@ tr:nth-child(even) {
 
 #delete {
     display: none;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    display: block;
+    padding: 12px 12px;
+    text-align: center;
+    font-family: "Nunito Sans";
+}
+
+form {
+    font-family: "Nunito Sans";
 }
