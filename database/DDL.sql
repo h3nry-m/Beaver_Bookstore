@@ -55,18 +55,34 @@ CREATE TABLE Orders (
 );
 
 -- -----------------------------------------------------
+-- Table Coupons
+-- -----------------------------------------------------
+CREATE TABLE Coupons (
+    idCoupon INT UNIQUE AUTO_INCREMENT,
+    expirationDate DATE NOT NULL,
+    discountCode VARCHAR(20) NOT NULL,
+    discountPercent DECIMAL(3,1) NOT NULL,
+    PRIMARY KEY (idCoupon),
+    FOREIGN KEY (idCoupon) REFERENCES OrderDetails (idCoupon) ON DELETE CASCADE
+);
+
+
+-- -----------------------------------------------------
 -- Intersecting Table OrderDetails
 -- -----------------------------------------------------
 CREATE TABLE OrderDetails (
     orderDetailsID INT NOT NULL UNIQUE AUTO_INCREMENT,
     idOrder INT,
     idBook INT,
+    idCoupon INT,
     orderQty INT NOT NULL,
     orderType VARCHAR(8) NOT NULL CHECK (orderType IN ('sale', 'purchase')),
     orderPrice DECIMAL(5,2) NOT NULL,
+    discountedPrice DECIMAL(5,2) NOT NULL,
     PRIMARY KEY (orderDetailsID),
     FOREIGN KEY (idOrder) REFERENCES Orders (idOrder) ON DELETE CASCADE,
-    FOREIGN KEY (idBook) REFERENCES Books (idBook) ON DELETE CASCADE
+    FOREIGN KEY (idBook) REFERENCES Books (idBook) ON DELETE CASCADE,
+    FOREIGN KEY (idCoupon) REFERENCES Coupons (idCoupon) ON DELETE CASCADE
 );
 
 -- -----------------------------------------------------
@@ -108,8 +124,8 @@ VALUE
 INSERT INTO Orders (idCustomer, orderDate, orderTotal) 
 VALUE
 (2, '2022-03-18', 68.93),
-(5, '2022-01-02', 22.86),
-(3, '2022-02-16', 45.70),
+(5, '2022-01-02', 40.15),
+(3, '2022-02-16', 9.36),
 (4, '2022-04-20', 5.90),
 (2, '2022-04-20', 10.62),
 (1, '2022-04-25', 4.84);
@@ -123,16 +139,22 @@ VALUE
 (1, 2, 'Not good', "Terrible book, do not recommend", 1),
 (1, 1, 'Pretty good', "Good for a quick relaxing read", 4);
 
-INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice)
+INSERT INTO Coupons (idCoupon, expirationDate, discountCode, discountPercent)
 VALUE
-(1, 2, 3, "purchase", 29.37),
-(1, 3, 4, "purchase", 39.56),
-(2, 4, 2, "purchase", 25.80),
-(2, 5, 2, "purchase", 19.92),
-(3, 1, 2, "purchase", 11.70),
-(4, 2, 1, "sale", 5.90),
-(5, 1, 2, "sale", 10.62),
-(6, 3, 1, "sale", 4.84);
+(1, "2023-04-25", "10_OFF_MITCHELL", 0.10),
+(2, "2023-02-08", "15_OFF_BLOOMSBURG", 0.15),
+(3, "2023-01-13", "20_OFF_NEW2014BOOKS", 0.20);
+
+INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, idCoupon, discountedPrice)
+VALUE
+(1, 2, 3, "purchase", 29.37, "NULL", 29.37),
+(1, 3, 4, "purchase", 39.56, "NULL", 39.56),
+(2, 4, 2, "purchase", 25.80, 1, 23.22),
+(2, 5, 2, "purchase", 19.92, 2, 16.93),
+(3, 1, 2, "purchase", 11.70, 3, 9.36),
+(4, 2, 1, "sale", 5.90, "NULL", 5.90),
+(5, 1, 2, "sale", 10.62, "NULL", 10.62),
+(6, 3, 1, "sale", 4.84, "NULL", 4.84);
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
