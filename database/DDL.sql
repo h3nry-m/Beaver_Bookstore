@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS `Orders`;
 DROP TABLE IF EXISTS `Books`;
 DROP TABLE IF EXISTS `OrderDetails`;
 DROP TABLE IF EXISTS `Reviews`;
+DROP TABLE IF EXISTS `Coupons`;
 
 -- -----------------------------------------------------
 -- Table Customers
@@ -62,8 +63,7 @@ CREATE TABLE Coupons (
     expirationDate DATE NOT NULL,
     discountCode VARCHAR(20) NOT NULL,
     discountPercent DECIMAL(3,1) NOT NULL,
-    PRIMARY KEY (idCoupon),
-    FOREIGN KEY (idCoupon) REFERENCES OrderDetails (idCoupon) ON DELETE CASCADE
+    PRIMARY KEY (idCoupon)
 );
 
 
@@ -82,7 +82,7 @@ CREATE TABLE OrderDetails (
     PRIMARY KEY (orderDetailsID),
     FOREIGN KEY (idOrder) REFERENCES Orders (idOrder) ON DELETE CASCADE,
     FOREIGN KEY (idBook) REFERENCES Books (idBook) ON DELETE CASCADE,
-    FOREIGN KEY (idCoupon) REFERENCES Coupons (idCoupon) ON DELETE CASCADE
+    FOREIGN KEY (idCoupon) REFERENCES Coupons (idCoupon) ON DELETE SET NULL
 );
 
 -- -----------------------------------------------------
@@ -147,14 +147,14 @@ VALUE
 
 INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, idCoupon, discountedPrice)
 VALUE
-(1, 2, 3, "purchase", 29.37, "NULL", 29.37),
-(1, 3, 4, "purchase", 39.56, "NULL", 39.56),
+(1, 2, 3, "purchase", 29.37, NULL, 29.37),
+(1, 3, 4, "purchase", 39.56, NULL, 39.56),
 (2, 4, 2, "purchase", 25.80, 1, 23.22),
 (2, 5, 2, "purchase", 19.92, 2, 16.93),
 (3, 1, 2, "purchase", 11.70, 3, 9.36),
-(4, 2, 1, "sale", 5.90, "NULL", 5.90),
-(5, 1, 2, "sale", 10.62, "NULL", 10.62),
-(6, 3, 1, "sale", 4.84, "NULL", 4.84);
+(4, 2, 1, "sale", 5.90, NULL, 5.90),
+(5, 1, 2, "sale", 10.62, NULL, 10.62),
+(6, 3, 1, "sale", 4.84, NULL, 4.84);
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;

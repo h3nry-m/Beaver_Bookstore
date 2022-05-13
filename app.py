@@ -66,7 +66,9 @@ def edit_book(id):
 @app.route('/reviews')
 def CRUD_reviews():
     if request.method == "GET":
-        query = "SELECT idReview, Customers.firstName, Customers.lastName, title, postTitle, postBody, stars FROM Reviews INNER JOIN Customers ON Reviews.idCustomer = Customers.idCustomer INNER JOIN Books ON Reviews.idBook = Books.idBook ORDER BY idReview ASC;"
+        query = "SELECT idReview, Customers.firstName, Customers.lastName, title, postTitle, postBody, stars \
+         FROM Reviews INNER JOIN Customers ON Reviews.idCustomer = Customers.idCustomer INNER JOIN Books ON Reviews.idBook = Books.idBook \
+         ORDER BY idReview ASC;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
 
@@ -84,7 +86,8 @@ def CRUD_reviews():
 @app.route('/orders', methods=["POST", "GET"])
 def CRUD_orders():
     if request.method == "GET":
-        query = "SELECT idOrder, firstName, lastName, orderDate, orderTotal FROM Orders INNER JOIN Customers ON Orders.idCustomer = Customers.idCustomer ORDER BY idOrder ASC;"
+        query = "SELECT idOrder, firstName, lastName, orderDate, orderTotal FROM Orders INNER JOIN Customers ON \
+        Orders.idCustomer = Customers.idCustomer ORDER BY idOrder ASC;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
 
@@ -141,7 +144,8 @@ def CRUD_customers():
 @app.route('/order_details')
 def CRUD_order_details():
     if request.method == "GET":
-        query = "SELECT orderDetailsID, Orders.idOrder, Books.title, orderQty FROM OrderDetails INNER JOIN Books ON OrderDetails.idBook = Books.idBook INNER JOIN Orders ON OrderDetails.idOrder = Orders.idOrder ORDER BY orderDetailsID ASC;"
+        query = "SELECT orderDetailsID, Orders.idOrder, Books.title, orderType, orderQty, orderPrice, idCoupon, discountedPrice FROM OrderDetails \
+        INNER JOIN Books ON OrderDetails.idBook = Books.idBook INNER JOIN Orders ON OrderDetails.idOrder = Orders.idOrder ORDER BY orderDetailsID ASC;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
 
@@ -152,16 +156,21 @@ def CRUD_order_details():
         query3 = "SELECT idBook, title FROM Books;"
         cursor = db.execute_query(db_connection=db_connection, query=query3)
         book_data = cursor.fetchall()
-    return render_template("order_details.j2", orderDetails=results, orders=order_data, books = book_data)
+
+        query4 = "SELECT idCoupon FROM Coupons;"
+        cursor = db.execute_query(db_connection=db_connection, query=query4)
+        coupon_data = cursor.fetchall()
+    return render_template("order_details.j2", orderDetails=results, orders=order_data, books = book_data, coupons = coupon_data)
 
 @app.route('/coupons')
 def CRUD_coupons():
-    # if request.method == "GET":
-    #     query = ""
-    #     cursor = db.execute_query(db_connection=db_connection, query=query)
-    #     results = cursor.fetchall()
+    if request.method == "GET":
+        query = "SELECT * FROM Coupons"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        results = cursor.fetchall()
 
-    return render_template("coupons.j2" )
+
+    return render_template("coupons.j2", coupons=results )
 
 
 @app.route('/')

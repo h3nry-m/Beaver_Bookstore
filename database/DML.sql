@@ -33,8 +33,6 @@ ORDER BY idReview ASC;
 
 
 
-
-
 -- CREATE QUERIES
 
 -- add a new book into the Books table
@@ -59,7 +57,9 @@ VALUES
 INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars) 
 VALUES (:idCustomer_from_review_table, :idBook_from_review_table, :postTitleInput, :postBodyInput, :starsInput);
 
-
+-- add a new coupon into the Coupons table
+INSERT INTO Coupons (expirationDate, discountCode, discountPercent)
+VALUES (:expirationDateInput, :discountCodeInput, :discountPercentInput)
 
 
 -- DELETE QUERIES
@@ -88,7 +88,10 @@ DELETE
 FROM Rewiews 
 WHERE idReview = :ID_review_selected_from_review_table;
 
-
+-- delete a coupon from the Coupons table
+DELETE 
+FROM Coupons 
+WHERE idCoupon = :couponID_selected_from_coupons_page;
 
 
 -- UPDATE QUERIES
@@ -147,3 +150,9 @@ postBody = :postBodyInput,
 stars = :starsInput
 WHERE id= :ID_review_from_the_update_form;
 
+-- update a coupon
+UPDATE Coupon 
+SET expirationDate = :expirationDateInput, 
+discountCode = :discountCodeInput, 
+discountPercent= :discountPercentInput
+WHERE id = :couponID_from_the_update_form;

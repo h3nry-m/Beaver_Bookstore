@@ -16,6 +16,7 @@
         <th class="table_cell">Order Type</th>
         <th class="table_cell">Order Quantity</th>
         <th class="table_cell">Order Price</th>
+        <th class="table_cell">Coupon ID</th>
         <th class="table_cell">Discounted Price</th>
         
     </tr>
@@ -64,8 +65,18 @@
                 <option value="{{ request.form['orderType'] }}"> purchase </option>
                 <option value="{{ request.form['orderType'] }}"> sale </option>
             </select>
-        <label> Order Quantity </label>
-        <input type="number" name="orderQty">
+        <label> Order Quantity: </label>
+        <input value="{{orderQty}}"type="number" name="orderQty">
+        <label> Order Price: </label>
+        <input value="{{orderPrice}}" type="number" name="orderPrice">
+        <label> Coupon ID: </label>
+            <select id="couponID">
+                {% for item in coupons %}
+                    <option value= "{{idCoupon}}">{{item['idCoupon']}}</option>
+                {% endfor %}
+            </select>
+        <label> Discounted Price: </label>
+        <input value="{{discountedPrice}}" type="number">
     </fieldset>
 
     <input type="button" class="submit" onclick="" value="Submit">
@@ -97,6 +108,17 @@
         </select>
         <label> Order Quantity </label>
         <input type="number" name="orderQty">
+        <label> Order Price: </label>
+        <input value="{{orderPrice}}" type="number" name="orderPrice">
+        <label> Coupon ID: </label>
+            <select id="couponID">
+                <option value = NULL > NULL</option>
+                {% for item in coupons %}
+                    <option value= "{{idCoupon}}">{{item['idCoupon']}}</option>
+                {% endfor %}
+            </select>
+        <label> Discounted Price: </label>
+        <input value="{{discountedPrice}}" type="number">
     </fieldset>
 
     <input type="button" class="submit" onclick="" value="Submit">
@@ -117,9 +139,13 @@
         <p> Are you sure you want to delete the following review?</p>
         <label> orderDetailsID: 1 </label>
         <label> Order ID : 1 </label>
-        <label> Book ID: 1</label>
-        <label>Order Type: purchase</label>
-        <label> Order Quantity: 2</label>
+        <label> Book Title: Moonwalking with Einstein </label>
+        <label> Order Type: purchase</label>
+        <label> Order Quantity: 3</label>
+        <label> Order Price: 29.37</label>
+        <label> Coupon ID: None </label>
+        <label> Discounted Price: 29.37 </label>
+      
         
     </fieldset>
 
