@@ -61,8 +61,8 @@ CREATE TABLE Orders (
 CREATE TABLE Coupons (
     idCoupon INT UNIQUE AUTO_INCREMENT,
     expirationDate DATE NOT NULL,
-    discountCode VARCHAR(20) NOT NULL,
-    discountPercent DECIMAL(3,1) NOT NULL,
+    discountCode VARCHAR(45),
+    discountPercent DECIMAL(3,2) NOT NULL,
     PRIMARY KEY (idCoupon)
 );
 
@@ -139,11 +139,11 @@ VALUE
 (1, 2, 'Not good', "Terrible book, do not recommend", 1),
 (1, 1, 'Pretty good', "Good for a quick relaxing read", 4);
 
-INSERT INTO Coupons (idCoupon, expirationDate, discountCode, discountPercent)
+INSERT INTO Coupons (expirationDate, discountCode, discountPercent)
 VALUE
-(1, "2023-04-25", "10_OFF_MITCHELL", 0.10),
-(2, "2023-02-08", "15_OFF_BLOOMSBURG", 0.15),
-(3, "2023-01-13", "20_OFF_NEW2014BOOKS", 0.20);
+('2023-04-25', '10_OFF_MITCHELL', 0.10),
+('2023-02-08', '15_OFF_BLOOMSBURG', 0.15),
+('2023-01-13', '20_OFF_NEW2014BOOKS', 0.20);
 
 INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, idCoupon, discountedPrice)
 VALUE
