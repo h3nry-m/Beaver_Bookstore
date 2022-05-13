@@ -21,8 +21,12 @@ ORDER BY idOrder ASC;
 
 
 -- Display Order Details
-SELECT orderDetailsID, idOrder, idBook, orderQty, orderType, orderPrice
-FROM OrderDetails;
+SELECT orderDetailsID, Orders.idOrder, Books.title, orderType, orderQty, orderPrice, idCoupon, discountedPrice 
+FROM OrderDetails 
+INNER JOIN Books ON OrderDetails.idBook = Books.idBook 
+INNER JOIN Orders ON OrderDetails.idOrder = Orders.idOrder 
+ORDER BY orderDetailsID ASC;
+        
 
 -- Display Reviews
 SELECT idReview, Customers.firstName, Customers.lastName, title, postTitle, postBody, stars 

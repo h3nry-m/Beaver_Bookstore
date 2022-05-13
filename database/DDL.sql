@@ -82,7 +82,7 @@ CREATE TABLE OrderDetails (
     PRIMARY KEY (orderDetailsID),
     FOREIGN KEY (idOrder) REFERENCES Orders (idOrder) ON DELETE CASCADE,
     FOREIGN KEY (idBook) REFERENCES Books (idBook) ON DELETE CASCADE,
-    FOREIGN KEY (idCoupon) REFERENCES Coupons (idCoupon) ON DELETE SET NULL
+    FOREIGN KEY (idCoupon) REFERENCES Coupons (idCoupon) ON DELETE CASCADE
 );
 
 -- -----------------------------------------------------
