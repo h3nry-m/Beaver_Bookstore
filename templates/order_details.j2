@@ -71,6 +71,7 @@
         <input value="{{orderPrice}}" type="number" name="orderPrice">
         <label> Coupon ID: </label>
             <select id="couponID">
+                <option value = NULL > NULL</option>
                 {% for item in coupons %}
                     <option value= "{{idCoupon}}">{{item['idCoupon']}}</option>
                 {% endfor %}
