@@ -10,6 +10,9 @@ SELECT * FROM Books;
 -- Display Customers
 SELECT * FROM Customers; 
 
+-- Display Coupons
+SELECT * FROM Coupons;
+
 -- Display Orders
 SELECT idOrder, firstName, lastName, orderDate, orderTotal
 FROM Orders
@@ -48,9 +51,9 @@ VALUES
 (:idCustomer,:orderDate, :orderTotal);
 
 -- add a new order into the Orders table
-INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice)
+INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, idCoupon, discountedPrice)
 VALUES
-(:idOrder,:idBook, :orderTotal, :orderQty, :orderType, :orderPrice);
+(:idOrder,:idBook, :orderTotal, :orderQty, :orderType, :orderPrice, :idCoupon, :discountedPrice);
 
 -- add a new review into the Reviews table
 INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars) 
@@ -129,6 +132,10 @@ UPDATE OrderDetails
 SET idOrder = :idOrderInput,
 idBook = :idBookInput,
 orderQty = :orderQty,
+orderType = :orderType,
+orderPrice = :orderPrice,
+idCoupon = :idCoupon,
+discountedPrice = :discountedPrice,
 WHERE orderDetailsID = :orderDetailsID_selected_from_the_update_form;
 
 -- update a review
