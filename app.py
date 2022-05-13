@@ -84,7 +84,7 @@ def CRUD_reviews():
 @app.route('/orders', methods=["POST", "GET"])
 def CRUD_orders():
     if request.method == "GET":
-        query = "SELECT idOrder, firstName, lastName, orderDate, orderTotal, orderType FROM Orders INNER JOIN Customers ON Orders.idCustomer = Customers.idCustomer ORDER BY idOrder ASC;"
+        query = "SELECT idOrder, firstName, lastName, orderDate, orderTotal FROM Orders INNER JOIN Customers ON Orders.idCustomer = Customers.idCustomer ORDER BY idOrder ASC;"
         cursor = db.execute_query(db_connection=db_connection, query=query)
         results = cursor.fetchall()
 
@@ -154,6 +154,15 @@ def CRUD_order_details():
         book_data = cursor.fetchall()
     return render_template("order_details.j2", orderDetails=results, orders=order_data, books = book_data)
 
+@app.route('/coupons')
+def CRUD_coupons():
+    # if request.method == "GET":
+    #     query = ""
+    #     cursor = db.execute_query(db_connection=db_connection, query=query)
+    #     results = cursor.fetchall()
+
+    return render_template("coupons.j2" )
+
 
 @app.route('/')
 def root():
@@ -165,7 +174,5 @@ if __name__ == "__main__":
     port = int(os.environ.get('PORT', 9011)) #9114
     #                                 ^^^^
     #              You can replace this number with any valid port
-    # app.run(debug=True) dunno your workflow but if you do debug=True then you can just 
-    # refresh the page instead of killing the hosting and restarting the hosting each time 
-    # like I was doing
+
     app.run(host="flip2.engr.oregonstate.edu", port=port, debug = False)

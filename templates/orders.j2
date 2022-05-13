@@ -16,7 +16,6 @@
             <th class="table_cell">Last Name</th>
             <th class="table_cell">Order Date</th>
             <th class="table_cell">Order Total</th>
-            <th class="table_cell">Order Type</th>
 
         </tr>
 
@@ -63,11 +62,7 @@
             <input type="number" name="Order Total"
                 placeholder="Order Total"
                 value="{{ request.form['orderTotal'] }}"></input>
-            <label>Order Type: </label>
-            <select id="orderType">
-                <option value="{{ request.form['orderType'] }}"> purchase </option>
-                <option value="{{ request.form['orderType'] }}"> sale </option>
-            </select>
+            
             <input type="button" class="submit" onclick="" value="Submit">
             <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
         </fieldset>
@@ -92,11 +87,7 @@
             <input type="number" name="Order Total"
                 placeholder="Order Total"
                 value="{{ request.form['orderTotal'] }}"></input>
-            <label>Order Type: </label>
-            <select id="orderType">
-                <option value="{{ request.form['orderType'] }}"> purchase </option>
-                <option value="{{ request.form['orderType'] }}"> sale </option>
-            </select>
+           
             <input type="button" class="update" onclick="" value="Update">
             <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
         </fieldset
@@ -122,9 +113,7 @@
         <br>
         <label>
         <label>Order Total: 19.68</label>
-        <br>
-        <label>Order Type: purchase</label>
-        <br>
+        
         <input type="button" class="submit" onclick="" value="Submit">
         <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
     </form>

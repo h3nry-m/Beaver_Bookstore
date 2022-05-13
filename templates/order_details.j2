@@ -13,7 +13,10 @@
         <th class="table_cell">Order-Details ID</th>
         <th class="table_cell">Order ID</th>
         <th class="table_cell">Book Title</th>
+        <th class="table_cell">Order Type</th>
         <th class="table_cell">Order Quantity</th>
+        <th class="table_cell">Order Price</th>
+        <th class="table_cell">Discounted Price</th>
         
     </tr>
     <tbody>
@@ -56,6 +59,11 @@
             <option value= "{{title}}"> {{item['title']}} </option>
             {% endfor %}
         </select>
+        <label>Order Type: </label>
+            <select id="orderType">
+                <option value="{{ request.form['orderType'] }}"> purchase </option>
+                <option value="{{ request.form['orderType'] }}"> sale </option>
+            </select>
         <label> Order Quantity </label>
         <input type="number" name="orderQty">
     </fieldset>
@@ -82,6 +90,11 @@
             <option value= "{{title}}"> {{item['title']}} </option>
             {% endfor %}
         </select>
+        <label>Order Type: </label>
+        <select id="orderType">
+            <option value="{{ request.form['orderType'] }}"> purchase </option>
+            <option value="{{ request.form['orderType'] }}"> sale </option>
+        </select>
         <label> Order Quantity </label>
         <input type="number" name="orderQty">
     </fieldset>
@@ -105,6 +118,7 @@
         <label> orderDetailsID: 1 </label>
         <label> Order ID : 1 </label>
         <label> Book ID: 1</label>
+        <label>Order Type: purchase</label>
         <label> Order Quantity: 2</label>
         
     </fieldset>
