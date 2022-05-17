@@ -32,7 +32,7 @@ function showSection(section){
         document.getElementById('browse').style.display = 'none';
         document.getElementById('create').style.display ='none';
         document.getElementById('update').style.display = 'none';
-        document.getElementById('delete').style.display = 'block';
+        document.getElementById('delete').style.display = 'block'; 
     }
     else if (section =='hide'){
         document.getElementById('browse').style.display = 'table';

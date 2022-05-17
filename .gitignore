@@ -6,3 +6,4 @@ venv
 /.vscode
 .env
 bin
+templates/delete_temp.j2

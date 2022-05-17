@@ -20,10 +20,10 @@
         <th class="table_cell">Discounted Price</th>
         
     </tr>
-    <tbody>
+    <tbody id = "tbody">
     {% for item in orderDetails %}
 
-        <tr>
+        <tr id="row_{{ item['orderDetailsID'] }}">
             <td class="table_cell"></td>
 
             {%for key in item.keys() %}
@@ -31,8 +31,11 @@
             {% endfor %}
 
             <td class="table_cell">
-            <input type="button" class="edit" onclick="updateOrder()" value="Edit">
-            <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
+                <input type="button" class="edit" onclick="updateOrder()" value="Edit">
+                {# <input type="button" class="delete" onclick="deleteOrder()" value="Delete"> #}
+            <form>
+                <button formaction="delete_order_details/{{ item['orderDetailsID'] }}" type="submit" class="delete" value="Delete">Delete</button>
+            </form>
             </td>
         </tr>
 
@@ -66,7 +69,7 @@
                 <label> Order Quantity: </label>
                 <input name="orderQty" type="number">
                 <label> Order Price: </label>
-                <input name="orderPrice" type="number" >
+                <input name="orderPrice" type="number" step="0.01" >
                 <label> Coupon ID: </label>
                     <select name = "idCoupon" id="couponID">
                         <option value = 0 >NULL</option>
@@ -75,7 +78,7 @@
                         {% endfor %}
                     </select>
                 <label> Discounted Price: </label>
-                <input name= "discountedPrice" type="number">
+                <input name= "discountedPrice" type="number" step="0.01">
             
         </fieldset>
 
@@ -108,7 +111,7 @@
         <label> Order Quantity </label>
         <input type="number" name="orderQty">
         <label> Order Price: </label>
-        <input value="{{orderPrice}}" type="number" name="orderPrice">
+        <input value="{{orderPrice}}" type="number" name="orderPrice" step=any>
         <label> Coupon ID: </label>
             <select id="couponID">
                 <option value = NULL > NULL</option>
@@ -117,44 +120,50 @@
                 {% endfor %}
             </select>
         <label> Discounted Price: </label>
-        <input value="{{discountedPrice}}" type="number">
+        <input value="{{discountedPrice}}" type="number" step=any>
     </fieldset>
 
     <input type="button" class="submit" onclick="" value="Submit">
     
-    <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+    <input type="button" id="cancel" onclizck="cancelOrder()" value="Cancel">
 
 </div>
 
-<div id = 'delete' style="display:none;">
+{# <div id = 'delete'>
 
-    <legend>
-    <h2> Delete an Order-Books </h2>
-    </legend>
-    
-    <fieldset>
-        {# TODO
-        NEED TO IMPLEMENT QUERY  #}
-        <p> Are you sure you want to delete the following review?</p>
-        <label> orderDetailsID: 1 </label>
-        <label> Order ID : 1 </label>
-        <label> Book Title: Moonwalking with Einstein </label>
-        <label> Order Type: purchase</label>
-        <label> Order Quantity: 3</label>
-        <label> Order Price: 29.37</label>
-        <label> Coupon ID: None </label>
-        <label> Discounted Price: 29.37 </label>
-      
+    <p> Are you sure you wish to delete the following row from the database? </p>
+
+    <table class = 'table'>
+    <thead>
+        <tr>
+            
+            <th class="table_cell">Order-Details ID</th>
+            <th class="table_cell">Order ID</th>
+            <th class="table_cell">Book Title</th>
+            <th class="table_cell">Order Type</th>
+            <th class="table_cell">Order Quantity</th>
+            <th class="table_cell">Order Price</th>
+            <th class="table_cell">Coupon ID</th>
+            <th class="table_cell">Discounted Price</th>
+            
+        </tr>
+    </thead>
+    <tbody>
         
-    </fieldset>
+
+    </tbody>
+ 
+
+
+
+
+
 
     <input type="button" class="submit" onclick="" value="Submit">
-    
     <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
 
-</div>
+</div> #}
 
-<br>
 <input type="button" id="all" onclick="showAll()" value="Show All">
 <input type="button" id="hide" style="display: none;" onclick="hideAll()" value="Hide All">
 {% endblock %}
