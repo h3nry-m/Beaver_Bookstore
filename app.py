@@ -1,4 +1,4 @@
-from flask import Flask, render_template, json, request
+from flask import Flask, redirect, render_template, json, request
 import database.db_connector as db
 import os
 
@@ -141,7 +141,7 @@ def CRUD_customers():
         return render_template("customers.j2", customers=all_customers)
 
 
-@app.route('/order_details')
+@app.route('/order_details', methods=["POST", "GET"])
 def CRUD_order_details():
     if request.method == "GET":
         query = "SELECT orderDetailsID, Orders.idOrder, Books.title, orderType, orderQty, orderPrice, idCoupon, discountedPrice FROM OrderDetails \
@@ -160,6 +160,24 @@ def CRUD_order_details():
         query4 = "SELECT idCoupon FROM Coupons;"
         cursor = db.execute_query(db_connection=db_connection, query=query4)
         coupon_data = cursor.fetchall()
+    elif request.method == "POST":
+        if request.form.get("Add_Order_Details"):
+            idOrder = request.form["idOrder"]
+            idBook = request.form["idBook"]
+            orderType = request.form["orderType"]
+            orderQty = request.form["orderQty"]
+            orderPrice = request.form["orderPrice"]
+            idCoupon = request.form["idCoupon"]
+            discountedPrice = request.form["discountedPrice"]
+            if idCoupon == '0':
+                query = "INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, discountedPrice) VALUES (%s, %s, %s, %s, %s, %s);"
+                cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(idOrder, idBook, orderQty, orderType, orderPrice, discountedPrice))
+                db_connection.commit()
+            else:
+                query = "INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, idCoupon, discountedPrice) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+                cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(idOrder, idBook, orderQty, orderType, orderPrice, idCoupon, discountedPrice))
+                db_connection.commit()
+            return redirect('/order_details')
     return render_template("order_details.j2", orderDetails=results, orders=order_data, books = book_data, coupons = coupon_data)
 
 @app.route('/coupons')

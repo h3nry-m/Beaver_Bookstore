@@ -74,7 +74,7 @@ CREATE TABLE OrderDetails (
     orderDetailsID INT NOT NULL UNIQUE AUTO_INCREMENT,
     idOrder INT,
     idBook INT,
-    idCoupon INT,
+    idCoupon INT DEFAULT NULL,
     orderQty INT NOT NULL,
     orderType VARCHAR(8) NOT NULL CHECK (orderType IN ('sale', 'purchase')),
     orderPrice DECIMAL(5,2) NOT NULL,
