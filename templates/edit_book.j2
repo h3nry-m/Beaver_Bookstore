@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>
+        {% block title %}Edit Books{% endblock %}
+    </h1>
+{% endblock %}
+{% block content %}
+       <div id="edit">
+       <form id="Edit_Book" action="/edit_book/{{ data[0].idBook }}" method="post">
+            <legend>
+                <strong>Edit Book</strong>
+            </legend>
+            <fieldset>
+                <label for="title">Title</label>
+                <input type="text" name="title" value="{{ data[0].title }}">
+            </input>
+            <br>
+            <label for="make">First name:</label>
+            <input type="text" name="firstName" value="{{ data[0].firstName }}">
+               </input>
+               <br>
+               <label for="name">Last Name</label>
+               <input type="text"
+                      name="lastName"
+                      placeholder="Last name"
+                      value="{{ data[0].lastName }}">
+           </input>
+           <br>
+           <label for="isbn">ISBN</label>
+           <input type="text"
+                  name="isbn"
+                  placeholder="xxx-x-xx-xxxxxx-x"
+                  value="{{ data[0].isbn }}">
+              </input>
+              <br>
+              <label for="publisher">Publisher</label>
+              <select id="publisher" name="publisher">
+                  {% for publisher in publishers %}
+                      <option value="{{ data[0].publisher }}">
+                          {{ publisher['publisher'] }}
+                      </option>
+                  {% endfor %}
+              </select>
+              <br>
+              <label for="publicationYear">publicationYear</label>
+              <input type="number"
+                     name="publicationYear"
+                     placeholder="publicationYear"
+                     value="{{ data[0].publicationYear }}">
+              </input>
+              <br>
+              <label for="newStock">New Stock</label>
+              <input type="number"
+                     name="newStock"
+                     placeholder="newStock"
+                     value="{{ data[0].newStock }}">
+              </input>
+              <br>
+              <label for="newPrice">New Price</label>
+              <input type="number"
+                     name="newPrice"
+                     placeholder="newPrice"
+                     value="{{ data[0].newPrice }}">
+              </input>
+              <br>
+              <label for="usedStock">used Stock</label>
+              <input type="number"
+                     name="usedStock"
+                     placeholder="usedStock"
+                     value="{{ data[0].usedStock }}">
+              </input>
+              <br>
+              <label for="usedPrice">Used Price</label>
+              <input type="number"
+                     name="usedPrice"
+                     placeholder="usedPrice"
+                     value="{{ data[0].usedPrice }}">
+              </input>
+              <br>
+              <input type="submit" name="Edit_Book" value="Edit_Book" class="btn">
+              <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+       </form>
+       </div>
+{% endblock %}

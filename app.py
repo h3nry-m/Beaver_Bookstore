@@ -37,7 +37,7 @@ def CRUD_books():
             isbn = request.form["isbn"]
             publisher = request.form["publisher"]
             publicationYear = request.form["publicationYear"]
-            newStock = request.form["publicationYear"]
+            newStock = request.form["newStock"]
             newPrice = request.form["newPrice"]
             usedStock = request.form["usedStock"]
             usedPrice = request.form["usedPrice"]
@@ -159,7 +159,7 @@ def CRUD_orders():
     #     if request.form.get()
 
 
-@app.route("/customers")
+@app.route("/customers", methods=["POST", "GET"])
 def CRUD_customers():
     if request.method == "GET":
         query = "SELECT * FROM Customers;"
@@ -168,7 +168,7 @@ def CRUD_customers():
         return render_template("customers.j2", customers=all_customers)
 
     if request.method == "POST":
-        if request.form.get("Edit_Customer"):
+        if request.form.get("Add_Customer"):
             firstName = request.form["firstName"]
             lastName = request.form["lastName"]
             email = request.form["email"]
@@ -176,18 +176,18 @@ def CRUD_customers():
             addressStreet = request.form["addressStreet"]
             addressState = request.form["addressState"]
             addressZip = request.form["addressZip"]
-            query = "UPDATE Customers SET Customers.firstName = %s, Customers.lastName = %s, Customers.email = %s, Customers.phoneNumber = %s, Customers.addressStreet = %s, Customers.addressState = %s, Customers.addressZip = %s WHERE Customers.idCustomer = %s;"
+            query = "INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addressState, addressZip) VALUES (%s, %s, %s, %s, %s, %s, %s);"
             cursor = db.execute_query(
                 db_connection=db_connection,
                 query=query,
                 query_params=(
                     firstName,
                     lastName,
+                    email,
                     phoneNumber,
                     addressStreet,
                     addressState,
                     addressZip,
-                    id,
                 ),
             )
             return redirect("/customers")
