@@ -40,50 +40,48 @@
     </tbody>
 </table>
 
-<div id = 'create' style="display:none;">
+<div id = 'create' style="display:none;" >
+    <form method="POST">
+        <fieldset>
+                <legend>
+                    <h2> Add an Order-Books </h2>
+                </legend>
+                <label> Order ID </label>
+                <select name = "idOrder" id="orderID" name="orderID">
+                    {% for item in orders %}
+                        <option  value= "{{ item['idOrder'] }}"> {{item['idOrder']}} </option>
+                    {% endfor %}
+                </select>
+                <label> Book Title </label>
+                <select name="idBook" id="bookID" name="bookID">
+                    {% for item in books %}
+                    <option  value= "{{ item['idBook'] }}" >{{item['title']}}</option>
+                    {% endfor %}
+                </select>
+                <label>Order Type: </label>
+                    <select name = "orderType" id="orderType">
+                        <option  value="purchase"> purchase </option>
+                        <option  value="sale"> sale </option>
+                    </select>
+                <label> Order Quantity: </label>
+                <input name="orderQty" type="number">
+                <label> Order Price: </label>
+                <input name="orderPrice" type="number" >
+                <label> Coupon ID: </label>
+                    <select name = "idCoupon" id="couponID">
+                        <option value = 0 >NULL</option>
+                        {% for item in coupons %}
+                            <option value ="{{ item['idCoupon'] }}">{{item['idCoupon']}}</option>
+                        {% endfor %}
+                    </select>
+                <label> Discounted Price: </label>
+                <input name= "discountedPrice" type="number">
+            
+        </fieldset>
 
-   
-    
-    <fieldset>
-        <legend>
-            <h2> Add an Order-Books </h2>
-        </legend>
-        <label> Order ID </label>
-        <select id="orderID" name="orderID">
-            {% for item in orders %}
-            <option value= "{{idOrder}}"> {{item['idOrder']}} </option>
-            {% endfor %}
-        </select>
-        <label> Book Title </label>
-        <select id="orderID" name="orderID">
-            {% for item in books %}
-            <option value= "{{title}}"> {{item['title']}} </option>
-            {% endfor %}
-        </select>
-        <label>Order Type: </label>
-            <select id="orderType">
-                <option value="{{ request.form['orderType'] }}"> purchase </option>
-                <option value="{{ request.form['orderType'] }}"> sale </option>
-            </select>
-        <label> Order Quantity: </label>
-        <input value="{{orderQty}}"type="number" name="orderQty">
-        <label> Order Price: </label>
-        <input value="{{orderPrice}}" type="number" name="orderPrice">
-        <label> Coupon ID: </label>
-            <select id="couponID">
-                <option value = NULL > NULL</option>
-                {% for item in coupons %}
-                    <option value= "{{idCoupon}}">{{item['idCoupon']}}</option>
-                {% endfor %}
-            </select>
-        <label> Discounted Price: </label>
-        <input value="{{discountedPrice}}" type="number">
-    </fieldset>
-
-    <input type="button" class="submit" onclick="" value="Submit">
-    
-    <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
-
+        <input name="Add_Order_Details"type="submit" class="submit" onclick="" value="Submit">
+        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+    </form>
 </div>
 
 <div id = 'update' style="display:none;">
