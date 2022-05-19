@@ -1,72 +1,136 @@
--- Sample Database Manipulation queries for Beaver Bookstore
+/* 
+----------------------------------------------------------
+
+
+Sample Database Manipulation queries for Beaver Bookstore
+
+
+----------------------------------------------------------
+*/
 
 
 
--- Retrieve Queries
 
--- Display Books
-SELECT * FROM Books;
+/* 
+----------------------------------------------------------
+
+Read Operations Section
+
+----------------------------------------------------------
+*/
+
+-- Query used to populate all rows for the main table on the Books page
+SELECT idBook, title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice 
+FROM Books;
 
 -- Display Customers
 SELECT * FROM Customers; 
 
--- Display Coupons
+
+-- Query used to populate all rows for the main table on the Coupons Page
 SELECT * FROM Coupons;
 
--- Display Orders
+
+-- Query used to populate all rows for the main table on the Orders page
 SELECT idOrder, firstName, lastName, orderDate, orderTotal
 FROM Orders
 INNER JOIN Customers ON Orders.idCustomer = Customers.idCustomer
 ORDER BY idOrder ASC;
 
 
--- Display Order Details
+-- Query used to populate all rows for the main table on the orders page and substitutes foreign key IDs for titles and names
 SELECT orderDetailsID, Orders.idOrder, Books.title, orderType, orderQty, orderPrice, idCoupon, discountedPrice 
 FROM OrderDetails 
 INNER JOIN Books ON OrderDetails.idBook = Books.idBook 
 INNER JOIN Orders ON OrderDetails.idOrder = Orders.idOrder 
 ORDER BY orderDetailsID ASC;
-        
 
--- Display Reviews
+
+-- Query used to populate all rows for the main table on the Reviews page and substitutes foreign key IDs for customers and titles of books
 SELECT idReview, Customers.firstName, Customers.lastName, title, postTitle, postBody, stars 
 FROM Reviews
 INNER JOIN Customers ON Reviews.idCustomer = Customers.idCustomer
 INNER JOIN Books ON Reviews.idBook = Books.idBook
 ORDER BY idReview ASC;
 
+/* 
+--------------------------------------------
+
+DROPDOWN WHEEL AND UPDATE POPULATION QUERIES 
+
+---------------------------------------------
+*/
+
+-- Display Customer IDs and Names for Dropdown on Orders Table;
+SELECT idCustomer, firstName, lastName FROM Customers;
+-- Display Order IDs for Dropdown on Order Details 
+SELECT idOrder FROM Orders;
+-- Display Book Titles corresponding to Book ID for Dropdown on Order Details 
+SELECT idBook, title FROM Books;
+-- Display Coupon IDs for Dropdown on Order Details 
+SELECT idCoupon FROM Coupons;
 
 
--- CREATE QUERIES
+
+-- Query used to populate one row for the update form for Books
+SELECT * FROM Books WHERE idBook = :idBook;
+
+
+
+
+
+/* 
+----------------------------------------------------------
+
+Create Operations Section
+
+----------------------------------------------------------
+*/
 
 -- add a new book into the Books table
 INSERT INTO Books (title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice) 
 VALUES (:titleInput, :firstNameInput, :lastNameInput, :isbnInput, :publisherInput, :publicationYearInput, :newStockInput, :newPriceInput, :usedStockInput, :usedPriceInput);
 
+
 -- add a new customer into the Customers table
 INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addresssCity, addressState, addressZip) 
 VALUES (:firstNameInput, :lastNameInput, :emailInput, :phoneNumberInput, :addressStreetInput, :addressCityInput, :addressStateInput, :addressZipInput);
+
 
 -- add a new order into the Orders table
 INSERT INTO Orders (idCustomer, orderDate, orderTotal)
 VALUES
 (:idCustomer,:orderDate, :orderTotal);
 
--- add a new order into the Orders table
+
+-- Query that adds a new OrderDetails into the OrderDetails table and accounts for a user inputs a NULL for coupon code
+INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, discountedPrice) 
+VALUES 
+(:idOrder,:idBook, :orderTotal, :orderQty, :orderType, :orderPrice, :discountedPrice);
+
+-- Query that add a new OrderDetails into the OrderDetails table and accounts for available coupon code
 INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, idCoupon, discountedPrice)
 VALUES
 (:idOrder,:idBook, :orderTotal, :orderQty, :orderType, :orderPrice, :idCoupon, :discountedPrice);
 
+
 -- add a new review into the Reviews table
 INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars) 
 VALUES (:idCustomer_from_review_table, :idBook_from_review_table, :postTitleInput, :postBodyInput, :starsInput);
+
 
 -- add a new coupon into the Coupons table
 INSERT INTO Coupons (expirationDate, discountCode, discountPercent)
 VALUES (:expirationDateInput, :discountCodeInput, :discountPercentInput)
 
 
--- DELETE QUERIES
+/* 
+----------------------------------------------------------
+
+Delete Operations Section
+
+----------------------------------------------------------
+*/
 
 -- delete a book
 DELETE FROM Books WHERE idBook = :book_ID_selected_from_book_table;
@@ -98,7 +162,13 @@ FROM Coupons
 WHERE idCoupon = :couponID_selected_from_coupons_page;
 
 
--- UPDATE QUERIES
+/* 
+----------------------------------------------------------
+
+Update Operations Section
+
+----------------------------------------------------------
+*/
 
 -- update a book
 UPDATE Books 

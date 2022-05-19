@@ -110,7 +110,7 @@ def edit_book(id):
             )
             return redirect("/books")
 
-
+            
 @app.route("/delete_book/<int:id>")
 def delete_book(id):
     query = "DELETE FROM Books WHERE idBook = '%s';"
