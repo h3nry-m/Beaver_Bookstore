@@ -36,7 +36,7 @@
               <label for="publisher">Publisher</label>
               <select id="publisher" name="publisher">
                   {% for publisher in publishers %}
-                      <option value="{{ data[0].publisher }}">
+                      <option value="{{ publisher['publisher'] }}">
                           {{ publisher['publisher'] }}
                       </option>
                   {% endfor %}
@@ -60,7 +60,8 @@
               <input type="number"
                      name="newPrice"
                      placeholder="newPrice"
-                     value="{{ data[0].newPrice }}">
+                     value="{{ data[0].newPrice }}"
+                     step=any>
               </input>
               <br>
               <label for="usedStock">used Stock</label>
@@ -74,7 +75,8 @@
               <input type="number"
                      name="usedPrice"
                      placeholder="usedPrice"
-                     value="{{ data[0].usedPrice }}">
+                     value="{{ data[0].usedPrice }}"
+                     step=any>
               </input>
               <br>
               <input type="submit" name="Edit_Book" value="Edit_Book" class="btn">
