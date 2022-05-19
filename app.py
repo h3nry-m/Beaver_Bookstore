@@ -23,11 +23,7 @@ def CRUD_books():
         cursor = db.execute_query(db_connection=db_connection, query=query1)
         all_books = cursor.fetchall()
 
-        query2 = "SELECT publisher FROM Books;"
-        cursor = db.execute_query(db_connection=db_connection, query=query2)
-        all_publishers = cursor.fetchall()
-
-        return render_template("books.j2", books=all_books, publishers=all_publishers)
+        return render_template("books.j2", books=all_books)
 
     if request.method == "POST":
         if request.form.get("Add_Book"):
@@ -71,12 +67,7 @@ def edit_book(id):
         )
         data = cursor.fetchall()
 
-        # to grab the publisher from the dropdown menu
-        query2 = "SELECT publisher FROM Books;"
-        cursor = db.execute_query(db_connection=db_connection, query=query2)
-        all_publishers = cursor.fetchall()
-
-        return render_template("edit_book.j2", data=data, publishers=all_publishers)
+        return render_template("edit_book.j2", data=data)
 
     if request.method == "POST":
         if request.form.get("Edit_Book"):
