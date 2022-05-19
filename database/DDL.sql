@@ -34,7 +34,7 @@ CREATE TABLE Books (
     firstName VARCHAR(45) NOT NULL,
     lastName VARCHAR(45) NOT NULL,
     isbn VARCHAR(17) NOT NULL,
-    publisher VARCHAR(45) NOT NULL UNIQUE,
+    publisher VARCHAR(45) NOT NULL,
     publicationYear SMALLINT(2) NOT NULL,
     newStock INT NOT NULL,
     newPrice DECIMAL(5,2) NOT NULL,
