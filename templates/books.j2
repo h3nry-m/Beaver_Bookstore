@@ -104,7 +104,8 @@
                      step="0.01"
                      name="newPrice"
                      placeholder="newPrice"
-                     value="{{ request.form['newPrice'] }}">
+                     value="{{ request.form['newPrice'] }}"
+                     step=any>
               </input>
               <br>
               <label for="usedStock">used Stock</label>
@@ -119,7 +120,8 @@
                      step="0.01"
                      name="usedPrice"
                      placeholder="usedPrice"
-                     value="{{ request.form['usedPrice'] }}">
+                     value="{{ request.form['usedPrice'] }}"
+                     step=any>
               </input>
               <br>
               <input type="submit" value="Add book" name="Add_Book" class="btn">
