@@ -33,14 +33,12 @@
                   value="{{ data[0].isbn }}">
             </input>
             <br>
-              <label for="publisher">Publisher</label>
-              <select id="publisher" name="publisher">
-                  {% for publisher in publishers %}
-                      <option value="{{ publisher['publisher'] }}">
-                          {{ publisher['publisher'] }}
-                      </option>
-                  {% endfor %}
-              </select>
+           <label for="publisher">Publisher</label>
+           <input type="text"
+                  name="publisher"
+                  placeholder="publisher"
+                  value="{{ data[0].publisher }}">
+            </input>
               <br>
               <label for="publicationYear">publicationYear</label>
               <input type="number"
@@ -53,6 +51,7 @@
               <input type="number"
                      name="newStock"
                      placeholder="newStock"
+                     min="0"
                      value="{{ data[0].newStock }}">
               </input>
               <br>
@@ -61,13 +60,15 @@
                      name="newPrice"
                      placeholder="newPrice"
                      value="{{ data[0].newPrice }}"
-                     step=any>
+                     min="0"
+                     step="0.01">
               </input>
               <br>
               <label for="usedStock">used Stock</label>
               <input type="number"
                      name="usedStock"
                      placeholder="usedStock"
+                     min="0"
                      value="{{ data[0].usedStock }}">
               </input>
               <br>
@@ -76,7 +77,8 @@
                      name="usedPrice"
                      placeholder="usedPrice"
                      value="{{ data[0].usedPrice }}"
-                     step=any>
+                     min="0"
+                     step="0.01">
               </input>
               <br>
               <input type="submit" name="Edit_Book" value="Edit_Book" class="btn">
