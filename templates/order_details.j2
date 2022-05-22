@@ -3,48 +3,48 @@
     <h1>{% block title %} Order Details {% endblock %}</h1>
 {% endblock %}
 {% block content %}
+<div>
+    <table id = 'browse' class="table">
+        <thead>
+            <tr>
+                <th class="table_cell">    
+                    <input type="button" class="new" onclick="newOrder()" value="New">
+                </th>
+                <th class="table_cell">Order-Details ID</th>
+                <th class="table_cell">Order ID</th>
+                <th class="table_cell">Book Title</th>
+                <th class="table_cell">Order Type</th>
+                <th class="table_cell">Order Quantity</th>
+                <th class="table_cell">Order Price</th>
+                <th class="table_cell">Coupon ID</th>
+                <th class="table_cell">Discounted Price</th>
+            </tr>
+        </thead>
+        <tbody id = "tbody">
+            {% for item in orderDetails %}
+                <tr id="row_{{ item['orderDetailsID'] }}">
+                    <td class="table_cell"></td>
 
-<table id = 'browse' class="table">
-    <thead>
-    <tr>
-        <th class="table_cell">    
-            <input type="button" class="new" onclick="newOrder()" value="New">
-        </th>
-        <th class="table_cell">Order-Details ID</th>
-        <th class="table_cell">Order ID</th>
-        <th class="table_cell">Book Title</th>
-        <th class="table_cell">Order Type</th>
-        <th class="table_cell">Order Quantity</th>
-        <th class="table_cell">Order Price</th>
-        <th class="table_cell">Coupon ID</th>
-        <th class="table_cell">Discounted Price</th>
-        
-    </tr>
-    <tbody id = "tbody">
-    {% for item in orderDetails %}
+                    {%for key in item.keys() %}
+                        <td class="table_cell"> {{item[key]}}</td>
+                    {% endfor %}
 
-        <tr id="row_{{ item['orderDetailsID'] }}">
-            <td class="table_cell"></td>
-
-            {%for key in item.keys() %}
-            <td class="table_cell"> {{item[key]}}</td>
+                    <td class="table_cell">
+                        
+                        {# <input type="button" class="delete" onclick="deleteOrder()" value="Delete"> #}
+                        <form>
+                            <button formaction="edit_order_details/{{ item['orderDetailsID'] }}" type="submit">Edit</button>
+                            <button formaction="delete_order_details/{{ item['orderDetailsID'] }}" type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
             {% endfor %}
-
-            <td class="table_cell">
-                <input type="button" class="edit" onclick="updateOrder()" value="Edit">
-                {# <input type="button" class="delete" onclick="deleteOrder()" value="Delete"> #}
-            <form>
-                <button formaction="delete_order_details/{{ item['orderDetailsID'] }}" type="submit" class="delete" value="Delete">Delete</button>
-            </form>
-            </td>
-        </tr>
-
-        {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
 
 <div id = 'create' style="display:none;" >
-    <form method="POST">
+    <form  method="POST">
         <fieldset>
                 <legend>
                     <h2> Add an Order-Books </h2>
@@ -82,89 +82,10 @@
             
         </fieldset>
 
-        <input name="Add_Order_Details"type="submit" class="submit" onclick="" value="Submit">
+        <input name="Add_Order_Details" type="submit" class="submit" onclick="" value="Submit">
         <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
     </form>
 </div>
 
-<div id = 'update' style="display:none;">
 
-    <legend>
-    <h2> Update an Order-Books </h2>
-    </legend>
-    
-    <fieldset>
-        <label> orderDetailsID: 1 </label>
-        <label> Order ID </label>
-        <input type="number" name="orderID">
-        <label> Book Title </label>
-        <select id="orderID" name="orderID">
-            {% for item in books %}
-            <option value= "{{title}}"> {{item['title']}} </option>
-            {% endfor %}
-        </select>
-        <label>Order Type: </label>
-        <select id="orderType">
-            <option value="{{ request.form['orderType'] }}"> purchase </option>
-            <option value="{{ request.form['orderType'] }}"> sale </option>
-        </select>
-        <label> Order Quantity </label>
-        <input type="number" name="orderQty">
-        <label> Order Price: </label>
-        <input value="{{orderPrice}}" type="number" name="orderPrice" step=any>
-        <label> Coupon ID: </label>
-            <select id="couponID">
-                <option value = NULL > NULL</option>
-                {% for item in coupons %}
-                    <option value= "{{idCoupon}}">{{item['idCoupon']}}</option>
-                {% endfor %}
-            </select>
-        <label> Discounted Price: </label>
-        <input value="{{discountedPrice}}" type="number" step=any>
-    </fieldset>
-
-    <input type="button" class="submit" onclick="" value="Submit">
-    
-    <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
-
-</div>
-
-{# <div id = 'delete'>
-
-    <p> Are you sure you wish to delete the following row from the database? </p>
-
-    <table class = 'table'>
-    <thead>
-        <tr>
-            
-            <th class="table_cell">Order-Details ID</th>
-            <th class="table_cell">Order ID</th>
-            <th class="table_cell">Book Title</th>
-            <th class="table_cell">Order Type</th>
-            <th class="table_cell">Order Quantity</th>
-            <th class="table_cell">Order Price</th>
-            <th class="table_cell">Coupon ID</th>
-            <th class="table_cell">Discounted Price</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        
-
-    </tbody>
- 
-
-
-
-
-
-
-    <input type="button" class="submit" onclick="" value="Submit">
-    <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
-
-</div> #}
-{#
-<input type="button" id="all" onclick="showAll()" value="Show All">
-<input type="button" id="hide" style="display: none;" onclick="hideAll()" value="Hide All">
-#}
 {% endblock %}

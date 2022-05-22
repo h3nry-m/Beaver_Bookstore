@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>
+        {% block title %}Edit Order-Details{% endblock %}
+    </h1>
+{% endblock %}
+{% block content %}
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table_cell">Order-Details ID</th>
+                <th class="table_cell">Order ID</th>
+                <th class="table_cell">Book Title</th>
+                <th class="table_cell">Order Type</th>
+                <th class="table_cell">Order Quantity</th>
+                <th class="table_cell">Order Price</th>
+                <th class="table_cell">Coupon ID</th>
+                <th class="table_cell">Discounted Price</th>
+            </tr>
+            </tr>
+        </thead> 
+
+        <tbody>
+            <tr>
+                <td class="table_cell">{{results[0]['orderDetailsID']}}</td>
+                <form method="POST">
+                    <td class="table_cell">
+                        <select name="idOrder">
+                            {% for item in orders %}
+                                {% if item['idOrder'] == results[0]['idOrder']%}
+                                    <option value="{{ item['idOrder'] }}" selected>{{item['idOrder']}}</option>
+                                {% else %}
+                                    <option value="{{ item['idOrder'] }}"> {{item['idOrder']}} </option>
+                                {% endif %}
+                            {% endfor %}    
+                        </select>
+                    </td>
+                    <td class="table_cell">
+                        <select name="idBook">
+                            {% for item in books %}
+                                {% if item['idBook'] == results[0]['idBook'] %}
+                                    <option value="{{ item['idBook'] }}" selected> {{item['title']}}</option>
+                                {% else %}
+                                    <option value="{{ item['idBook'] }}"> {{item['title']}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="table_cell">
+                        <select name="orderType">
+                            {% if results[0]['orderType'] == 'purchase'%}
+                                <option value="purchase" selected> purchase </option>
+                                <option value="sale" > sale</option>
+
+                            {% else %}
+                                <option value="purchase" > purchase </option>
+                                <option value="sale" selected> sale</option>
+                            {% endif %}
+                        </select>
+                    </td>
+
+                    <td class="table_cell">
+                        <input name="orderQty" type="number" placeholder="{{ results[0]['orderQty'] }}">
+                    </td> 
+                    
+                    <td class="table_cell">
+                        <input name="orderPrice"type="number" step="any" placeholder="{{ results[0]['orderPrice'] }}">
+                    </td>
+
+                    <td class="table_cell">
+                        <select name = "idCoupon">
+                            {% if results[0]['idCoupon'] == 'NULL'%}
+                                    <option value= '0' selected> NULL </option>
+                            {% else %}
+                                    <option value = '0'> NULL </option>
+                            {% endif %}
+
+                            {% for item in coupons %}
+                                {% if results[0]['idCoupon'] == item['idCoupon'] %}
+                                    <option value="{{ item['idCoupon'] }}" selected > {{ item['idCoupon'] }}</option>
+                                {% else %}
+                                    <option value="{{ item['idCoupon'] }}"> {{ item['idCoupon'] }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td class="table_cell">
+                        <input name="discountedPrice" type="number" step="any" placeholder="{{ results[0]['discountedPrice'] }}" >
+                    </td>
+                    <td>
+                        <input name="Edit_Order_Details" type="submit" value="Submit" class="btn">
+                        <br>
+                        <a href="/order_details"><button type="button">Cancel</button></a>
+                    </td>
+                    
+                </form>
+
+            </tr>
+                
+        </tbody>
+            
+    </table>
+   
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,3 +1,10 @@
+# Author Name: Supplied through OSU-cs340 flask-starter-app
+# Availability: https://github.com/osu-cs340-ecampus/flask-starter-app#step-0---quick-and-dirty-task-1-setup
+
+
+
+
+
 import MySQLdb
 import os
 from dotenv import load_dotenv, find_dotenv

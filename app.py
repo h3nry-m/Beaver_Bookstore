@@ -159,6 +159,7 @@ def CRUD_customers():
         return render_template("customers.j2", customers=all_customers)
 
     if request.method == "POST":
+        print("success")
         if request.form.get("Add_Customer"):
             firstName = request.form["firstName"]
             lastName = request.form["lastName"]
@@ -192,8 +193,6 @@ def delete_customer(id):
     )
     return redirect("/customers")
 
-
-@app.route("/order_details")
 
 @app.route('/order_details', methods=["POST", "GET"])
 def CRUD_order_details():
@@ -259,14 +258,59 @@ def delete_order_details(orderDetailsID):
 
     # elif request.method == "DELETE":
     #     if request.form.get("Delete_Order_Details"):
-    query = "DELETE FROM OrderDetails WHERE orderDetailsID = '%s';"
+    #         query = "DELETE FROM OrderDetails WHERE orderDetailsID = %s;"
+    #         cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(orderDetailsID,) )
+    #         db_connection.commit()
+    #         return redirect('/order_details')
+    query = "DELETE FROM OrderDetails WHERE orderDetailsID = %s;"
     cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(orderDetailsID,) )
     db_connection.commit()
     return redirect('/order_details')
-        
     # return render_template("delete_temp.j2", table_header=table_info, delete_info=results)
 
+@app.route('/edit_order_details/<int:orderDetailsID>', methods=["POST", "GET"])
+def edit_order_details(orderDetailsID):
+    if request.method == "GET":
+        query = "SELECT * FROM OrderDetails WHERE orderDetailsID = '%s'"
+        cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(orderDetailsID,))
+        results = cursor.fetchall()
 
+        query2 = "SELECT idOrder FROM Orders;"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        order_data = cursor.fetchall()
+
+        query3 = "SELECT idBook, title FROM Books;"
+        cursor = db.execute_query(db_connection=db_connection, query=query3)
+        book_data = cursor.fetchall()
+
+        query4 = "SELECT idCoupon FROM Coupons;"
+        cursor = db.execute_query(db_connection=db_connection, query=query4)
+        coupon_data = cursor.fetchall()
+    elif request.method == "POST":
+        if request.form.get("Edit_Order_Details"):
+
+            idOrder = request.form['idOrder']
+            idBook = request.form['idBook']
+            orderType = request.form['orderType']
+            orderQty = request.form['orderQty']
+            orderPrice = request.form['orderPrice']
+            idCoupon = request.form['idCoupon']
+            discountedPrice = request.form['discountedPrice']
+
+            if idCoupon == '0':
+                query = "UPDATE OrderDetails SET \
+                idOrder = %s, idBook = %s, orderType = %s, orderQty = %s, orderPrice = %s, idCoupon = NULL, discountedPrice = %s WHERE orderDetailsID = %s;"
+                cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(idOrder, idBook, orderType, orderQty, orderPrice, discountedPrice, orderDetailsID))
+                db_connection.commit()
+            else:
+                query =  "UPDATE OrderDetails SET \
+                idOrder = %s, idBook = %s, orderType = %s, orderQty = %s, orderPrice = %s, idCoupon = %s, discountedPrice = %s WHERE orderDetailsID = %s;"
+                cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(idOrder, idBook, orderType, orderQty, orderPrice, idCoupon, discountedPrice, orderDetailsID))
+                db_connection.commit()
+            return redirect("/order_details")
+        else:
+            print(False)
+    return render_template("edit_templates/edit_order_details.j2", results=results, orders=order_data, books = book_data, coupons = coupon_data )
 
 @app.route('/coupons')
 def CRUD_coupons():
