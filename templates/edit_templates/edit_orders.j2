@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>
+        {% block title %}Edit Orders{% endblock %}
+    </h1>
+{% endblock %}
+{% block content %}
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table_cell">Order ID</th>
+                <th class="table_cell">Customer Name</th>
+                <th class="table_cell">Order Date</th>
+                <th class="table_cell">Order Total</th>
+            </tr>
+            </tr>
+        </thead> 
+
+        <tbody>
+            <tr>
+                <td class="table_cell">{{results[0]['idOrder']}}</td>
+                <form method="POST">
+                    <td class="table_cell">
+                        <select name="idCustomer">
+                            {% for item in customer_info %}
+                                {% if item['idCustomer'] == results[0]['idCustomer']%}
+                                    <option value="{{ item['idCustomer'] }}" selected> {{item['firstName']}} {{item['lastName']}} </option>
+                                {% else %}
+                                    <option value="{{ item['idCustomer'] }}"> {{item['firstName']}} {{item['lastName']}} </option>
+                                {% endif %}
+                            {% endfor %}    
+                        </select>
+                    </td>
+                    <td class="table_cell">
+                        <input type="date" name="orderDate">
+                    </td>
+                    <td class="table_cell">
+                        <input name="orderTotal" type="number" step="any" placeholder="{{ results[0]['orderTotal'] }}">
+                    </td>
+                    <td>
+                        <input name="Edit_Orders" type="submit" value="Submit" class="btn">
+                        <br>
+                        <a href="/orders"><button type="button">Cancel</button></a>
+                    </td>
+                    
+                </form>
+
+            </tr>
+                
+        </tbody>
+            
+    </table>
+   
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{%endblock%}

@@ -32,8 +32,10 @@
             {% endfor %}
 
             <td class="table_cell">
-            <input type="button" class="edit" onclick="updateOrder()" value="Edit">
-            <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
+                <form>
+                    <button formaction="edit_orders/{{ item['idOrder'] }}" type="submit">Edit</button>
+                    <button formaction="delete_orders/{{ item['idOrder'] }}" type="submit">Delete</button>
+                </form>
             </td>
         </tr>
 
@@ -42,8 +44,7 @@
 </table>
 
 <div id="create" >
-
-    <form id="addOrder" method="post">
+    <form method="POST">
         <fieldset>
             <legend>
                 <h2>Add a Order</h2>
@@ -52,76 +53,19 @@
             
             <select id="fname" name="fullName">
                 {% for item in customers %}
-                <option value= "{{idCustomer}}"> {{item['firstName']}} {{item['lastName']}}</option>
+                    <option value= "{{ item['idCustomer'] }}"> {{item['firstName']}} {{item['lastName']}}</option>
                 {% endfor %}
             </select>
 
             <label>Date:</label>
-            <input value="{{ request.form['date'] }}" type="date">
-            <label for="orderTotal">Order Total</label>
-            <input type="number" name="Order Total"
-                placeholder="Order Total"
-                value="{{ request.form['orderTotal'] }}"></input>
+            <input name= "orderDate" type="date">
+            <label> Order Total</label>
+            <input type="number" name="orderTotal" placeholder="Order Total" step="any">
             
-            <input type="button" class="submit" onclick="" value="Submit">
+            <input name="Add_Order" type="submit" class="submit" value="Submit">
             <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
         </fieldset>
-        
     </form>
 </div>
 
-<div id="update">
-    <form id="modifyOrder" methord="post">
-        <fieldset>
-            <legend>
-                <h2>Modify a Order</h2>
-            </legend>
-            <label>orderID: 1 </label>
-            <label>First Name: Gene</label>
-            
-            <labe>Last Name: Fram</label>
-            
-            <label>Date:</label>
-            <input value="{{ request.form['date'] }}" type="date">
-            <label for="orderTotal">Order Total</label>
-            <input type="number" name="Order Total"
-                placeholder="Order Total"
-                value="{{ request.form['orderTotal'] }}"></input>
-           
-            <input type="button" class="update" onclick="" value="Update">
-            <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
-        </fieldset
-    </form>
-
-</div>
-
-<div id="delete">
-    <form id="modifyOrder" methord="post">
-        <legend>
-            <h2>Delete a Order</h2>
-        </legend>
-        {# this is a sample, need to adjust for queries at a later date #}
-        {# TODO #}
-        <p> Are you sure you ant to delete the following order?</p>
-        <label>orderID: 1 </label>
-        <br>
-        <label>First Name: Gene</label>
-        <br>
-        <labe>Last Name: Fram</label>
-        <br>
-        <label>Date: 2022-03-18</label>
-        <br>
-        <label>
-        <label>Order Total: 19.68</label>
-        
-        <input type="button" class="submit" onclick="" value="Submit">
-        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
-    </form>
-
-</div>
-<br>
-{#
-<input type="button" id="all" onclick="showAll()" value="Show All">
-<input type="button" id="hide" style="display: none;" onclick="hideAll()" value="Hide All">
-#}
 {% endblock %}

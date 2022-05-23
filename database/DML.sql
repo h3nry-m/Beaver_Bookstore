@@ -200,9 +200,8 @@ WHERE id= :customer_ID_from_the_update_form;
 UPDATE Orders
 SET idCustomer = :idCustomerInput,
 orderDate = :orderDateInput,
-orderTotal = :orderTotal,
-orderType = orderType
-WHERE orderID = :orderID_selected_from_the_update_form;
+orderTotal = :orderTotal
+WHERE idOrder = :orderID_selected_from_the_update_form;
 
 -- update a order from the Update table
 UPDATE OrderDetails
@@ -212,7 +211,7 @@ orderQty = :orderQty,
 orderType = :orderType,
 orderPrice = :orderPrice,
 idCoupon = :idCoupon,
-discountedPrice = :discountedPrice,
+discountedPrice = :discountedPrice
 WHERE orderDetailsID = :orderDetailsID_selected_from_the_update_form;
 
 -- update a review
