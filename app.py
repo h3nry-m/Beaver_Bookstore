@@ -196,16 +196,17 @@ def CRUD_customers():
         return render_template("customers.j2", customers=all_customers)
 
     if request.method == "POST":
-        print("success")
         if request.form.get("Add_Customer"):
             firstName = request.form["firstName"]
             lastName = request.form["lastName"]
             email = request.form["email"]
             phoneNumber = request.form["phoneNumber"]
             addressStreet = request.form["addressStreet"]
+            addressCity = request.form["addressCity"]
             addressState = request.form["addressState"]
             addressZip = request.form["addressZip"]
-            query = "INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addressState, addressZip) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+            print(f'addresStreet and city {addressStreet} and {addressCity}')
+            query = "INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
             cursor = db.execute_query(
                 db_connection=db_connection,
                 query=query,
@@ -215,6 +216,7 @@ def CRUD_customers():
                     email,
                     phoneNumber,
                     addressStreet,
+                    addressCity,
                     addressState,
                     addressZip,
                 ),
@@ -229,6 +231,48 @@ def delete_customer(id):
         db_connection=db_connection, query=query, query_params=(id,)
     )
     return redirect("/customers")
+
+@app.route("/edit_customer/<int:id>", methods=["POST", "GET"])
+def edit_customer(id):
+    if request.method == "GET":
+        # to grab the current info of the book
+        query = "SELECT * FROM Customers WHERE idCustomer = '%s';"
+        cursor = db.execute_query(
+            db_connection=db_connection, query=query, query_params=(id,)
+        )
+        data = cursor.fetchall()
+
+        return render_template("edit_customer.j2", data=data)
+
+    if request.method == "POST":
+        if request.form.get("Edit_Customer"):
+            firstName = request.form["firstName"]
+            lastName = request.form["lastName"]
+            email = request.form["email"]
+            phoneNumber = request.form["phoneNumber"]
+            addressStreet = request.form["addressStreet"]
+            addressCity = request.form["addressCity"]
+            addressState = request.form["addressState"]
+            addressZip = request.form["addressZip"]
+            print(f'{firstName}, {lastName}, {email}, {phoneNumber}, {addressStreet}, {addressCity}, {addressState}, {addressZip}')
+            query = "UPDATE Customers SET Customers.firstName = %s, Customers.lastName = %s, Customers.email = %s, Customers.phoneNumber = %s, Customers.addressStreet = %s, Customers.addressCity = %s, Customers.addressState = %s, Customers.addressZip = %s WHERE Customers.idCustomer = %s;"
+            cursor = db.execute_query(
+            db_connection=db_connection,
+            query=query,
+            query_params=(
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                addressStreet,
+                addressCity,
+                addressState,
+                addressZip,
+                id,
+            ),
+        )
+        return redirect("/customers")
+
 
 
 @app.route('/order_details', methods=["POST", "GET"])
@@ -363,7 +407,7 @@ def root():
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 9013))  # 9114
+    port = int(os.environ.get("PORT", 9012))  # 9114
     #                                 ^^^^
     #              You can replace this number with any valid port
 
