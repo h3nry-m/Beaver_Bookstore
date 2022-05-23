@@ -6,7 +6,8 @@
 {% endblock %}
 {% block content %}
     <div id="search">
-        <input type="text" placeholder="Search Books..." id="searchBooks">
+        <input type="search" name="q" placeholder="Search Books..." id="searchBooks">
+        <button>Search</button>
     </div>
     <table id="browse" class="table">
         <thead>
@@ -48,6 +49,7 @@
                         <legend>
                             <h2>Add a book</h2>
                         </legend>
+                        <fieldset>
                         <label for="title">Title</label>
                         <input type="text"
                                name="title"
