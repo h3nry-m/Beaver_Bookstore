@@ -22,13 +22,19 @@ db_connection.ping(True)
 #                                                                                 #   
 ###################################################################################
 @app.route("/books", methods=["GET", "POST"])
-def CRUD_books():
+def create_read_books():
     if request.method == "GET":
-        query1 = "SELECT idBook, title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice FROM Books;"
-        cursor = db.execute_query(db_connection=db_connection, query=query1)
-        all_books = cursor.fetchall()
+        search_query = request.query_string.decode() 
+        if search_query: 
+            query = f"SELECT * FROM Books WHERE MATCH (title, firstName, lastName, isbn, publisher) AGAINST ('{search_query[2:]}' IN NATURAL LANGUAGE MODE);"
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            books_data = cursor.fetchall()
 
-        return render_template("books.j2", books=all_books)
+        else:
+            query1 = "SELECT idBook, title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice FROM Books;"
+            cursor = db.execute_query(db_connection=db_connection, query=query1)
+            books_data = cursor.fetchall()
+        return render_template("books.j2", books=books_data)
 
     if request.method == "POST":
         if request.form.get("Add_Book"):
@@ -60,7 +66,6 @@ def CRUD_books():
                 ),
             )
         return redirect("/books")
-
 
 @app.route("/edit_book/<int:id>", methods=["POST", "GET"])
 def edit_book(id):
@@ -213,12 +218,18 @@ def edit_order(idOrder):
 #                                                                                 #   
 ###################################################################################
 @app.route("/customers", methods=["POST", "GET"])
-def CRUD_customers():
+def create_read_customers():
     if request.method == "GET":
-        query = "SELECT * FROM Customers;"
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-        all_customers = cursor.fetchall()
-        return render_template("customers.j2", customers=all_customers)
+        search_query = request.query_string.decode() 
+        if search_query: 
+            query = f"SELECT * FROM Customers WHERE MATCH (firstName, lastName, email, phoneNumber, addressStreet, addressCity, addressState, addressZip) AGAINST ('{search_query[2:]}' IN NATURAL LANGUAGE MODE);"
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            customers_data = cursor.fetchall()
+        else:
+            query = "SELECT * FROM Customers;"
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            customers_data = cursor.fetchall()
+        return render_template("customers.j2", customers=customers_data)
 
     if request.method == "POST":
         if request.form.get("Add_Customer"):
@@ -278,7 +289,6 @@ def edit_customer(id):
             addressCity = request.form["addressCity"]
             addressState = request.form["addressState"]
             addressZip = request.form["addressZip"]
-            print(f'{firstName}, {lastName}, {email}, {phoneNumber}, {addressStreet}, {addressCity}, {addressState}, {addressZip}')
             query = "UPDATE Customers SET Customers.firstName = %s, Customers.lastName = %s, Customers.email = %s, Customers.phoneNumber = %s, Customers.addressStreet = %s, Customers.addressCity = %s, Customers.addressState = %s, Customers.addressZip = %s WHERE Customers.idCustomer = %s;"
             cursor = db.execute_query(
             db_connection=db_connection,

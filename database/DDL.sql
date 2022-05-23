@@ -22,6 +22,7 @@ CREATE TABLE Customers (
     addressCity VARCHAR(45) NOT NULL,
     addressState VARCHAR(45) NOT NULL,
     addressZip VARCHAR(10) NOT NULL,
+    FULLTEXT (firstName, lastName, email, phoneNumber, addressStreet, addressCity, addressState, addressZip),
     PRIMARY KEY (idCustomer)
 );
 
@@ -40,6 +41,7 @@ CREATE TABLE Books (
     newPrice DECIMAL(5,2) NOT NULL,
     usedStock INT NOT NULL,
     usedPrice DECIMAL(5,2) NOT NULL,
+    FULLTEXT (title, firstName, lastName, isbn, publisher),
     PRIMARY KEY(idBook)
 );
 
