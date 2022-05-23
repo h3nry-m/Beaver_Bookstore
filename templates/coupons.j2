@@ -9,9 +9,9 @@
     <thead>
 
         <tr>
-            <th class="table_cell">    
+            {# <th class="table_cell">    
             <input type="button" class="new" onclick="newOrder()" value="New">
-            </th>
+            </th> #}
             <th class="table_cell">Coupon ID</th>
             <th class="table_cell">Expiration Date</th>
             <th class="table_cell">Discount Code</th>
@@ -24,16 +24,16 @@
     {% for item in coupons %}
 
         <tr>
-            <td class="table_cell"></td>
+            {# <td class="table_cell"></td> #}
 
             {%for key in item.keys() %}
             <td class="table_cell"> {{item[key]}}</td>
             {% endfor %}
 
-            <td class="table_cell">
+            {# <td class="table_cell">
             <input type="button" class="edit" onclick="updateOrder()" value="Edit">
             <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
-            </td>
+            </td> #}
         </tr>
 
         {% endfor %}
