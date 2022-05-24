@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>
+        {% block title %}Edit Reviews{% endblock %}
+    </h1>
+{% endblock %}
+{% block content %}
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table_cell">Review ID</th>
+                <th class="table_cell">Customer Name</th>
+                <th class="table_cell">Book Title</th>
+                <th class="table_cell">Post Title</th>
+                <th class="table_cell">Body</th>
+                <th class="table_cell">Stars</th>
+            </tr>
+            </tr>
+        </thead> 
+
+        <tbody>
+            <tr>
+                <td class="table_cell">{{results[0]['idReview']}}</td>
+                <form method="POST">
+                    <td class="table_cell">
+                        <select name="idCustomer">
+                            {% for item in customer_info %}
+                                {% if item['idCustomer'] == results[0]['idCustomer']%}
+                                    <option value="{{ item['idCustomer'] }}" selected> {{item['firstName']}} {{item['lastName']}} </option>
+                                {% else %}
+                                    <option value="{{ item['idCustomer'] }}"> {{item['firstName']}} {{item['lastName']}} </option>
+                                {% endif %}
+                            {% endfor %}    
+                        </select>
+                    </td>
+                    <td class="table_cell">
+                        <select name="idBook">
+                            {% for item in book_data %}
+                                {% if item['idBook'] == results[0]['idBook'] %}
+                                    <option value="{{ item['idBook'] }}" selected> {{item['title']}}</option>
+                                {% else %}
+                                    <option value="{{ item['idBook'] }}"> {{item['title']}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td class="table_cell">
+                        <input name="postTitle" type="text" placeholder="{{ results[0]['postTitle'] }}" value="{{ results[0]['postTitle'] }}" >
+                    </td>
+                    <td class="table_cell">
+                        <textarea placeholder="{{ results[0]['postBody'] }}" name="postBody" rows="4" cols="50" >{{ results[0]['postBody'] }}</textarea>
+                    </td>
+                    <td class="table_cell">
+                        <select name="stars" id="stars">
+                            {% for number in range(1, 6) %}
+                                {% if number == results[0]['stars'] %}
+                                    <option value= {{number}} selected> {{number}} </option>
+                                {% else %}
+                                    <option value= {{number}}> {{number}} </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select> 
+                    </td>
+                    <td>
+                        <input name="Edit_Reviews" type="submit" value="Submit" class="btn">
+                        <br>
+                        <a href="/reviews"><button type="button">Cancel</button></a>
+                    </td>
+                </form>
+
+            </tr>
+        </tbody>
+    </table>
+   
+</div>
+
+
+{% endblock %}

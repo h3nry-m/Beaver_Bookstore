@@ -111,7 +111,7 @@ def delete_book(id):
     return redirect("/books")
 
 
-@app.route("/reviews")
+@app.route("/reviews", methods=["POST", "GET"])
 def CRUD_reviews():
     if request.method == "GET":
         query = "SELECT idReview, Customers.firstName, Customers.lastName, title, postTitle, postBody, stars \
@@ -127,10 +127,87 @@ def CRUD_reviews():
         query3 = "SELECT idBook, title FROM Books;"
         cursor = db.execute_query(db_connection=db_connection, query=query3)
         book_data = cursor.fetchall()
+    elif request.method == "POST":
+        if request.form.get("Add_Review"):
 
-    return render_template(
-        "reviews.j2", reviews=results, customers=customer_data, books=book_data
-    )
+            idCustomer = request.form["idCustomer"]
+            idBook = request.form["idBook"]
+            postTitle = request.form["postTitle"]
+            postBody = request.form["postBody"]
+            stars = request.form["stars"]
+            if postTitle == '' and postBody == '':
+                query = "INSERT INTO Reviews (idCustomer, idBook, stars) \
+                VALUES (%s, %s, %s);"
+                cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(idCustomer, idBook, stars))
+                db_connection.commit()
+            elif postTitle == '':
+                query = "INSERT INTO Reviews (idCustomer, idBook, postBody, stars) \
+                VALUES (%s, %s, %s, %s);"
+                cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(idCustomer, idBook, postBody, stars))
+                db_connection.commit()
+            elif postBody == '':
+                query = "INSERT INTO Reviews (idCustomer, idBook, postTitle, stars) \
+                VALUES (%s, %s, %s, %s);"
+                cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(idCustomer, idBook, postTitle, stars))
+                db_connection.commit()
+            else:
+                query = "INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars) \
+                VALUES (%s, %s, %s, %s, %s);"
+                cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(idCustomer, idBook, postTitle, postBody, stars))
+                db_connection.commit()
+            return redirect("/reviews")
+    return render_template("reviews.j2", reviews=results, customers=customer_data, books=book_data)
+
+@app.route("/delete_reviews/<int:idReview>")
+def delete_review(idReview):
+    query = "DELETE FROM Reviews WHERE idReview = %s;"
+    cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(idReview,) )
+    db_connection.commit()
+    return redirect('/reviews')
+
+@app.route("/edit_reviews/<int:idReview>", methods=["POST", "GET"])
+def edit_revieW(idReview):
+    if request.method == "GET":
+        query = "SELECT * FROM Reviews WHERE idReview = %s"
+        cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(idReview,) )
+        results = cursor.fetchall()
+
+        query2 = "SELECT idCustomer, firstName, lastName FROM Customers;"
+        cursor = db.execute_query(db_connection=db_connection, query=query2)
+        customer_data = cursor.fetchall()
+
+        query3 = "SELECT idBook, title FROM Books;"
+        cursor = db.execute_query(db_connection=db_connection, query=query3)
+        book_data = cursor.fetchall()
+    elif request.method == "POST":
+        if request.form.get("Edit_Reviews"):
+
+            idCustomer = request.form["idCustomer"]
+            idBook = request.form["idBook"]
+            postTitle = request.form["postTitle"]
+            postBody = request.form["postBody"]
+            stars = request.form["stars"]
+
+            if postTitle == '' and postBody == '':
+                query = "UPDATE Reviews SET idCustomer = %s, idBook = %s, stars = %s WHERE idReview= %s;"
+                cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(idCustomer, idBook, stars, idReview))
+                db_connection.commit()
+            elif postTitle == '':
+                query = "UPDATE Reviews SET idCustomer = %s, idBook = %s, postBody = %s, stars = %s WHERE idReview= %s;"
+                cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(idCustomer, idBook, postBody, stars, idReview))
+                db_connection.commit()
+            elif postBody == '':
+                query = "UPDATE Reviews SET idCustomer = %s, idBook = %s, postTitle = %s, stars = %s WHERE idReview= %s;"
+                cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(idCustomer, idBook, postTitle, stars, idReview))
+                db_connection.commit()
+            else:
+                query = "UPDATE Reviews SET idCustomer = %s, idBook = %s, postTitle = %s, postBody = %s, stars = %s WHERE idReview= %s;"
+                cursor = db.execute_query(db_connection=db_connection, query=query, query_params=(idCustomer, idBook, postTitle, postBody, stars, idReview))
+                db_connection.commit()
+
+            return redirect("/reviews")
+    return render_template("edit_templates/edit_reviews.j2", results=results, customer_info=customer_data, book_data=book_data )
+
 
 
 @app.route("/orders", methods=["POST", "GET"])

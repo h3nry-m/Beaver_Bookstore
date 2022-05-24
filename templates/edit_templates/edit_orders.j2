@@ -34,10 +34,10 @@
                         </select>
                     </td>
                     <td class="table_cell">
-                        <input type="date" name="orderDate">
+                        <input type="date" name="orderDate" value="{{ results[0]['orderDate'] }}">
                     </td>
                     <td class="table_cell">
-                        <input name="orderTotal" type="number" step="any" placeholder="{{ results[0]['orderTotal'] }}">
+                        <input name="orderTotal" type="number" step="any" placeholder="{{ results[0]['orderTotal'] }}" value="{{ results[0]['orderTotal'] }}">
                     </td>
                     <td>
                         <input name="Edit_Orders" type="submit" value="Submit" class="btn">
