@@ -19,9 +19,10 @@ CREATE TABLE Customers (
     email VARCHAR(45) NOT NULL,
     phoneNumber VARCHAR(45) NOT NULL,
     addressStreet VARCHAR(45) NOT NULL,
-    addresssCity VARCHAR(45) NOT NULL,
+    addressCity VARCHAR(45) NOT NULL,
     addressState VARCHAR(45) NOT NULL,
     addressZip VARCHAR(10) NOT NULL,
+    FULLTEXT (firstName, lastName, email, phoneNumber, addressStreet, addressCity, addressState, addressZip),
     PRIMARY KEY (idCustomer)
 );
 
@@ -40,6 +41,7 @@ CREATE TABLE Books (
     newPrice DECIMAL(5,2) NOT NULL,
     usedStock INT NOT NULL,
     usedPrice DECIMAL(5,2) NOT NULL,
+    FULLTEXT (title, firstName, lastName, isbn, publisher),
     PRIMARY KEY(idBook)
 );
 
@@ -102,7 +104,7 @@ Create TABLE Reviews (
 );
 
 
-INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addresssCity, addressState, addressZip)
+INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addressCity, addressState, addressZip)
 VALUE
 ('Cara', 'Jacob', 'cara.jacob9@hotmail.com', '954-616-7898', '667 Kenwood Place','Fort Lauderdale', 'FL', '33301'),
 ('Gene', 'Fram', 'gene_fram7@hotmail.com', '612-775-0456', '2128 Jewell Road', 'Minneapolis', 'MN', '55402'),

@@ -10,20 +10,31 @@ orders_from_app_py = []
 app = Flask(__name__)
 
 # #database connection
-
 db_connection = db.connect_to_database()
 db_connection.ping(True)
+
 # # Routes
-
-
+###################################################################################
+#                                                                                 #  
+#                                                                                 #   
+#                                   Books                                         #   
+#                                                                                 #   
+#                                                                                 #   
+###################################################################################
 @app.route("/books", methods=["GET", "POST"])
-def CRUD_books():
+def create_read_books():
     if request.method == "GET":
-        query1 = "SELECT idBook, title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice FROM Books;"
-        cursor = db.execute_query(db_connection=db_connection, query=query1)
-        all_books = cursor.fetchall()
+        search_query = request.query_string.decode() 
+        if search_query: 
+            query = f"SELECT * FROM Books WHERE MATCH (title, firstName, lastName, isbn, publisher) AGAINST ('{search_query[2:]}' IN NATURAL LANGUAGE MODE);"
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            books_data = cursor.fetchall()
 
-        return render_template("books.j2", books=all_books)
+        else:
+            query1 = "SELECT idBook, title, firstName, lastName, isbn, publisher, publicationYear, newStock, newPrice, usedStock, usedPrice FROM Books;"
+            cursor = db.execute_query(db_connection=db_connection, query=query1)
+            books_data = cursor.fetchall()
+        return render_template("books.j2", books=books_data)
 
     if request.method == "POST":
         if request.form.get("Add_Book"):
@@ -56,7 +67,6 @@ def CRUD_books():
             )
         return redirect("/books")
 
-
 @app.route("/edit_book/<int:id>", methods=["POST", "GET"])
 def edit_book(id):
     if request.method == "GET":
@@ -67,7 +77,7 @@ def edit_book(id):
         )
         data = cursor.fetchall()
 
-        return render_template("edit_book.j2", data=data)
+        return render_template("edit_templates/edit_book.j2", data=data)
 
     if request.method == "POST":
         if request.form.get("Edit_Book"):
@@ -101,7 +111,6 @@ def edit_book(id):
             )
             return redirect("/books")
 
-            
 @app.route("/delete_book/<int:id>")
 def delete_book(id):
     query = "DELETE FROM Books WHERE idBook = '%s';"
@@ -111,7 +120,14 @@ def delete_book(id):
     return redirect("/books")
 
 
-@app.route("/reviews", methods=["POST", "GET"])
+###################################################################################
+#                                                                                 #  
+#                                                                                 #   
+#                                   Reviews                                       #   
+#                                                                                 #   
+#                                                                                 #   
+###################################################################################
+@app.route("/reviews")
 def CRUD_reviews():
     if request.method == "GET":
         query = "SELECT idReview, Customers.firstName, Customers.lastName, title, postTitle, postBody, stars \
@@ -210,6 +226,13 @@ def edit_revieW(idReview):
 
 
 
+###################################################################################
+#                                                                                 #  
+#                                                                                 #   
+#                                   Orders                                        #   
+#                                                                                 #   
+#                                                                                 #   
+###################################################################################
 @app.route("/orders", methods=["POST", "GET"])
 def CRUD_orders():
     if request.method == "GET":
@@ -264,25 +287,39 @@ def edit_order(idOrder):
     return render_template("edit_templates/edit_orders.j2", results=results, customer_info=customer_info )
 
 
+###################################################################################
+#                                                                                 #  
+#                                                                                 #   
+#                                   Customers                                     #   
+#                                                                                 #   
+#                                                                                 #   
+###################################################################################
 @app.route("/customers", methods=["POST", "GET"])
-def CRUD_customers():
+def create_read_customers():
     if request.method == "GET":
-        query = "SELECT * FROM Customers;"
-        cursor = db.execute_query(db_connection=db_connection, query=query)
-        all_customers = cursor.fetchall()
-        return render_template("customers.j2", customers=all_customers)
+        search_query = request.query_string.decode() 
+        if search_query: 
+            query = f"SELECT * FROM Customers WHERE MATCH (firstName, lastName, email, phoneNumber, addressStreet, addressCity, addressState, addressZip) AGAINST ('{search_query[2:]}' IN NATURAL LANGUAGE MODE);"
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            customers_data = cursor.fetchall()
+        else:
+            query = "SELECT * FROM Customers;"
+            cursor = db.execute_query(db_connection=db_connection, query=query)
+            customers_data = cursor.fetchall()
+        return render_template("customers.j2", customers=customers_data)
 
     if request.method == "POST":
-        print("success")
         if request.form.get("Add_Customer"):
             firstName = request.form["firstName"]
             lastName = request.form["lastName"]
             email = request.form["email"]
             phoneNumber = request.form["phoneNumber"]
             addressStreet = request.form["addressStreet"]
+            addressCity = request.form["addressCity"]
             addressState = request.form["addressState"]
             addressZip = request.form["addressZip"]
-            query = "INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addressState, addressZip) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+            print(f'addresStreet and city {addressStreet} and {addressCity}')
+            query = "INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
             cursor = db.execute_query(
                 db_connection=db_connection,
                 query=query,
@@ -292,12 +329,12 @@ def CRUD_customers():
                     email,
                     phoneNumber,
                     addressStreet,
+                    addressCity,
                     addressState,
                     addressZip,
                 ),
             )
             return redirect("/customers")
-
 
 @app.route("/delete_customer/<int:id>")
 def delete_customer(id):
@@ -307,7 +344,54 @@ def delete_customer(id):
     )
     return redirect("/customers")
 
+@app.route("/edit_customer/<int:id>", methods=["POST", "GET"])
+def edit_customer(id):
+    if request.method == "GET":
+        # to grab the current info of the book
+        query = "SELECT * FROM Customers WHERE idCustomer = '%s';"
+        cursor = db.execute_query(
+            db_connection=db_connection, query=query, query_params=(id,)
+        )
+        data = cursor.fetchall()
 
+        return render_template("edit_templates/edit_customer.j2", data=data)
+
+    if request.method == "POST":
+        if request.form.get("Edit_Customer"):
+            firstName = request.form["firstName"]
+            lastName = request.form["lastName"]
+            email = request.form["email"]
+            phoneNumber = request.form["phoneNumber"]
+            addressStreet = request.form["addressStreet"]
+            addressCity = request.form["addressCity"]
+            addressState = request.form["addressState"]
+            addressZip = request.form["addressZip"]
+            query = "UPDATE Customers SET Customers.firstName = %s, Customers.lastName = %s, Customers.email = %s, Customers.phoneNumber = %s, Customers.addressStreet = %s, Customers.addressCity = %s, Customers.addressState = %s, Customers.addressZip = %s WHERE Customers.idCustomer = %s;"
+            cursor = db.execute_query(
+            db_connection=db_connection,
+            query=query,
+            query_params=(
+                firstName,
+                lastName,
+                email,
+                phoneNumber,
+                addressStreet,
+                addressCity,
+                addressState,
+                addressZip,
+                id,
+            ),
+        )
+        return redirect("/customers")
+
+
+###################################################################################
+#                                                                                 #  
+#                                                                                 #   
+#                                   Order Details                                 #   
+#                                                                                 #   
+#                                                                                 #   
+###################################################################################
 @app.route('/order_details', methods=["POST", "GET"])
 def CRUD_order_details():
     if request.method == "GET":
@@ -423,6 +507,14 @@ def edit_order_details(orderDetailsID):
             return redirect("/order_details")
     return render_template("edit_templates/edit_order_details.j2", results=results, orders=order_data, books = book_data, coupons = coupon_data )
 
+
+###################################################################################
+#                                                                                 #  
+#                                                                                 #   
+#                                   Coupons                                       #   
+#                                                                                 #   
+#                                                                                 #   
+###################################################################################
 @app.route('/coupons')
 def CRUD_coupons():
     if request.method == "GET":
@@ -440,7 +532,7 @@ def root():
 
 # Listener
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 9013))  # 9114
+    port = int(os.environ.get("PORT", 9012))  # 9114
     #                                 ^^^^
     #              You can replace this number with any valid port
 

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block header %}
+    <h1>
+        {% block title %}Edit Customer{% endblock %}
+    </h1>
+{% endblock %}
+{% block content %}
+
+
+<div id="edit">
+
+    <form id="Edit_Customer" action="/edit_customer/{{ data[0].idCustomer }}" method="post">
+        <legend>
+            <strong>Edit a Customer</strong>
+        </legend>
+       <fieldset>
+        <label for="firstName">First Name</label>
+        <input type="text" name="firstName"
+               placeholder="First name"
+               value="{{ data[0].firstName }}"></input>
+        <br>
+
+        <label for="lastName">Last Name</label>
+        <input type="text" name="lastName"
+               placeholder="Last name"
+               value="{{ data[0].lastName }}"></input>
+        <br>
+
+        <label for="email">Email</label>
+        <input type="email" name="email"
+               placeholder="Email"
+               value="{{ data[0].email}}"></input>
+        <br>
+
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" name="phoneNumber"
+               placeholder="(xxx)-xxx-xxx"
+               value="{{ data[0].phoneNumber}}"></input>
+        <br>
+
+        <label for="addressStreet">Street</label>
+        <input type="text" name="addressStreet"
+               placeholder="addressStreet"
+               value="{{ data[0].addressStreet }}"></input>
+        <br>
+
+        <label for="addressCity">City</label>
+        <input type="text" name="addressCity"
+               placeholder="addressCity"
+               value="{{ data[0].addressCity }}"></input>
+        <br>
+
+        <label for="addressState">State</label>
+        <input type="text" name="addressState"
+               placeholder="addressState"
+               value="{{ data[0].addressState }}"></input>
+        <br>
+
+        <label for="addressZip">Zip Code</label>
+        <input type="number" name="addressZip"
+               placeholder="number"
+               value="{{ data[0].addressZip}}"></input>
+        <br>
+        <input type="submit" name="Edit_Customer" value="Edit_Customer" class="btn">
+       <a href="/books"><button type="button">Cancel</button></a>
+    </form>
+</div>
+{% endblock %}

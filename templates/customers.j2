@@ -4,9 +4,10 @@
 {% endblock %}
 {% block content %}
 
-<div id="search">
-       <input type="text" placeholder="Search Customers..." id="searchCustomers">
-</div>
+<form id="search">
+       <input type="search" name="q" placeholder="Search Customers..." id="searchCustomers">
+       <button>Search</button>
+</form>
 
 <table id="browse" class="table">
     <thead>
@@ -31,10 +32,12 @@
        {% for key in item.keys() %}
               <td class="table_cell"> {{item[key]}} </td>
        {% endfor %}
-       
-            <td class="table_cell"><input type="button" class="edit" onclick="updateOrder()" value="Edit"></td>
-            <td class="table_cell"><input type="button" class="delete" onclick="deleteOrder()" value="Delete"></td>
+        <td class="table_cell">                                                    
+            <a href="edit_customer/{{ item.idCustomer }}" type="button" >Edit</a>          
         </td>
+        <td class="table_cell">
+            <a href="delete_customer/{{ item.idCustomer }}" type="button" >Delete</a>      
+        </td>                                                                 
     </tr>
     {% endfor %}
 </table>
@@ -45,6 +48,7 @@
         <legend>
             <h2>Add a customer</h2>
         </legend>
+        <fieldset>
         <label for="firstName">First Name</label>
         <input type="text" name="firstName"
                placeholder="First name"
@@ -73,6 +77,12 @@
         <input type="text" name="addressStreet"
                placeholder="addressStreet"
                value="{{ request.form['addressStreet'] }}"></input>
+        <br>
+
+        <label for="addressCity">City</label>
+        <input type="text" name="addressCity"
+               placeholder="addressCity"
+               value="{{ request.form['addressCity'] }}"></input>
         <br>
 
         <label for="addressState">State</label>
