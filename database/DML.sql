@@ -113,6 +113,11 @@ INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, idCo
 VALUES
 (:idOrder,:idBook, :orderTotal, :orderQty, :orderType, :orderPrice, :idCoupon, :discountedPrice);
 
+-- Query that adds a new OrderDetails where idCoupon is set to NULL
+INSERT INTO OrderDetails (idOrder, idBook, orderQty, orderType, orderPrice, discountedPrice) 
+VALUES 
+(:idOrder,:idBook, :orderTotal, :orderQty, :orderType, :orderPrice, :discountedPrice);
+
 
 -- add a new review into the Reviews table
 INSERT INTO Reviews (idCustomer, idBook, postTitle, postBody, stars) 
@@ -182,7 +187,7 @@ newStock = :newStockInput,
 newPrice = :newPriceInput, 
 usedStock = :usedStockInput, 
 usedPrice = :usedPriceInput
-WHERE id= :book_ID_from_the_update_form;
+WHERE idBook = :book_ID_from_the_update_form;
 
 -- update a customer
 UPDATE Customers 
@@ -194,7 +199,7 @@ addressStreet = :addressStreetInput,
 addressCity = :addressCityInput, 
 addressState = :addressStateInput, 
 addressZip = :addressZipInput
-WHERE id= :customer_ID_from_the_update_form;
+WHERE idCustomer = :customer_ID_from_the_update_form;
 
 -- update a order from the Update table
 UPDATE Orders
@@ -214,6 +219,17 @@ idCoupon = :idCoupon,
 discountedPrice = :discountedPrice
 WHERE orderDetailsID = :orderDetailsID_selected_from_the_update_form;
 
+-- update a order without idCoupon for the Update Table
+UPDATE OrderDetails
+SET idOrder = :idOrderInput,
+idBook = :idBookInput,
+orderQty = :orderQty,
+orderType = :orderType,
+orderPrice = :orderPrice,
+discountedPrice = :discountedPrice
+WHERE orderDetailsID = :orderDetailsID_selected_from_the_update_form;
+
+
 -- update a review
 UPDATE Reviews 
 SET idCustomer = :idCustomer_from_review_table, 
@@ -221,11 +237,41 @@ idBook = :idBook_from_review_table,
 postTitle = :postTitleInput, 
 postBody = :postBodyInput, 
 stars = :starsInput
-WHERE id= :ID_review_from_the_update_form;
+WHERE idReview= :ID_review_from_the_update_form;
+
+
+-- update a review with no title
+
+UPDATE Reviews 
+SET idCustomer = :idCustomer_from_review_table, 
+idBook = :idBook_from_review_table, 
+postBody = :postBodyInput, 
+stars = :starsInput
+WHERE idReview= :ID_review_from_the_update_form;
+
+
+-- update a review with no body
+
+UPDATE Reviews 
+SET idCustomer = :idCustomer_from_review_table, 
+idBook = :idBook_from_review_table, 
+postTitle = :postTitleInput, 
+stars = :starsInput
+WHERE idReview= :ID_review_from_the_update_form;
+
+
+-- update a review with no title or body
+UPDATE Reviews 
+SET 
+idCustomer = idCustomer_from_review_table, 
+idBook = :idBook_from_review_table, 
+stars = :starsInput
+WHERE 
+idReview= ID_review_from_the_update_form;
 
 -- update a coupon
 UPDATE Coupon 
 SET expirationDate = :expirationDateInput, 
 discountCode = :discountCodeInput, 
 discountPercent= :discountPercentInput
-WHERE id = :couponID_from_the_update_form;
+WHERE idCoupon = :couponID_from_the_update_form;
