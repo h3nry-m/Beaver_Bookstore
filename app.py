@@ -127,7 +127,7 @@ def delete_book(id):
 #                                                                                 #   
 #                                                                                 #   
 ###################################################################################
-@app.route("/reviews")
+@app.route("/reviews", methods=["POST", "GET"])
 def CRUD_reviews():
     if request.method == "GET":
         query = "SELECT idReview, Customers.firstName, Customers.lastName, title, postTitle, postBody, stars \
@@ -151,6 +151,7 @@ def CRUD_reviews():
             postTitle = request.form["postTitle"]
             postBody = request.form["postBody"]
             stars = request.form["stars"]
+
             if postTitle == '' and postBody == '':
                 query = "INSERT INTO Reviews (idCustomer, idBook, stars) \
                 VALUES (%s, %s, %s);"
