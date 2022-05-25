@@ -3,12 +3,12 @@
     <h1>{% block title %} Customers {% endblock %}</h1>
 {% endblock %}
 {% block content %}
-
+{#
 <form id="search">
        <input type="search" name="q" placeholder="Search Customers..." id="searchCustomers">
        <button>Search</button>
 </form>
-
+#}
 <table id="browse" class="table">
     <thead>
     <tr>
@@ -52,49 +52,63 @@
         <label for="firstName">First Name</label>
         <input type="text" name="firstName"
                placeholder="First name"
-               value="{{ request.form['firstName'] }}"></input>
+               value="{{ request.form['firstName'] }}"
+               required></input>
         <br>
 
         <label for="lastName">Last Name</label>
         <input type="text" name="lastName"
                placeholder="Last name"
-               value="{{ request.form['lastName'] }}"></input>
+               value="{{ request.form['lastName'] }}"
+               required></input>
         <br>
 
         <label for="email">Email</label>
         <input type="email" name="email"
                placeholder="Email"
-               value="{{ request.form['email'] }}"></input>
+               value="{{ request.form['email'] }}"
+               required></input>
         <br>
 
         <label for="phoneNumber">Phone Number</label>
         <input type="text" name="phoneNumber"
-               placeholder="(xxx)-xxx-xxx"
-               value="{{ request.form['phoneNumber'] }}"></input>
+               placeholder="###-###-####"
+               value="{{ request.form['phoneNumber'] }}"
+               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+               title="###-###-####"
+               required></input>
         <br>
 
         <label for="addressStreet">Street</label>
         <input type="text" name="addressStreet"
                placeholder="addressStreet"
-               value="{{ request.form['addressStreet'] }}"></input>
+               value="{{ request.form['addressStreet'] }}"
+               required></input>
         <br>
 
         <label for="addressCity">City</label>
         <input type="text" name="addressCity"
                placeholder="addressCity"
-               value="{{ request.form['addressCity'] }}"></input>
+               value="{{ request.form['addressCity'] }}"
+               required></input>
         <br>
 
         <label for="addressState">State</label>
         <input type="text" name="addressState"
                placeholder="addressState"
-               value="{{ request.form['addressState'] }}"></input>
+               value="{{ request.form['addressState'] }}"
+               pattern="[A-Z]{2}"
+               title="State Abbreviation (ie. CA for California)"
+               required></input>
         <br>
 
         <label for="addressZip">Zip Code</label>
-        <input type="number" name="addressZip"
+        <input type="text" name="addressZip"
                placeholder="number"
-               value="{{ request.form['addressZip'] }}"></input>
+               value="{{ request.form['addressZip'] }}"
+               pattern="\b\d{5}\b"
+               title="#####"
+               required></input>
         <br>
        <input type="submit" value="Add customer" name="Add_Customer" class="btn">
     </form>

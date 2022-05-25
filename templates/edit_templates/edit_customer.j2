@@ -17,49 +17,64 @@
         <label for="firstName">First Name</label>
         <input type="text" name="firstName"
                placeholder="First name"
-               value="{{ data[0].firstName }}"></input>
+               value="{{ data[0].firstName }}"
+               required></input>
+
         <br>
 
         <label for="lastName">Last Name</label>
         <input type="text" name="lastName"
                placeholder="Last name"
-               value="{{ data[0].lastName }}"></input>
+               value="{{ data[0].lastName }}"
+              required></input>
         <br>
 
         <label for="email">Email</label>
         <input type="email" name="email"
                placeholder="Email"
-               value="{{ data[0].email}}"></input>
+               value="{{ data[0].email}}"
+               required></input>
         <br>
 
         <label for="phoneNumber">Phone Number</label>
         <input type="text" name="phoneNumber"
                placeholder="(xxx)-xxx-xxx"
-               value="{{ data[0].phoneNumber}}"></input>
+               value="{{ data[0].phoneNumber}}"
+               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+               title="###-###-####"
+               required></input>
         <br>
 
         <label for="addressStreet">Street</label>
         <input type="text" name="addressStreet"
                placeholder="addressStreet"
-               value="{{ data[0].addressStreet }}"></input>
+               value="{{ data[0].addressStreet }}"
+               required></input>
         <br>
 
         <label for="addressCity">City</label>
         <input type="text" name="addressCity"
                placeholder="addressCity"
-               value="{{ data[0].addressCity }}"></input>
+               value="{{ data[0].addressCity }}"
+               required></input>
         <br>
 
         <label for="addressState">State</label>
         <input type="text" name="addressState"
                placeholder="addressState"
-               value="{{ data[0].addressState }}"></input>
+               value="{{ data[0].addressState }}"
+               pattern="[A-Z]{2}"
+               title="State Abbreviation (ie. CA for California)"
+               required></input>
         <br>
 
         <label for="addressZip">Zip Code</label>
-        <input type="number" name="addressZip"
+        <input type="text" name="addressZip"
                placeholder="number"
-               value="{{ data[0].addressZip}}"></input>
+               value="{{ data[0].addressZip}}"
+               pattern="\b\d{5}\b"
+               title="#####"
+               required></input>
         <br>
         <input type="submit" name="Edit_Customer" value="Edit_Customer" class="btn">
        <a href="/books"><button type="button">Cancel</button></a>

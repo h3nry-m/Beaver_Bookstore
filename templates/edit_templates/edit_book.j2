@@ -12,39 +12,47 @@
             </legend>
             <fieldset>
                 <label for="title">Title</label>
-                <input type="text" name="title" value="{{ data[0].title }}">
+                <input type="text" name="title" value="{{ data[0].title }}" required>
             </input>
             <br>
             <label for="make">First name:</label>
-            <input type="text" name="firstName" value="{{ data[0].firstName }}">
+            <input type="text" name="firstName" value="{{ data[0].firstName }}" required>
                </input>
                <br>
                <label for="name">Last Name</label>
                <input type="text"
                       name="lastName"
                       placeholder="Last name"
-                      value="{{ data[0].lastName }}">
+                      value="{{ data[0].lastName }}"
+                      required>
            </input>
            <br>
            <label for="isbn">ISBN</label>
            <input type="text"
                   name="isbn"
                   placeholder="xxx-x-xx-xxxxxx-x"
-                  value="{{ data[0].isbn }}">
+                  value="{{ data[0].isbn }}"
+                  pattern="[0-9]{3}-[0-9]{1}-[0-9]{2}-[0-9]{6}-[0-9]{1}"
+                            title="xxx-x-xx-xxxxxx-x"
+                            required>
             </input>
             <br>
            <label for="publisher">Publisher</label>
            <input type="text"
                   name="publisher"
                   placeholder="publisher"
-                  value="{{ data[0].publisher }}">
+                  value="{{ data[0].publisher }}"
+                  required>
             </input>
               <br>
               <label for="publicationYear">publicationYear</label>
-              <input type="number"
+              <input type="text"
                      name="publicationYear"
                      placeholder="publicationYear"
-                     value="{{ data[0].publicationYear }}">
+                     value="{{ data[0].publicationYear }}"
+                     pattern="\d{4}"
+                     title="####"
+                     required>
               </input>
               <br>
               <label for="newStock">New Stock</label>
@@ -52,7 +60,8 @@
                      name="newStock"
                      placeholder="newStock"
                      min="0"
-                     value="{{ data[0].newStock }}">
+                     value="{{ data[0].newStock }}"
+                     required>
               </input>
               <br>
               <label for="newPrice">New Price</label>
@@ -61,7 +70,8 @@
                      placeholder="newPrice"
                      value="{{ data[0].newPrice }}"
                      min="0"
-                     step="0.01">
+                     step="0.01"
+                     required>
               </input>
               <br>
               <label for="usedStock">used Stock</label>
@@ -69,7 +79,8 @@
                      name="usedStock"
                      placeholder="usedStock"
                      min="0"
-                     value="{{ data[0].usedStock }}">
+                     value="{{ data[0].usedStock }}"
+                     required>
               </input>
               <br>
               <label for="usedPrice">Used Price</label>
@@ -78,7 +89,8 @@
                      placeholder="usedPrice"
                      value="{{ data[0].usedPrice }}"
                      min="0"
-                     step="0.01">
+                     step="0.01"
+                     required>
               </input>
               <br>
               <input type="submit" name="Edit_Book" value="Edit_Book" class="btn">
