@@ -1,117 +1,94 @@
 {% extends 'base.html' %}
 {% block header %}
-    <h1>{% block title %} Customers {% endblock %}</h1>
+<h1>{% block title %} Customers {% endblock %}</h1>
 {% endblock %}
 {% block content %}
 {#
 <form id="search">
-       <input type="search" name="q" placeholder="Search Customers..." id="searchCustomers">
-       <button>Search</button>
+    <input type="search" name="q" placeholder="Search Customers..." id="searchCustomers">
+    <button>Search</button>
 </form>
 #}
 <table id="browse" class="table">
     <thead>
-    <tr>
-        <th class="table_cell">    
-            <input type="button" class="new" onclick="newOrder()" value="New">
-        </th>
-        <th class="table_cell">Customer ID</th>
-        <th class="table_cell">First Name</th>
-        <th class="table_cell">Last Name</th>
-        <th class="table_cell">Email</th>
-        <th class="table_cell">Phone number</th>
-        <th class="table_cell">Street Address</th>
-        <th class="table_cell">City</th>
-        <th class="table_cell">State</th>
-        <th class="table_cell">Zip Code</th>
-    </tr>
+        <tr>
+            <th class="table_cell">
+                <input type="button" class="new" onclick="newOrder()" value="New">
+            </th>
+            <th class="table_cell">Customer ID</th>
+            <th class="table_cell">First Name</th>
+            <th class="table_cell">Last Name</th>
+            <th class="table_cell">Email</th>
+            <th class="table_cell">Phone number</th>
+            <th class="table_cell">Street Address</th>
+            <th class="table_cell">City</th>
+            <th class="table_cell">State</th>
+            <th class="table_cell">Zip Code</th>
+        </tr>
     <tbody>
-       {% for item in customers %}
-       <tr>
-        <td class="table_cell">
-       {% for key in item.keys() %}
-              <td class="table_cell"> {{item[key]}} </td>
-       {% endfor %}
-        <td class="table_cell">                                                    
-            <a href="edit_customer/{{ item.idCustomer }}" type="button" >Edit</a>          
-        </td>
-        <td class="table_cell">
-            <a href="delete_customer/{{ item.idCustomer }}" type="button" >Delete</a>      
-        </td>                                                                 
-    </tr>
-    {% endfor %}
+        {% for item in customers %}
+        <tr>
+            <td class="table_cell">
+                {% for key in item.keys() %}
+            <td class="table_cell"> {{item[key]}} </td>
+            {% endfor %}
+            <td class="table_cell">
+                <form>
+                    <button formaction="edit_customer/{{ item.idCustomer }}" type="submit">Edit</button>
+                    <button formaction="delete_customer/{{ item.idCustomer }}" type="submit">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
 </table>
 
 <div id="create" style="display: none;"">
 
-    <form id="Add_Customer" method="POST">
-        <legend>
-            <h2>Add a customer</h2>
-        </legend>
-        <fieldset>
+    <form id=" Add_Customer" method="POST">
+    <legend>
+        <h2>Add a customer</h2>
+    </legend>
+    <fieldset>
         <label for="firstName">First Name</label>
-        <input type="text" name="firstName"
-               placeholder="First name"
-               value="{{ request.form['firstName'] }}"
-               required></input>
+        <input type="text" name="firstName" placeholder="First name" value="{{ request.form['firstName'] }}"
+            required></input>
         <br>
 
         <label for="lastName">Last Name</label>
-        <input type="text" name="lastName"
-               placeholder="Last name"
-               value="{{ request.form['lastName'] }}"
-               required></input>
+        <input type="text" name="lastName" placeholder="Last name" value="{{ request.form['lastName'] }}"
+            required></input>
         <br>
 
         <label for="email">Email</label>
-        <input type="email" name="email"
-               placeholder="Email"
-               value="{{ request.form['email'] }}"
-               required></input>
+        <input type="email" name="email" placeholder="Email" value="{{ request.form['email'] }}" required></input>
         <br>
 
         <label for="phoneNumber">Phone Number</label>
-        <input type="text" name="phoneNumber"
-               placeholder="###-###-####"
-               value="{{ request.form['phoneNumber'] }}"
-               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-               title="###-###-####"
-               required></input>
+        <input type="text" name="phoneNumber" placeholder="###-###-####" value="{{ request.form['phoneNumber'] }}"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="###-###-####" required></input>
         <br>
 
         <label for="addressStreet">Street</label>
-        <input type="text" name="addressStreet"
-               placeholder="addressStreet"
-               value="{{ request.form['addressStreet'] }}"
-               required></input>
+        <input type="text" name="addressStreet" placeholder="addressStreet" value="{{ request.form['addressStreet'] }}"
+            required></input>
         <br>
 
         <label for="addressCity">City</label>
-        <input type="text" name="addressCity"
-               placeholder="addressCity"
-               value="{{ request.form['addressCity'] }}"
-               required></input>
+        <input type="text" name="addressCity" placeholder="addressCity" value="{{ request.form['addressCity'] }}"
+            required></input>
         <br>
 
         <label for="addressState">State</label>
-        <input type="text" name="addressState"
-               placeholder="addressState"
-               value="{{ request.form['addressState'] }}"
-               pattern="[A-Z]{2}"
-               title="State Abbreviation (ie. CA for California)"
-               required></input>
+        <input type="text" name="addressState" placeholder="addressState" value="{{ request.form['addressState'] }}"
+            pattern="[A-Z]{2}" title="State Abbreviation (ie. CA for California)" required></input>
         <br>
 
         <label for="addressZip">Zip Code</label>
-        <input type="text" name="addressZip"
-               placeholder="number"
-               value="{{ request.form['addressZip'] }}"
-               pattern="\b\d{5}\b"
-               title="#####"
-               required></input>
+        <input type="text" name="addressZip" placeholder="number" value="{{ request.form['addressZip'] }}"
+            pattern="\b\d{5}\b" title="#####" required></input>
         <br>
-       <input type="submit" value="Add customer" name="Add_Customer" class="btn">
-    </form>
+        <input type="submit" value="Add customer" name="Add_Customer" class="btn">
+        </form>
 </div>
 {#
 <div id="update">
@@ -122,45 +99,34 @@
         </legend>
 
         <label for="firstName">First Name</label>
-        <input type="text" name="name"
-               placeholder="First name"
-               value="{{ request.form['firstName'] }}"></input>
+        <input type="text" name="name" placeholder="First name" value="{{ request.form['firstName'] }}"></input>
         <br>
 
         <label for="lastName">Last Name</label>
-        <input type="text" name="lastName"
-               placeholder="Last name"
-               value="{{ request.form['lastName'] }}"></input>
+        <input type="text" name="lastName" placeholder="Last name" value="{{ request.form['lastName'] }}"></input>
         <br>
 
         <label for="email">Email</label>
-        <input type="email" name="email"
-               placeholder="Email"
-               value="{{ request.form['email'] }}"></input>
+        <input type="email" name="email" placeholder="Email" value="{{ request.form['email'] }}"></input>
         <br>
 
         <label for="phoneNumber">Phone Number</label>
-        <input type="text" name="phoneNumber"
-               placeholder="(xxx)-xxx-xxx"
-               value="{{ request.form['phoneNumber'] }}"></input>
+        <input type="text" name="phoneNumber" placeholder="(xxx)-xxx-xxx"
+            value="{{ request.form['phoneNumber'] }}"></input>
         <br>
 
         <label for="addressStreet">Street</label>
-        <input type="text" name="addressStreet"
-               placeholder="addressStreet"
-               value="{{ request.form['addressStreet'] }}"></input>
+        <input type="text" name="addressStreet" placeholder="addressStreet"
+            value="{{ request.form['addressStreet'] }}"></input>
         <br>
 
         <label for="addressState">State</label>
-        <input type="text" name="addressState"
-               placeholder="addressState"
-               value="{{ request.form['addressState'] }}"></input>
+        <input type="text" name="addressState" placeholder="addressState"
+            value="{{ request.form['addressState'] }}"></input>
         <br>
 
         <label for="addressZip">Zip Code</label>
-        <input type="number" name="addressZip"
-               placeholder="number"
-               value="{{ request.form['addressZip'] }}"></input>
+        <input type="number" name="addressZip" placeholder="number" value="{{ request.form['addressZip'] }}"></input>
         <br>
         <input type="button" class="update" onclick="" value="Update">
         <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
@@ -179,12 +145,12 @@
         <label>First Name: Cara</label>
         <br>
         <labe>Last Name: Jacob</label>
-        <br>
-        <label>Email: cara.jacob9@hotmail.com</label>
-        <br>
-        <label>
-        <input type="button" class="submit" onclick="" value="Submit">
-        <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
+            <br>
+            <label>Email: cara.jacob9@hotmail.com</label>
+            <br>
+            <label>
+                <input type="button" class="submit" onclick="" value="Submit">
+                <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
     </form>
 
 </div>
@@ -194,6 +160,3 @@
 <input type="button" id="hide" style="display: none;" onclick="hideAll()" value="Hide All">
 #}
 {% endblock %}
-
-
-
