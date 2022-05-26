@@ -11,35 +11,45 @@
 #}
 <table id="browse" class="table">
     <thead>
-    <tr>
-        <th class="table_cell">    
-            <input type="button" class="new" onclick="newOrder()" value="New">
-        </th>
-        <th class="table_cell">Customer ID</th>
-        <th class="table_cell">First Name</th>
-        <th class="table_cell">Last Name</th>
-        <th class="table_cell">Email</th>
-        <th class="table_cell">Phone number</th>
-        <th class="table_cell">Street Address</th>
-        <th class="table_cell">City</th>
-        <th class="table_cell">State</th>
-        <th class="table_cell">Zip Code</th>
-    </tr>
+              <tr>
+                     <th class="table_cell">    
+                            <input type="button" class="new" onclick="newOrder()" value="New">
+                     </th>
+                     <th class="table_cell">Customer ID</th>
+                     <th class="table_cell">First Name</th>
+                     <th class="table_cell">Last Name</th>
+                     <th class="table_cell">Email</th>
+                     <th class="table_cell">Phone number</th>
+                     <th class="table_cell">Street Address</th>
+                     <th class="table_cell">City</th>
+                     <th class="table_cell">State</th>
+                     <th class="table_cell">Zip Code</th>
+              </tr>
+    </thead>
     <tbody>
-       {% for item in customers %}
-       <tr>
-        <td class="table_cell">
-       {% for key in item.keys() %}
-              <td class="table_cell"> {{item[key]}} </td>
-       {% endfor %}
-        <td class="table_cell">                                                    
-            <a href="edit_customer/{{ item.idCustomer }}" type="button" >Edit</a>          
-        </td>
-        <td class="table_cell">
-            <a href="delete_customer/{{ item.idCustomer }}" type="button" >Delete</a>      
-        </td>                                                                 
-    </tr>
-    {% endfor %}
+              {% for item in customers %}
+                     <tr>
+                            <td class="table_cell">
+                                   {% for key in item.keys() %}
+                                          <td class="table_cell"> {{item[key]}} </td>
+                                   {% endfor %}
+                            </td>
+{# 
+                            <a href="edit_customer/{{ item.idCustomer }}" type="button" >Edit</a>          
+                            </td>
+                            <td class="table_cell">
+                            <a href="delete_customer/{{ item.idCustomer }}" type="button" >Delete</a>       #}
+
+                            <td class="table_cell">                                                                                    
+                                   <form>
+                                          <button formaction="edit_customer/{{ item['idCustomer'] }}" type="submit">Edit</button>
+                                          <button formaction="delete_customer/{{ item['idCustomer'] }}" type="submit">Delete</button>
+                                   </form>
+                            </td>
+                     </tr>
+
+              {% endfor %}
+
 </table>
 
 <div id="create" style="display: none;"">

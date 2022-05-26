@@ -35,10 +35,10 @@
                                 <td class="table_cell">{{ item[key] }}</td>
                             {% endfor %}
                             <td class="table_cell">
-                                <a href="edit_book/{{ item.idBook }}" type="button" >Edit</a>
-                            </td>
-                            <td class="table_cell">
-                                <a href="delete_book/{{ item.idBook }}" type="button" >Delete</a>
+                                <form>
+                                    <button formaction="edit_book/{{ item['idBook'] }}" type="submit">Edit</button>
+                                    <button formaction="delete_book/{{ item['idBook'] }}" type="submit">Delete</button>
+                                </form>
                             </td>
                         </tr>
                     {% endfor %}
