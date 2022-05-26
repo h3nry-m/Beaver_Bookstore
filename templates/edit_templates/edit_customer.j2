@@ -1,83 +1,79 @@
 {% extends 'base.html' %}
 {% block header %}
-    <h1>
-        {% block title %}Edit Customer{% endblock %}
-    </h1>
+<h1>
+    {% block title %}Edit Customer{% endblock %}
+</h1>
 {% endblock %}
 {% block content %}
 
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="table_cell">Customer ID</th>
+                <th class="table_cell">First Name</th>
+                <th class="table_cell">Last Name</th>
+                <th class="table_cell">Email</th>
+                <th class="table_cell">Phone number</th>
+                <th class="table_cell">Street Address</th>
+                <th class="table_cell">City</th>
+                <th class="table_cell">State</th>
+                <th class="table_cell">Zip Code</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="table_cell">{{data[0].idCustomer}}</td>
+                <form method="post">
+                    <td class="table_cell">
+                        <input type="text" name="firstName" placeholder="First name" value="{{ data[0].firstName }}"
+                            required></input>
+                    </td>
 
-<div id="edit">
+                    <td class="table_cell">
+                        <input type="text" name="lastName" placeholder="Last name" value="{{ data[0].lastName }}"
+                            required></input>
+                    </td>
 
-    <form id="Edit_Customer" action="/edit_customer/{{ data[0].idCustomer }}" method="post">
-        <legend>
-            <strong>Edit a Customer</strong>
-        </legend>
-       <fieldset>
-        <label for="firstName">First Name</label>
-        <input type="text" name="firstName"
-               placeholder="First name"
-               value="{{ data[0].firstName }}"
-               required></input>
+                    <td class="table_cell">
+                        <input type="email" name="email" placeholder="Email" value="{{ data[0].email}}"
+                            required></input>
+                    </td>
 
-        <br>
+                    <td class="table_cell">
+                        <input type="text" name="phoneNumber" placeholder="(xxx)-xxx-xxx"
+                            value="{{ data[0].phoneNumber}}" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="###-###-####"
+                            required></input>
+                    </td>
 
-        <label for="lastName">Last Name</label>
-        <input type="text" name="lastName"
-               placeholder="Last name"
-               value="{{ data[0].lastName }}"
-              required></input>
-        <br>
+                    <td class="table_cell">
+                        <input type="text" name="addressStreet" placeholder="addressStreet"
+                            value="{{ data[0].addressStreet }}" required></input>
+                    </td>
 
-        <label for="email">Email</label>
-        <input type="email" name="email"
-               placeholder="Email"
-               value="{{ data[0].email}}"
-               required></input>
-        <br>
+                    <td class="table_cell">
+                        <input type="text" name="addressCity" placeholder="addressCity"
+                            value="{{ data[0].addressCity }}" required></input>
+                    </td>
 
-        <label for="phoneNumber">Phone Number</label>
-        <input type="text" name="phoneNumber"
-               placeholder="(xxx)-xxx-xxx"
-               value="{{ data[0].phoneNumber}}"
-               pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
-               title="###-###-####"
-               required></input>
-        <br>
+                    <td class="table_cell">
+                        <input type="text" name="addressState" placeholder="addressState"
+                            value="{{ data[0].addressState }}" pattern="[A-Z]{2}"
+                            title="State Abbreviation (ie. CA for California)" required></input>
+                    </td>
 
-        <label for="addressStreet">Street</label>
-        <input type="text" name="addressStreet"
-               placeholder="addressStreet"
-               value="{{ data[0].addressStreet }}"
-               required></input>
-        <br>
-
-        <label for="addressCity">City</label>
-        <input type="text" name="addressCity"
-               placeholder="addressCity"
-               value="{{ data[0].addressCity }}"
-               required></input>
-        <br>
-
-        <label for="addressState">State</label>
-        <input type="text" name="addressState"
-               placeholder="addressState"
-               value="{{ data[0].addressState }}"
-               pattern="[A-Z]{2}"
-               title="State Abbreviation (ie. CA for California)"
-               required></input>
-        <br>
-
-        <label for="addressZip">Zip Code</label>
-        <input type="text" name="addressZip"
-               placeholder="number"
-               value="{{ data[0].addressZip}}"
-               pattern="\b\d{5}\b"
-               title="#####"
-               required></input>
-        <br>
-        <input type="submit" name="Edit_Customer" value="Edit_Customer" class="btn">
-       <a href="/books"><button type="button">Cancel</button></a>
-    </form>
+                    <td class="table_cell">
+                        <input type="text" name="addressZip" placeholder="number" value="{{ data[0].addressZip}}"
+                            pattern="\b\d{5}\b" title="#####" required></input>
+                    </td>
+                    <td>
+                        <input type="submit" name="Edit_Customer" value="Edit" class="btn">
+                        <br>
+                        <a href="/books"><button type="button">Cancel</button></a>
+                    </td>
+                </form>
+            </tr>
+        </tbody>
+    </table>
 </div>
 {% endblock %}
