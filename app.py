@@ -268,7 +268,7 @@ def delete_order(idOrder):
 @app.route("/edit_orders/<int:idOrder>", methods={"POST", "GET"})
 def edit_order(idOrder):
     if request.method == "GET":
-        query = "SELECT * FROM Orders WHERE idOrder = '%s'"
+        query = "SELECT * FROM Orders WHERE idOrder = '%s';"
         cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(idOrder,))
         results = cursor.fetchall()
 
@@ -298,15 +298,9 @@ def edit_order(idOrder):
 @app.route("/customers", methods=["POST", "GET"])
 def create_read_customers():
     if request.method == "GET":
-        search_query = request.query_string.decode() 
-        if search_query: 
-            query = f"SELECT * FROM Customers WHERE MATCH (firstName, lastName, email, phoneNumber, addressStreet, addressCity, addressState, addressZip) AGAINST ('{search_query[2:]}' IN NATURAL LANGUAGE MODE);"
-            cursor = db.execute_query(db_connection=db_connection, query=query)
-            customers_data = cursor.fetchall()
-        else:
-            query = "SELECT * FROM Customers;"
-            cursor = db.execute_query(db_connection=db_connection, query=query)
-            customers_data = cursor.fetchall()
+        query = "SELECT * FROM Customers;"
+        cursor = db.execute_query(db_connection=db_connection, query=query)
+        customers_data = cursor.fetchall()
         return render_template("customers.j2", customers=customers_data)
 
     if request.method == "POST":
@@ -443,23 +437,6 @@ def CRUD_order_details():
 
 @app.route('/delete_order_details/<int:orderDetailsID>', methods=["GET", "DELETE"])
 def delete_order_details(orderDetailsID):
-    # table_info = {   
-    #         'page-title': 'Order Details',
-    #         'table-header': ['Order-Details ID', 'Order ID', 'Book Title', 'Order Type', 'Order Quantity', 'Order Price', 'Coupon ID', 'Discounted Price']
-    #         }
-        
-    # if request.method == "GET":
-    #     query = "SELECT orderDetailsID, Orders.idOrder, Books.title, orderType, orderQty, orderPrice, idCoupon, discountedPrice FROM OrderDetails \
-    #     INNER JOIN Books ON OrderDetails.idBook = Books.idBook INNER JOIN Orders ON OrderDetails.idOrder = Orders.idOrder WHERE OrderDetails.orderDetailsID = %s ORDER BY orderDetailsID ASC;"
-    #     cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(orderDetailsID,))
-    #     results = cursor.fetchall()
-
-    # elif request.method == "DELETE":
-    #     if request.form.get("Delete_Order_Details"):
-    #         query = "DELETE FROM OrderDetails WHERE orderDetailsID = %s;"
-    #         cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(orderDetailsID,) )
-    #         db_connection.commit()
-    #         return redirect('/order_details')
     query = "DELETE FROM OrderDetails WHERE orderDetailsID = %s;"
     cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(orderDetailsID,) )
     db_connection.commit()
@@ -469,7 +446,7 @@ def delete_order_details(orderDetailsID):
 @app.route('/edit_order_details/<int:orderDetailsID>', methods=["POST", "GET"])
 def edit_order_details(orderDetailsID):
     if request.method == "GET":
-        query = "SELECT * FROM OrderDetails WHERE orderDetailsID = '%s'"
+        query = "SELECT * FROM OrderDetails WHERE orderDetailsID = '%s';"
         cursor = db.execute_query(db_connection=db_connection, query = query, query_params=(orderDetailsID,))
         results = cursor.fetchall()
 
