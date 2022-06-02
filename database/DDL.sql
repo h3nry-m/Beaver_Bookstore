@@ -1,3 +1,13 @@
+-- DDL Description: 
+
+-- The purpose of this DDL file is to create six tables within a database which was designed to
+-- consist of Customers, Orders, Books, Reviews, Coupons and a intersecting table OrderDetails. 
+-- The file also consists of multiple queries that insert sample data within each table which will be used 
+-- to fill tables for our main web app that will provide  users the ability to
+-- complete multiple CRUD operations for an online Bookstore.
+
+
+
 SET FOREIGN_KEY_CHECKS=0;
 SET AUTOCOMMIT = 0;
 
