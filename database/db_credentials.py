@@ -1,6 +1,7 @@
-# Author Name: Supplied through OSU-cs340 flask-starter-app
-# Availability: https://github.com/osu-cs340-ecampus/flask-starter-app#step-0---quick-and-dirty-task-1-setup
-
+# Author Name: Supplied through osu-cs340-ecampus/flask-starter-app 
+# Title of Program: db_credentials.py
+# Date retrieved: 06/02/2022
+# Availability: https://github.com/osu-cs340-ecampus/flask-starter-app/blob/master/database/db_credentials.py
 
 
 
