@@ -37,7 +37,7 @@
                         <input type="date" name="orderDate" value="{{ results[0]['orderDate'] }}" required>
                     </td>
                     <td class="table_cell">
-                        <input name="orderTotal" type="number" step="any" placeholder="{{ results[0]['orderTotal'] }}" value="{{ results[0]['orderTotal'] }}" required>
+                        <input name="orderTotal" min="0" type="number" step="any" placeholder="{{ results[0]['orderTotal'] }}" value="{{ results[0]['orderTotal'] }}" required>
                     </td>
                     <td>
                         <input name="Edit_Orders" type="submit" value="Submit" class="btn">

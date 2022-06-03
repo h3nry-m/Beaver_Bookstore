@@ -62,11 +62,11 @@
                     </td>
 
                     <td class="table_cell">
-                        <input name="orderQty" type="number" placeholder="{{ results[0]['orderQty'] }}" value="{{ results[0]['orderQty'] }}" required>
+                        <input name="orderQty" type="number" min="0" placeholder="{{ results[0]['orderQty'] }}" value="{{ results[0]['orderQty'] }}" required>
                     </td> 
                     
                     <td class="table_cell">
-                        <input name="orderPrice"type="number" step="any" value="{{ results[0]['orderPrice'] }}"" placeholder="{{ results[0]['orderPrice'] }}" required>
+                        <input name="orderPrice"type="number" min="0" step="any" value="{{ results[0]['orderPrice'] }}"" placeholder="{{ results[0]['orderPrice'] }}" required>
                     </td>
 
                     <td class="table_cell">
@@ -88,7 +88,7 @@
                     </td>
 
                     <td class="table_cell">
-                        <input name="discountedPrice" type="number" step="any" placeholder="{{ results[0]['discountedPrice'] }}" value= "{{ results[0]['discountedPrice'] }}" required >
+                        <input name="discountedPrice" type="number" min="0" step="any" placeholder="{{ results[0]['discountedPrice'] }}" value= "{{ results[0]['discountedPrice'] }}" required >
                     </td>
                     <td>
                         <input name="Edit_Order_Details" type="submit" value="Submit" class="btn">

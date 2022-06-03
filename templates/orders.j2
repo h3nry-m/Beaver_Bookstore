@@ -60,7 +60,7 @@
             <label>Date:</label>
             <input name= "orderDate" type="date" required>
             <label> Order Total</label>
-            <input type="number" name="orderTotal" placeholder="Order Total" step="any" required>
+            <input type="number" name="orderTotal" min="0" placeholder="Order Total" step="any" required>
             
             <input name="Add_Order" type="submit" class="submit" value="Submit">
             <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
