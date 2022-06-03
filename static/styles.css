@@ -1,67 +1,72 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300&display=swap");
 
 p {
-    font-family: "Nunito Sans";
+  font-family: "Nunito Sans";
 }
 
 tr:nth-child(even) {
-    background-color: #e5e5e5;
+  background-color: #e5e5e5;
 }
 
 .table {
-    margin: 1rem;
-    border: 1px solid black;
- 
+  margin: 1rem;
+  border: 1px solid black;
+}
+
+.long_table {
+  margin: 1rem;
+  border: 1px solid black;
+  table-layout: ;
+  width: 1700px;
 }
 
 h1 {
-    font-family: "Nunito Sans";
+  font-family: "Nunito Sans";
 }
 
 .table_header {
-    text-align: left;
-    border: 1px solid black;
-    font-family: "Nunito Sans";
+  text-align: left;
+  border: 1px solid black;
+  font-family: "Nunito Sans";
 }
 
 .table_cell {
-    padding: 8px;
-    border: 1px solid black;
-    font-family: "Nunito Sans";
-    text-align: center;
+  padding: 8px;
+  border: 1px solid black;
+  font-family: "Nunito Sans";
+  text-align: center;
 }
 
-
 #create {
-    display: none;
+  display: none;
 }
 
 #update {
-    display: none;
+  display: none;
 }
 
 #delete {
-    display: none;
+  display: none;
 }
 
 ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
 li {
-    float: left;
+  float: left;
 }
 
 li a {
-    display: block;
-    padding: 12px 12px;
-    text-align: center;
-    font-family: "Nunito Sans";
+  display: block;
+  padding: 12px 12px;
+  text-align: center;
+  font-family: "Nunito Sans";
 }
 
 form {
-    font-family: "Nunito Sans";
+  font-family: "Nunito Sans";
 }
