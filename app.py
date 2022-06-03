@@ -313,7 +313,6 @@ def create_read_customers():
             addressCity = request.form["addressCity"]
             addressState = request.form["addressState"]
             addressZip = request.form["addressZip"]
-            print(f'addresStreet and city {addressStreet} and {addressCity}')
             query = "INSERT INTO Customers (firstName, lastName, email, phoneNumber, addressStreet, addressCity, addressState, addressZip) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);"
             cursor = db.execute_query(
                 db_connection=db_connection,

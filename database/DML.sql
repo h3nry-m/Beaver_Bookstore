@@ -19,7 +19,7 @@ Read Operations Section
 ----------------------------------------------------------
 */
 
--- Query used to  return a specifc book that is inputed through a search bar for the books page
+-- Query used to return a specifc book that is inputed through a search bar for the books page
 SELECT * FROM Books WHERE MATCH (title, firstName, lastName, isbn, publisher) AGAINST ('{search_query[2:]}' IN NATURAL LANGUAGE MODE)
 
 
@@ -197,7 +197,7 @@ Update Operations Section
 
 -- Query that updates a book
 UPDATE Books 
-SET title = :titleInput, 
+SET Books.title = :titleInput, 
 Books.firstName = :firstNameInput, 
 Books.lastName = :lastNameInput, 
 Books.isbn = :isbnInput, 
@@ -211,14 +211,14 @@ WHERE idBook = :book_ID_from_the_update_form;
 
 -- Query that updates a customer
 UPDATE Customers 
-SET firstName = :firstNameInput, 
-lastName = :lastNameInput, 
-email = :emailInput, 
-phoneNumber = :phoneNumberInput, 
-addressStreet = :addressStreetInput, 
-addressCity = :addressCityInput, 
-addressState = :addressStateInput, 
-addressZip = :addressZipInput
+SET Customers.firstName = :firstNameInput, 
+Customers.lastName = :lastNameInput, 
+Customers.email = :emailInput, 
+Customers.phoneNumber = :phoneNumberInput, 
+Customers.addressStreet = :addressStreetInput, 
+Customers.addressCity = :addressCityInput, 
+Customers.addressState = :addressStateInput, 
+Customers.addressZip = :addressZipInput
 WHERE idCustomer = :customer_ID_from_the_update_form;
 
 -- Query that updates a order from the Update table
@@ -287,4 +287,3 @@ idBook = :idBook_from_review_table,
 stars = :starsInput
 WHERE 
 idReview= ID_review_from_the_update_form;
-
