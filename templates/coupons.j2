@@ -9,9 +9,7 @@
     <thead>
 
         <tr>
-            {# <th class="table_cell">    
-            <input type="button" class="new" onclick="newOrder()" value="New">
-            </th> #}
+
             <th class="table_cell">Coupon ID</th>
             <th class="table_cell">Expiration Date</th>
             <th class="table_cell">Discount Code</th>
@@ -24,96 +22,15 @@
     {% for item in coupons %}
 
         <tr>
-            {# <td class="table_cell"></td> #}
 
             {%for key in item.keys() %}
             <td class="table_cell"> {{item[key]}}</td>
             {% endfor %}
 
-            {# <td class="table_cell">
-            <input type="button" class="edit" onclick="updateOrder()" value="Edit">
-            <input type="button" class="delete" onclick="deleteOrder()" value="Delete">
-            </td> #}
         </tr>
 
         {% endfor %}
     </tbody>
 </table>
 
-<div id="create" >
-
-    <form id="addCoupon" method="post">
-        <fieldset>
-            <legend>
-                <h2>Add a Coupon</h2>
-            </legend>
-            
-            <label>Expiration Date:</label>
-            <input value="{{ request.form['date'] }}" type="date">
-            
-            <label>Discount Code:</label>
-            <input value="{{ request.form['discountCode'] }}">
-
-            <labe> Discount Percent: </label>
-            <input type ="number" value ="{{ request.form[discountPercent] }}" >
-
-            <input type="button" class="submit" onclick="" value="Submit">
-            <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
-
-        </fieldset>
-        
-    </form>
-</div>
-
-<div id="update">
-    <form id="modifyOrder" methord="post">
-        <fieldset>
-            <legend>
-                <h2>Modify a Coupon</h2>
-            </legend>
-            <label>Coupon ID: 1 </label>
-            <label>Expiration Date:</label>
-            <input value="{{ request.form['date'] }}" type="date">
-            
-            <label>Discount Code:</label>
-            <input value="{{ request.form['discountCode'] }}">
-            
-            <labe> Discount Percent: </label>
-            <input type ="number" value ="{{ request.form[discountPercent] }}" >
-
-            <input type="button" class="submit" onclick="" value="Submit">
-            <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
-        </fieldset
-    </form>
-
-</div>
-
-<div id="delete">
-    <form id="modifyOrder" methord="post">
-        <fieldset>
-
-            <legend>
-                <h2>Delete a Order</h2>
-            </legend>
-            
-            <p> Are you sure you ant to delete the following coupon?</p>
-            <label>Coupon ID: 1 </label>
-            <br>
-            <label>Expiration Date: 2023-02-08</label>
-            <br>
-            <label>Discount Code: 10_OFF_MITCHELL</label>
-            <br>  
-            <label> Discount Percent: 0.1</label>
-            <br>
-            <input type="button" class="submit" onclick="" value="Submit">
-            <input type="button" id="cancel" onclick="cancelOrder()" value="Cancel">
-        </fieldset
-    </form>
-
-</div>
-
-{#
-<input type="button" id="all" onclick="showAll()" value="Show All">
-<input type="button" id="hide" style="display: none;" onclick="hideAll()" value="Hide All">
-#}
 {% endblock %}
